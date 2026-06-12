@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>FORE — Discovery Calls</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #0a0a0a;
+    --white: #f5f2ed;
+    --off: #1a1a1a;
+    --mid: #2e2e2e;
+    --muted: #555;
+    --accent-1: #c8f060;
+    --accent-2: #f0a030;
+    --accent-3: #60c8f0;
+    --accent-4: #f060a8;
+    --border: rgba(245,242,237,0.1);
+    --border-strong: rgba(245,242,237,0.2);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* HEADER */
+  .header {
+    border-bottom: 1px solid var(--border);
+    padding: 1.5rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    background: var(--black);
+    z-index: 100;
+  }
+
+  .logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    letter-spacing: 0.12em;
+    color: var(--white);
+  }
+
+  .logo span {
+    color: var(--accent-1);
+  }
+
+  .header-meta {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    text-align: right;
+    line-height: 1.8;
+  }
+
+  /* TABS */
+  .tab-nav {
+    display: flex;
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+    gap: 0;
+    overflow-x: auto;
+  }
+
+  .tab-btn {
+    background: none;
+    border: none;
+    color: var(--muted);
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 1rem 1.5rem;
+    cursor: pointer;
+    position: relative;
+    white-space: nowrap;
+    transition: color 0.2s;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+  }
+
+  .tab-btn:hover { color: var(--white); }
+
+  .tab-btn.active {
+    color: var(--white);
+  }
+
+  .tab-btn.active::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    right: 0;
+    height: 2px;
+  }
+
+  .tab-btn[data-client="john"].active { color: var(--accent-1); border-bottom-color: var(--accent-1); }
+  .tab-btn[data-client="damel"].active { color: var(--accent-2); border-bottom-color: var(--accent-2); }
+  .tab-btn[data-client="chantal"].active { color: var(--accent-3); border-bottom-color: var(--accent-3); }
+  .tab-btn[data-client="zhara"].active { color: var(--accent-4); border-bottom-color: var(--accent-4); }
+  .tab-btn[data-client="emma"].active { color: #6edba0; border-bottom-color: #6edba0; }
+
+  /* PANEL */
+  .panel { display: none; padding: 2rem; max-width: 1100px; }
+  .panel.active { display: block; }
+
+  /* CLIENT HEADER */
+  .client-header {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 1.5rem;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .client-avatar {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 18px;
+    letter-spacing: 0.05em;
+    flex-shrink: 0;
+  }
+
+  .av-john { background: rgba(200,240,96,0.12); color: var(--accent-1); border: 1px solid rgba(200,240,96,0.3); }
+  .av-damel { background: rgba(240,160,48,0.12); color: var(--accent-2); border: 1px solid rgba(240,160,48,0.3); }
+  .av-chantal { background: rgba(96,200,240,0.12); color: var(--accent-3); border: 1px solid rgba(96,200,240,0.3); }
+  .av-zhara { background: rgba(240,96,168,0.12); color: var(--accent-4); border: 1px solid rgba(240,96,168,0.3); }
+  .av-emma { background: rgba(110,219,160,0.12); color: #6edba0; border: 1px solid rgba(110,219,160,0.3); }
+
+  .client-info h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 32px;
+    letter-spacing: 0.06em;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .client-info p {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+  }
+
+  .client-info p span {
+    color: var(--white);
+    opacity: 0.6;
+  }
+
+  .call-badge {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 6px 14px;
+    border-radius: 100px;
+    border: 1px solid;
+    white-space: nowrap;
+  }
+
+  .badge-john { border-color: rgba(200,240,96,0.4); color: var(--accent-1); background: rgba(200,240,96,0.06); }
+  .badge-damel { border-color: rgba(240,160,48,0.4); color: var(--accent-2); background: rgba(240,160,48,0.06); }
+  .badge-chantal { border-color: rgba(96,200,240,0.4); color: var(--accent-3); background: rgba(96,200,240,0.06); }
+  .badge-zhara { border-color: rgba(240,96,168,0.4); color: var(--accent-4); background: rgba(240,96,168,0.06); }
+
+  /* GRID */
+  .grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .grid-3 {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1.25rem;
+    margin-bottom: 1.25rem;
+  }
+
+  @media (max-width: 700px) {
+    .grid-2, .grid-3 { grid-template-columns: 1fr; }
+    .client-header { grid-template-columns: auto 1fr; }
+    .call-badge { display: none; }
+  }
+
+  /* CARDS */
+  .card {
+    background: var(--off);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.25rem;
+  }
+
+  .card-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.75rem;
+  }
+
+  /* AGENDA */
+  .agenda-list { list-style: none; }
+
+  .agenda-item {
+    display: grid;
+    grid-template-columns: 56px 1fr;
+    gap: 1rem;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .agenda-item:last-child { border-bottom: none; padding-bottom: 0; }
+  .agenda-item:first-child { padding-top: 0; }
+
+  .agenda-time {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    padding-top: 2px;
+  }
+
+  .agenda-title {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--white);
+    margin-bottom: 2px;
+  }
+
+  .agenda-desc {
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  /* CONTEXT PILLS */
+  .pill-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 0.75rem;
+  }
+
+  .pill {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.06em;
+    padding: 4px 10px;
+    border-radius: 100px;
+    background: var(--mid);
+    color: var(--white);
+    opacity: 0.7;
+    border: 1px solid var(--border);
+  }
+
+  /* QUESTIONS */
+  .q-list { list-style: none; }
+
+  .q-item {
+    padding: 0.6rem 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 13px;
+    color: var(--white);
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    line-height: 1.5;
+  }
+
+  .q-item:last-child { border-bottom: none; padding-bottom: 0; }
+  .q-item:first-child { padding-top: 0; }
+
+  .q-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    padding-top: 3px;
+    flex-shrink: 0;
+    width: 16px;
+  }
+
+  /* NOTES AREA */
+  .notes-area {
+    width: 100%;
+    background: var(--mid);
+    border: 1px solid var(--border-strong);
+    border-radius: 6px;
+    padding: 0.75rem;
+    color: var(--white);
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    line-height: 1.8;
+    resize: vertical;
+    min-height: 120px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .notes-area:focus { border-color: rgba(245,242,237,0.35); }
+  .notes-area::placeholder { color: var(--muted); }
+
+  /* STATUS SELECTS */
+  .status-row {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    margin-top: 0.75rem;
+  }
+
+  .status-select {
+    background: var(--mid);
+    border: 1px solid var(--border-strong);
+    border-radius: 6px;
+    color: var(--white);
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    padding: 6px 10px;
+    cursor: pointer;
+    outline: none;
+    flex: 1;
+    min-width: 140px;
+  }
+
+  /* OVERVIEW */
+  .context-block {
+    font-size: 13px;
+    line-height: 1.75;
+    color: rgba(245,242,237,0.75);
+  }
+
+  .highlight {
+    font-weight: 500;
+    color: var(--white);
+  }
+
+  /* SECTION DIVIDER */
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 1.5rem 0 0.75rem;
+  }
+
+  /* PRINT */
+  @media print {
+    .tab-nav { display: none; }
+    .panel { display: block !important; page-break-after: always; }
+    body { background: white; color: black; }
+  }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="logo">FORE<span>.</span></div>
+  <div class="header-meta">
+    Discovery Call Dashboard<br>
+    30-min Initial Session · Free Consultancy Cohort
+  </div>
+</header>
+
+<nav class="tab-nav">
+  <button class="tab-btn active" data-client="john" onclick="switchTab('john')">01 — John Yariga</button>
+  <button class="tab-btn" data-client="damel" onclick="switchTab('damel')">02 — Damel Dioum</button>
+  <button class="tab-btn" data-client="chantal" onclick="switchTab('chantal')">03 — Chantal Kryou</button>
+  <button class="tab-btn" data-client="zhara" onclick="switchTab('zhara')">04 — Zhara Randall</button>
+  <button class="tab-btn" data-client="emma" onclick="switchTab('emma')">05 — Emma Jenkins</button>
+</nav>
+
+<!-- ============================== JOHN ============================== -->
+<div class="panel active" id="panel-john">
+  <div class="client-header">
+    <div class="client-avatar av-john">JY</div>
+    <div class="client-info">
+      <h1>John Yariga</h1>
+      <p>johnyariga@gmail.com &nbsp;·&nbsp; <span>@john.y14 / @mpconcierge</span> &nbsp;·&nbsp; London</p>
+    </div>
+    <div class="call-badge badge-john" style="background:rgba(200,240,96,0.15);border-color:rgba(200,240,96,0.6);">Rescheduled - Tue 9 Jun</div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <p class="card-label">Client overview</p>
+      <div class="pill-row">
+        <span class="pill">Founder</span>
+        <span class="pill">Early stage</span>
+        <span class="pill">Luxury / Lifestyle</span>
+        <span class="pill">Met @ Fashion Week</span>
+      </div>
+      <p class="context-block">
+        John is building <span class="highlight">Maison Privé</span> — a concierge and lifestyle management brand targeting UHNW clients. He has 6 years in hospitality, 3 as a concierge, and brings firsthand knowledge of the luxury world he wants to serve. He's converting a professional identity into a business and needs help turning that into a brand, an audience and eventually paying clients.
+      </p>
+    </div>
+
+    <div class="card">
+      <p class="card-label">Call agenda — 30 min</p>
+      <ul class="agenda-list">
+        <li class="agenda-item">
+          <span class="agenda-time">0:00</span>
+          <div>
+            <p class="agenda-title">Intro & check-in</p>
+            <p class="agenda-desc">Quick personal connection. Good to finally speak properly after fashion week.</p>
+          </div>
+        </li>
+        <li class="agenda-item">
+          <span class="agenda-time">0:05</span>
+          <div>
+            <p class="agenda-title">The vision for Maison Privé</p>
+            <p class="agenda-desc">What does it look like in 12 months? What's the full scope of the brand?</p>
+          </div>
+        </li>
+        <li class="agenda-item">
+          <span class="agenda-time">0:12</span>
+          <div>
+            <p class="agenda-title">Where he's stuck</p>
+            <p class="agenda-desc">Networking strategy, converting interest to clients, building in public vs staying private.</p>
+          </div>
+        </li>
+        <li class="agenda-item">
+          <span class="agenda-time">0:20</span>
+          <div>
+            <p class="agenda-title">Fit assessment</p>
+            <p class="agenda-desc">Where can I genuinely add value? Scope, timeline, what support looks like.</p>
+          </div>
+        </li>
+        <li class="agenda-item">
+          <span class="agenda-time">0:27</span>
+          <div>
+            <p class="agenda-title">Next steps</p>
+            <p class="agenda-desc">Clear actions before we speak again. No vague "let's keep in touch."</p>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <p class="card-label">Questions to ask</p>
+      <ul class="q-list">
+        <li class="q-item"><span class="q-num">01</span>How would you describe Maison Privé to someone who's never heard of you — in two sentences?</li>
+        <li class="q-item"><span class="q-num">02</span>Who is your first target client — have you already got anyone in mind or in your network?</li>
+        <li class="q-item"><span class="q-num">03</span>What does your current personal brand look like online — what are you putting out and how's it landing?</li>
+        <li class="q-item"><span class="q-num">04</span>Where does the UHNW networking actually happen for you right now — events, introductions, socials?</li>
+        <li class="q-item"><span class="q-num">05</span>What's the one thing you feel is blocking you from moving faster?</li>
+        <li class="q-item"><span class="q-num">06</span>Have you worked with a consultant before — what worked and what didn't?</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <p class="card-label">Watch-outs & instincts</p>
+      <ul class="q-list">
+        <li class="q-item"><span class="q-num">→</span>Luxury branding requires restraint — make sure John understands less is more when positioning Maison Privé.</li>
+        <li class="q-item"><span class="q-num">→</span>The UHNW market is relationship-led, not social media-led. Manage expectations on what content can do here vs. direct networking.</li>
+        <li class="q-item"><span class="q-num">→</span>He's early stage — check he has clarity on the actual service offer before diving into brand.</li>
+        <li class="q-item"><span class="q-num">→</span>Already has Instagram presence — audit it before the call if possible.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <p class="card-label">Live meeting notes</p>
+    <textarea class="notes-area" placeholder="Add notes during or after the call..."></textarea>
+    <div class="status-row">
+      <select class="status-select">
+        <option value="">— Fit assessment —</option>
+        <option>Strong fit</option>
+        <option>Good fit</option>
+        <option>Possible fit</option>
+        <option>Not the right time</option>
+        <option>Not a fit</option>
+      </select>
+      <select class="status-select">
+        <option value="">— Next action —</option>
+        <option>Send proposal</option>
+        <option>Follow-up call booked</option>
+        <option>Send resources</option>
+        <option>Check back in 4 weeks</option>
+        <option>Close — not progressing</option>
+      </select>
+    </div>
+  </div>
+</div>
+
+<!-- ============================== DAMEL ============================== -->
+<div class="panel" id="panel-damel">
+  <div class="client-header">
+    <div class="client-avatar av-damel">DD</div>
+    <div class="client-info">
+      <h1>Damel Dioum</h1>
+      <p>info@ddthept.com &nbsp;·&nbsp; <span>@ddthept / @holistichealth_ldn</span> &nbsp;·&nbsp; West London (currently Senegal)</p>
+    </div>
+    <div class="call-badge badge-damel" style="background: rgba(240,160,48,0.15); border-color: rgba(240,160,48,0.6);">✓ Call Complete</div>
+  </div>
+
+  <div class="grid-3">
+    <div class="card" style="border-color: rgba(240,160,48,0.25);">
+      <p class="card-label">Fit assessment</p>
+      <p style="font-family: 'Bebas Neue', sans-serif; font-size: 26px; color: var(--accent-2); letter-spacing: 0.06em; margin-bottom: 6px;">Good Fit</p>
+      <p class="context-block" style="font-size: 12px;">Strong purpose, real momentum building. Needs accountability, content systems and strategic focus more than creative direction. Clear scope for support.</p>
+    </div>
+    <div class="card">
+      <p class="card-label">Current income</p>
+      <p style="font-family: 'Bebas Neue', sans-serif; font-size: 26px; color: var(--white); letter-spacing: 0.06em; margin-bottom: 6px;">£850–£1,500/mo</p>
+      <p class="context-block" style="font-size: 12px;">Down from £3K–4K peak. ACL surgery last October disrupted business significantly. Rebuilding phase now.</p>
+    </div>
+    <div class="card">
+      <p class="card-label">Next action</p>
+      <p style="font-family: 'Bebas Neue', sans-serif; font-size: 26px; color: var(--white); letter-spacing: 0.06em; margin-bottom: 6px;">Send Follow-Up</p>
+      <p class="context-block" style="font-size: 12px;">Email with content strategy, CIC structure advice, and WhatsApp contact. Committed to acting as accountability partner.</p>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <p class="card-label">Key findings from the call</p>
+      <ul class="q-list">
+        <li class="q-item"><span class="q-num" style="color: var(--accent-2);">01</span>ACL injury two years ago has been the root disruption — physically, emotionally, financially. He's 65–70% recovered and rebuilding daily.</li>
+        <li class="q-item"><span class="q-num" style="color: var(--accent-2);">02</span>Vision is clear: holistic health combining physical fitness, nutrition and mental well-being — care and confidence over aesthetics.</li>
+        <li class="q-item"><span class="q-num" style="color: var(--accent-2);">03</span>Target market is shifting to school teachers — a niche with a real pain point (burnout, stress) and a gap in ongoing mental health support.</li>
+        <li class="q-item"><span class="q-num" style="color: var(--accent-2);">04</span>Business model: school contracts for recurring wellness classes → upsell into 1:1 coaching. Institutional + personal revenue stack.</li>
+        <li class="q-item"><span class="q-num" style="color: var(--accent-2);">05</span>Virtual Wellness Sessions running for 4 years with 2–8 consistent attendees — never heavily promoted. Real foundation to build from.</li>
+        <li class="q-item"><span class="q-num" style="color: var(--accent-2);">06</span>TikTok content has directly driven client re-engagement — proof of concept for social media, even with low follower counts.</li>
+        <li class="q-item"><span class="q-num" style="color: var(--accent-2);">07</span>Mindset is shifting. Time in Senegal has given him space to journal, meditate and get clearer on direction. He's ready to move.</li>
+        <li class="q-item"><span class="q-num" style="color: var(--accent-2);">08</span>Client base is currently too broad (ages 7–95). Needs to unify under a clearer niche and brand identity before scaling.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <p class="card-label">Strategic priorities identified</p>
+      <ul class="q-list">
+        <li class="q-item"><span class="q-num">→</span><strong style="font-weight:500;">Niche first.</strong> Lead with teachers and school mental health. It's the sharpest entry point with the clearest pain and a viable contract model.</li>
+        <li class="q-item"><span class="q-num">→</span><strong style="font-weight:500;">Content as credibility.</strong> Use social media primarily to build trust and demonstrate impact — not just for client acquisition. This matters for grant applications too.</li>
+        <li class="q-item"><span class="q-num">→</span><strong style="font-weight:500;">Recovery as narrative.</strong> Document the ACL journey. It's authentic, relatable and directly on-brand for a holistic health story.</li>
+        <li class="q-item"><span class="q-num">→</span><strong style="font-weight:500;">Fix the editing bottleneck.</strong> He enjoys capturing content, hates editing. Outsource or simplify — this is what's killing consistency.</li>
+        <li class="q-item"><span class="q-num">→</span><strong style="font-weight:500;">CIC structure.</strong> Set up alongside a Ltd company — CIC for school/community grant funding, Ltd for personal training income. Don't rush it — get pipeline first.</li>
+        <li class="q-item"><span class="q-num">→</span><strong style="font-weight:500;">Accountability partnership.</strong> He explicitly said he needs external push. Build that into the working relationship from the start.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <p class="card-label">Your action items</p>
+      <ul class="q-list">
+        <li class="q-item"><span class="q-num" style="color: var(--accent-2);">1</span>Send follow-up email — discussion summary, content strategy outline, CIC and funding advice (Sport England etc.).</li>
+        <li class="q-item"><span class="q-num" style="color: var(--accent-2);">2</span>Share WhatsApp contact and set up ongoing accountability check-ins.</li>
+        <li class="q-item"><span class="q-num" style="color: var(--accent-2);">3</span>Prepare multi-channel content strategy plan — key narratives: recovery, teachers, holistic philosophy, community.</li>
+        <li class="q-item"><span class="q-num" style="color: var(--accent-2);">4</span>Send notes on dual CIC + Ltd company structure and how to approach grant applications.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <p class="card-label">Damel's action items</p>
+      <ul class="q-list">
+        <li class="q-item"><span class="q-num">1</span>Commit to content strategy plan — consistent social media presence built on agreed narratives.</li>
+        <li class="q-item"><span class="q-num">2</span>Continue rehab daily and document the recovery process for storytelling content.</li>
+        <li class="q-item"><span class="q-num">3</span>Begin exploring school pipeline — identify potential contacts, local schools, education sector leads.</li>
+        <li class="q-item"><span class="q-num">4</span>Research CIC formation — investigate once there's early pipeline of school contracts or grant opportunities lined up.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <p class="card-label">Additional notes</p>
+    <textarea class="notes-area" placeholder="Add any further notes here...">Call complete. Strong session — Damel is purpose-driven and self-aware. The ACL injury context explains a lot of the disruption. His story (semi-pro football → holistic health after injury) is actually a powerful brand narrative he's not fully using yet. Teachers niche is genuinely smart. Main risks: scope creep on the vision, editing bottleneck killing content momentum. He's currently based in Senegal which gives him good headspace. Dual structure (Ltd + CIC) conversation went well — he's open to it once there's pipeline. Worth checking in on content output within 2 weeks of sending the follow-up.</textarea>
+    <div class="status-row">
+      <select class="status-select">
+        <option value="">— Fit assessment —</option>
+        <option selected>Good fit</option>
+        <option>Strong fit</option>
+        <option>Possible fit</option>
+        <option>Not the right time</option>
+        <option>Not a fit</option>
+      </select>
+      <select class="status-select">
+        <option value="">— Next action —</option>
+        <option selected>Send resources</option>
+        <option>Send proposal</option>
+        <option>Follow-up call booked</option>
+        <option>Check back in 4 weeks</option>
+        <option>Close — not progressing</option>
+      </select>
+    </div>
+  </div>
+</div>
+
+<!-- ============================== CHANTAL ============================== -->
+<div class="panel" id="panel-chantal">
+  <div class="client-header">
+    <div class="client-avatar av-chantal">CK</div>
+    <div class="client-info">
+      <h1>Chantal Kryou</h1>
+      <p>kryouchantal@gmail.com &nbsp;·&nbsp; <span>@chantal.kryou</span> &nbsp;·&nbsp; London (via Stockholm)</p>
+    </div>
+    <div class="call-badge badge-chantal" style="background: rgba(96,200,240,0.15); border-color: rgba(96,200,240,0.6);">✓ Call Complete</div>
+  </div>
+
+  <div class="grid-3">
+    <div class="card" style="border-color: rgba(96,200,240,0.25);">
+      <p class="card-label">Fit assessment</p>
+      <p style="font-family: 'Bebas Neue', sans-serif; font-size: 26px; color: var(--accent-3); letter-spacing: 0.06em; margin-bottom: 6px;">Strong Fit</p>
+      <p class="context-block" style="font-size: 12px;">Values-aligned with FORE. Clear vision, genuine passion, culturally relevant concept. Visa complexity is the main watch-out. 2-3 strategy calls planned over 3-4 weeks.</p>
+    </div>
+    <div class="card">
+      <p class="card-label">TikTok</p>
+      <p style="font-family: 'Bebas Neue', sans-serif; font-size: 26px; color: var(--white); letter-spacing: 0.06em; margin-bottom: 6px;">@StarNeighbor7</p>
+      <p class="context-block" style="font-size: 12px;">Up to 1k views but no clear strategy. Mostly aesthetic posts. Shopify waiting list exists but unpromoted. Needs to shift to mission-driven storytelling.</p>
+    </div>
+    <div class="card">
+      <p class="card-label">Next action</p>
+      <p style="font-family: 'Bebas Neue', sans-serif; font-size: 26px; color: var(--white); letter-spacing: 0.06em; margin-bottom: 6px;">Send Follow-Up</p>
+      <p class="context-block" style="font-size: 12px;">Email with brand strategy notes, mission framework, community profile template and content plan. Also awaiting Canva deck designs from Chantal.</p>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <p class="card-label">Key findings from the call</p>
+      <ul class="q-list">
+        <li class="q-item"><span class="q-num" style="color: var(--accent-3);">01</span>Cards are 300-350 GSM, star-shaped with rounded corners. Built around "we are all stardust." Designed for public spaces to invite connection.</li>
+        <li class="q-item"><span class="q-num" style="color: var(--accent-3);">02</span>The USP is the brand story and movement, not the cards themselves. Cards are a vessel for the mission of countering digital isolation.</li>
+        <li class="q-item"><span class="q-num" style="color: var(--accent-3);">03</span>Target audience refined: women 18-35, subcultures including women of colour, creatives, and those battling social anxiety seeking real community.</li>
+        <li class="q-item"><span class="q-num" style="color: var(--accent-3);">04</span>Business model: community and events first (game nights, hikes, brunches, art clubs). Cards are the tool, not the product.</li>
+        <li class="q-item"><span class="q-num" style="color: var(--accent-3);">05</span>Extensions planned: blank custom cards, tarot/affirmation decks, wearables (badges, bracelets) as social signals. Artist collabs and limited edition backs.</li>
+        <li class="q-item"><span class="q-num" style="color: var(--accent-3);">06</span>Legal complexity: skilled worker visa may restrict self-employment. Sole trader vs Ltd needs clarifying before crowdfunding. Business bank account needed for Kickstarter.</li>
+        <li class="q-item"><span class="q-num" style="color: var(--accent-3);">07</span>Personal brand strategy planned - Chantal as figurehead, modelling the behaviour (approaching strangers with cards on camera).</li>
+        <li class="q-item"><span class="q-num" style="color: var(--accent-3);">08</span>Long-term vision is global. Digital community via WhatsApp/Discord planned to support geographic spread beyond London.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <p class="card-label">Strategic priorities</p>
+      <ul class="q-list">
+        <li class="q-item"><span class="q-num">1</span><strong style="font-weight:500;">Mission first.</strong> Define the target community and craft a clear brand mission statement. This unlocks marketing, content and crowdfunding.</li>
+        <li class="q-item"><span class="q-num">2</span><strong style="font-weight:500;">Shift the content.</strong> Move from aesthetic posts to mission-driven storytelling. The story of why this exists is the content.</li>
+        <li class="q-item"><span class="q-num">3</span><strong style="font-weight:500;">Test TikTok in parallel.</strong> Trial formats and stories to find what drives engagement before scaling.</li>
+        <li class="q-item"><span class="q-num">4</span><strong style="font-weight:500;">Sort the legal structure.</strong> Visa implications, sole trader vs Ltd, business bank account - all before any crowdfunding push.</li>
+        <li class="q-item"><span class="q-num">5</span><strong style="font-weight:500;">Run focus groups.</strong> Small private play sessions - user research and content generation at the same time.</li>
+        <li class="q-item"><span class="q-num">6</span><strong style="font-weight:500;">Three-call structure.</strong> 2-3 strategy calls over 3-4 weeks with clear deliverables between each.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <p class="card-label">Your action items</p>
+      <ul class="q-list">
+        <li class="q-item"><span class="q-num" style="color: var(--accent-3);">1</span>Send follow-up email with notes, brand strategy templates, mission/community framework and content plan.</li>
+        <li class="q-item"><span class="q-num" style="color: var(--accent-3);">2</span>Review Canva deck designs once Chantal sends them.</li>
+        <li class="q-item"><span class="q-num" style="color: var(--accent-3);">3</span>Provide input on event formats, community-building tactics and TikTok content strategy.</li>
+        <li class="q-item"><span class="q-num" style="color: var(--accent-3);">4</span>Plan next call for 2-4 weeks out to review mission, content and legal setup progress.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <p class="card-label">Chantal's action items</p>
+      <ul class="q-list">
+        <li class="q-item"><span class="q-num">1</span>Send Jordan the Canva deck designs for review.</li>
+        <li class="q-item"><span class="q-num">2</span>Run a small focus group play session with prepared interview questions aligned to brand values.</li>
+        <li class="q-item"><span class="q-num">3</span>Explore legal setup options: visa implications, sole trader vs Ltd, Kickstarter and business bank account readiness.</li>
+        <li class="q-item"><span class="q-num">4</span>Post consistent social content reflecting the refined brand mission, not just aesthetics.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <p class="card-label">Additional notes</p>
+    <textarea class="notes-area">Call complete. Chantal is thoughtful, values-led and has a genuinely compelling concept. The visa situation needs addressing early before any commercial moves. Her personal story of moving to London and feeling the absence of community IS the brand story - that needs to come through in everything. Focus group idea is a smart double-use: user research and content simultaneously. Star-shaped tin box packaging is a strong gifting and merch angle. Book call 2 for approx 17 Jun.</textarea>
+    <div class="status-row">
+      <select class="status-select">
+        <option value="">— Fit assessment —</option>
+        <option selected>Strong fit</option>
+        <option>Good fit</option>
+        <option>Possible fit</option>
+        <option>Not the right time</option>
+        <option>Not a fit</option>
+      </select>
+      <select class="status-select">
+        <option value="">— Next action —</option>
+        <option>Send proposal</option>
+        <option>Follow-up call booked</option>
+        <option selected>Send resources</option>
+        <option>Check back in 4 weeks</option>
+        <option>Close — not progressing</option>
+      </select>
+    </div>
+  </div>
+</div>
+
+<!-- ============================== ZHARA ============================== -->
+<div class="panel" id="panel-zhara">
+  <div class="client-header">
+    <div class="client-avatar av-zhara">ZR</div>
+    <div class="client-info">
+      <h1>Zhara Randall</h1>
+      <p>zee.zarte@icloud.com &nbsp;·&nbsp; <span>Z'arte / The Ze-verse</span> &nbsp;·&nbsp; London</p>
+    </div>
+    <div class="call-badge badge-zhara">30 min Discovery</div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <p class="card-label">Client overview</p>
+      <div class="pill-row">
+        <span class="pill">Artist</span>
+        <span class="pill">Early stage</span>
+        <span class="pill">Creative universe</span>
+        <span class="pill">Illustration / IP</span>
+        <span class="pill">Stuck in planning</span>
+      </div>
+      <p class="context-block">
+        Zhara is a multidisciplinary creative building <span class="highlight">The Ze-verse</span> — an original creative universe through her identity Z'arte. Characters, worldbuilding, illustration, music culture, animation and IP. She thinks in worlds, not pieces of content. The vision is genuinely strong. The problem: she's been planning too long, second-guesses herself heavily and has no portfolio yet. She needs structure, accountability and someone to help her actually start.
+      </p>
+    </div>
+
+    <div class="card">
+      <p class="card-label">Call agenda — 30 min</p>
+      <ul class="agenda-list">
+        <li class="agenda-item">
+          <span class="agenda-time">0:00</span>
+          <div>
+            <p class="agenda-title">Intro & check-in</p>
+            <p class="agenda-desc">She's a long-time follower. Acknowledge that — start from familiarity, not formality.</p>
+          </div>
+        </li>
+        <li class="agenda-item">
+          <span class="agenda-time">0:05</span>
+          <div>
+            <p class="agenda-title">The Ze-verse — in her words</p>
+            <p class="agenda-desc">Let her explain the whole world unprompted. Don't interrupt. Listen for themes, tensions and what excites her most.</p>
+          </div>
+        </li>
+        <li class="agenda-item">
+          <span class="agenda-time">0:13</span>
+          <div>
+            <p class="agenda-title">What exists right now</p>
+            <p class="agenda-desc">What's actually been made — sketches, characters, concepts? What's only in her head?</p>
+          </div>
+        </li>
+        <li class="agenda-item">
+          <span class="agenda-time">0:19</span>
+          <div>
+            <p class="agenda-title">Unpacking the block</p>
+            <p class="agenda-desc">What does the self-doubt sound like? What would "actually starting" look like to her?</p>
+          </div>
+        </li>
+        <li class="agenda-item">
+          <span class="agenda-time">0:25</span>
+          <div>
+            <p class="agenda-title">Fit & next steps</p>
+            <p class="agenda-desc">Honest about what I can offer. Clear action she can take this week — before we even formalise anything.</p>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <p class="card-label">Questions to ask</p>
+      <ul class="q-list">
+        <li class="q-item"><span class="q-num">01</span>Tell me about the Ze-verse — forget the strategy, just describe the world to me like you're excited about it.</li>
+        <li class="q-item"><span class="q-num">02</span>Of all the characters and ideas you've got, which one do you feel most connected to right now?</li>
+        <li class="q-item"><span class="q-num">03</span>What's physically been created so far — what could you show me today?</li>
+        <li class="q-item"><span class="q-num">04</span>What does the voice in your head say when you're about to post something and you don't?</li>
+        <li class="q-item"><span class="q-num">05</span>If you had to put one thing out into the world this week — just one — what would it be?</li>
+        <li class="q-item"><span class="q-num">06</span>What would make this feel like it was worth it — not in 5 years, but in the next 3 months?</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <p class="card-label">Watch-outs & instincts</p>
+      <ul class="q-list">
+        <li class="q-item"><span class="q-num">→</span>The self-doubt is real and deep. Don't just validate it — challenge it gently. Ask her what evidence the doubt is based on.</li>
+        <li class="q-item"><span class="q-num">→</span>She explicitly said "I don't even have a portfolio." Start there. The first output is a body of work, not a launch.</li>
+        <li class="q-item"><span class="q-num">→</span>The Ze-verse concept is ambitious and multi-format. Help her identify the single entry point — the one character, one format, one platform — that starts the whole thing.</li>
+        <li class="q-item"><span class="q-num">→</span>She's highly conceptual and creative. Be careful not to over-systematise early — the goal is momentum, not perfection.</li>
+        <li class="q-item"><span class="q-num">→</span>Strongest candidate for accountability/coaching model alongside creative strategy.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <p class="card-label">Live meeting notes</p>
+    <textarea class="notes-area" placeholder="Add notes during or after the call..."></textarea>
+    <div class="status-row">
+      <select class="status-select">
+        <option value="">— Fit assessment —</option>
+        <option>Strong fit</option>
+        <option>Good fit</option>
+        <option>Possible fit</option>
+        <option>Not the right time</option>
+        <option>Not a fit</option>
+      </select>
+      <select class="status-select">
+        <option value="">— Next action —</option>
+        <option>Send proposal</option>
+        <option>Follow-up call booked</option>
+        <option>Send resources</option>
+        <option>Check back in 4 weeks</option>
+        <option>Close — not progressing</option>
+      </select>
+    </div>
+  </div>
+</div>
+
+<!-- ============================== EMMA ============================== -->
+<div class="panel" id="panel-emma">
+  <div class="client-header">
+    <div class="client-avatar av-emma">EJ</div>
+    <div class="client-info">
+      <h1>Emma Jenkins</h1>
+      <p>emmaam93@gmail.com &nbsp;·&nbsp; <span>@ea.jenkins</span> &nbsp;·&nbsp; London</p>
+    </div>
+    <div class="call-badge" style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;padding:6px 14px;border-radius:100px;border:1px solid rgba(110,219,160,0.6);color:#6edba0;background:rgba(110,219,160,0.15);white-space:nowrap;">✓ Call Complete</div>
+  </div>
+
+  <div class="grid-3">
+    <div class="card" style="border-color: rgba(110,219,160,0.25);">
+      <p class="card-label">Fit assessment</p>
+      <p style="font-family: 'Bebas Neue', sans-serif; font-size: 26px; color: #6edba0; letter-spacing: 0.06em; margin-bottom: 6px;">Strong Fit</p>
+      <p class="context-block" style="font-size: 12px;">More groundwork done than she gives herself credit for. Perfectionism and restarts are the blocker, not the idea. Accountability is central to the support model.</p>
+    </div>
+    <div class="card">
+      <p class="card-label">Name direction</p>
+      <p style="font-family: 'Bebas Neue', sans-serif; font-size: 26px; color: var(--white); letter-spacing: 0.06em; margin-bottom: 6px;">Bare Collective</p>
+      <p class="context-block" style="font-size: 12px;">Bare Basics dropped. Jordan's instinct: Bare Collective is strongest — community built into the name. Needs testing with 10 real target customers.</p>
+    </div>
+    <div class="card">
+      <p class="card-label">Next action</p>
+      <p style="font-family: 'Bebas Neue', sans-serif; font-size: 26px; color: var(--white); letter-spacing: 0.06em; margin-bottom: 6px;">Send Resources</p>
+      <p class="context-block" style="font-size: 12px;">Action plan (once old biz plan received), deadstock supplier contacts, London warehouse ref, customer avatar framework. Awaiting Emma's three deadlines.</p>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <p class="card-label">Key findings from the call</p>
+      <ul class="q-list">
+        <li class="q-item"><span class="q-num" style="color: #6edba0;">01</span>Sustainable made-to-order capsule wardrobe from deadstock and organic materials. No prints, no heavy branding. Story, quality and community are the differentiators.</li>
+        <li class="q-item"><span class="q-num" style="color: #6edba0;">02</span>Product pivoted post-call to two-piece sets (tops/shorts/skirts, interchangeable) from deadstock designer materials. Holiday wardrobe angle as the entry point.</li>
+        <li class="q-item"><span class="q-num" style="color: #6edba0;">03</span>Brand building PDF has logo mockups, startup costs, Shopify already in progress, and 10+ deadstock/sustainable supplier research. She's ahead of where she thinks she is.</li>
+        <li class="q-item"><span class="q-num" style="color: #6edba0;">04</span>Target customer: women late 20s-30s and above. Sophisticated, chic, not defined by logos or patterns.</li>
+        <li class="q-item"><span class="q-num" style="color: #6edba0;">05</span>Prior brand attempt (jewellery/bags from recycled materials) fizzled - unclear direction and content overload. History of perfectionism and restarts noted.</li>
+        <li class="q-item"><span class="q-num" style="color: #6edba0;">06</span>Full-time production role is a real constraint. Plan must work around it.</li>
+        <li class="q-item"><span class="q-num" style="color: #6edba0;">07</span>Weak on financial planning - husband handles numbers. Emma leads on creative and operational.</li>
+        <li class="q-item"><span class="q-num" style="color: #6edba0;">08</span>Made-to-order model to prevent overproduction. Garment bags made herself from calico. Supply chain scalability will be key at growth stage.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <p class="card-label">Strategic priorities</p>
+      <ul class="q-list">
+        <li class="q-item"><span class="q-num">1</span><strong style="font-weight:500;">Name first.</strong> Test Bare Collective, Bare Studios and alternatives with 10 real target customers. Decision before anything else moves.</li>
+        <li class="q-item"><span class="q-num">2</span><strong style="font-weight:500;">Stop restarting the prototype.</strong> Commit to the two-piece, set a wearable-by date, hold it.</li>
+        <li class="q-item"><span class="q-num">3</span><strong style="font-weight:500;">Post now.</strong> Before the product is ready. Sourcing trips, swatches, prototype sessions. This is the content and it builds community before launch.</li>
+        <li class="q-item"><span class="q-num">4</span><strong style="font-weight:500;">Customer avatar.</strong> Framework to be sent. She needs to move beyond personal taste to a defined customer profile to inform every decision.</li>
+        <li class="q-item"><span class="q-num">5</span><strong style="font-weight:500;">Supply chain as story.</strong> Deadstock sourcing is part of the product. It needs to show up publicly from day one.</li>
+        <li class="q-item"><span class="q-num">6</span><strong style="font-weight:500;">Accountability.</strong> Three deadlines to be set and sent to Jordan. Built into the working relationship from the start.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <p class="card-label">Your action items</p>
+      <ul class="q-list">
+        <li class="q-item"><span class="q-num" style="color: #6edba0;">1</span>Send deadstock supplier contacts and London deadstock warehouse reference.</li>
+        <li class="q-item"><span class="q-num" style="color: #6edba0;">2</span>Send customer avatar framework template.</li>
+        <li class="q-item"><span class="q-num" style="color: #6edba0;">3</span>Review brand building PDF + old business plan (once received) and build prioritised chronological action plan.</li>
+        <li class="q-item"><span class="q-num" style="color: #6edba0;">4</span>Check in on Emma's three deadlines: name decision / prototype sign-off / first social post.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <p class="card-label">Emma's action items</p>
+      <ul class="q-list">
+        <li class="q-item"><span class="q-num">1</span>Send old business plan to Jordan for review.</li>
+        <li class="q-item"><span class="q-num">2</span>Set three honest deadlines and send to Jordan: name decision / prototype sign-off / first social post.</li>
+        <li class="q-item"><span class="q-num">3</span>Test name options with 10 people in the target customer range - not friends.</li>
+        <li class="q-item"><span class="q-num">4</span>Start posting the process now - sourcing, swatches, prototyping.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <p class="card-label">Additional notes</p>
+    <textarea class="notes-area">Call complete 11 Jun 2026. Emma has done more groundwork than she realises - the brand building PDF is genuinely solid for this stage. Her production background is an underused asset: she understands process, craft and timelines. The perfectionism is the real blocker, not the idea. Her post-call email the same evening showed immediate momentum - she'd already pivoted to two-pieces and was rethinking the name unprompted. That's a great sign. Key watch-out: don't let her spiral into naming debates for weeks. Set a testing deadline and move on. Follow-up call to be booked once initial tasks are complete - target late June/early July.</textarea>
+    <div class="status-row">
+      <select class="status-select">
+        <option value="">— Fit assessment —</option>
+        <option selected>Strong fit</option>
+        <option>Good fit</option>
+        <option>Possible fit</option>
+        <option>Not the right time</option>
+        <option>Not a fit</option>
+      </select>
+      <select class="status-select">
+        <option value="">— Next action —</option>
+        <option>Send proposal</option>
+        <option>Follow-up call booked</option>
+        <option selected>Send resources</option>
+        <option>Check back in 4 weeks</option>
+        <option>Close — not progressing</option>
+      </select>
+    </div>
+  </div>
+</div>
+
+<script>
+  function switchTab(client) {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    document.querySelector(`[data-client="${client}"]`).classList.add('active');
+    document.getElementById(`panel-${client}`).classList.add('active');
+  }
+</script>
+</body>
+</html>

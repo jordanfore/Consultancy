@@ -1,0 +1,2077 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>DD The PT — Social Media Strategy 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@300;400;500&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300;1,9..40,400&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --ink: #0d0d0d;
+  --paper: #f7f4ee;
+  --paper2: #eeebe3;
+  --mid: #c8c3b8;
+  --muted: #8a8478;
+  --rule: #d8d4cc;
+  --green: #2a7a4b;
+  --green-lt: #e8f5ee;
+  --green-mid: #c2e0ce;
+  --amber: #b85c00;
+  --amber-lt: #fdf0e5;
+  --blue: #1a4f7a;
+  --blue-lt: #e5eef6;
+  --purple: #5a2d82;
+  --purple-lt: #f0eaf8;
+  --red: #9b2a2a;
+  --red-lt: #faeaea;
+}
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  line-height: 1.65;
+}
+
+/* MASTHEAD */
+.masthead {
+  background: var(--ink);
+  color: var(--paper);
+  padding: 3rem 3rem 2.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.masthead::before {
+  content: 'DD';
+  position: absolute;
+  right: -0.05em;
+  top: -0.1em;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 22rem;
+  color: rgba(255,255,255,0.04);
+  line-height: 1;
+  pointer-events: none;
+  letter-spacing: -0.02em;
+}
+
+.masthead-eyebrow {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--mid);
+  margin-bottom: 1rem;
+}
+
+.masthead h1 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(3rem, 8vw, 6rem);
+  letter-spacing: 0.04em;
+  line-height: 0.9;
+  margin-bottom: 1.5rem;
+}
+
+.masthead h1 span {
+  color: #4ecb80;
+}
+
+.masthead-meta {
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+  border-top: 1px solid rgba(255,255,255,0.12);
+  padding-top: 1.25rem;
+  margin-top: 1.25rem;
+}
+
+.masthead-meta-item {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  color: var(--mid);
+  line-height: 1.8;
+}
+
+.masthead-meta-item strong {
+  display: block;
+  color: var(--paper);
+  font-size: 12px;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 500;
+  letter-spacing: 0;
+}
+
+/* NAV */
+.sticky-nav {
+  position: sticky;
+  top: 0;
+  background: var(--ink);
+  z-index: 50;
+  padding: 0 3rem;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  display: flex;
+  gap: 0;
+  overflow-x: auto;
+}
+
+.nav-link {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-decoration: none;
+  padding: 0.9rem 1.25rem;
+  border-bottom: 2px solid transparent;
+  white-space: nowrap;
+  transition: color 0.15s, border-color 0.15s;
+}
+
+.nav-link:hover { color: var(--paper); border-bottom-color: rgba(255,255,255,0.3); }
+
+/* BODY */
+.page { max-width: 1080px; margin: 0 auto; padding: 3rem; }
+
+@media (max-width: 700px) {
+  .masthead { padding: 2rem; }
+  .page { padding: 1.5rem; }
+  .sticky-nav { padding: 0 1rem; }
+}
+
+/* SECTION */
+.section { margin-bottom: 4rem; }
+
+.section-header {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  margin-bottom: 1.75rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 2px solid var(--ink);
+}
+
+.section-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2.5rem;
+  color: var(--rule);
+  line-height: 1;
+}
+
+.section-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.75rem;
+  letter-spacing: 0.04em;
+  line-height: 1;
+}
+
+/* DIAGNOSIS */
+.diag-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
+@media (max-width: 700px) { .diag-grid { grid-template-columns: 1fr; } }
+
+.diag-card {
+  border: 1.5px solid var(--rule);
+  border-radius: 8px;
+  padding: 1.25rem;
+  background: white;
+}
+
+.diag-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 0.75rem;
+}
+
+.diag-label.gap { color: var(--red); }
+.diag-label.opp { color: var(--green); }
+
+.diag-list { list-style: none; }
+
+.diag-item {
+  padding: 0.4rem 0;
+  border-bottom: 1px solid var(--rule);
+  font-size: 13px;
+  display: flex;
+  gap: 8px;
+  line-height: 1.5;
+}
+
+.diag-item:last-child { border-bottom: none; padding-bottom: 0; }
+.diag-item:first-child { padding-top: 0; }
+
+.diag-icon { flex-shrink: 0; font-size: 12px; padding-top: 2px; }
+
+/* PILLARS */
+.pillars-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
+@media (max-width: 800px) { .pillars-grid { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 500px) { .pillars-grid { grid-template-columns: 1fr; } }
+
+.pillar-card {
+  border-radius: 8px;
+  padding: 1.4rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.pillar-card.p1 { background: var(--green-lt); border: 1.5px solid var(--green-mid); }
+.pillar-card.p2 { background: var(--amber-lt); border: 1.5px solid #f0c898; }
+.pillar-card.p3 { background: var(--blue-lt); border: 1.5px solid #b0c8e0; }
+.pillar-card.p4 { background: var(--purple-lt); border: 1.5px solid #c8a8e8; }
+.pillar-card.p5 { background: var(--red-lt); border: 1.5px solid #e0a8a8; }
+.pillar-card.p6 { background: var(--paper2); border: 1.5px solid var(--rule); }
+
+.pillar-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 3rem;
+  line-height: 1;
+  margin-bottom: 0.5rem;
+  opacity: 0.18;
+  position: absolute;
+  top: 0.75rem;
+  right: 1rem;
+}
+
+.pillar-card.p1 .pillar-num { color: var(--green); }
+.pillar-card.p2 .pillar-num { color: var(--amber); }
+.pillar-card.p3 .pillar-num { color: var(--blue); }
+.pillar-card.p4 .pillar-num { color: var(--purple); }
+.pillar-card.p5 .pillar-num { color: var(--red); }
+.pillar-card.p6 .pillar-num { color: var(--ink); }
+
+.pillar-tag {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.p1 .pillar-tag { color: var(--green); }
+.p2 .pillar-tag { color: var(--amber); }
+.p3 .pillar-tag { color: var(--blue); }
+.p4 .pillar-tag { color: var(--purple); }
+.p5 .pillar-tag { color: var(--red); }
+.p6 .pillar-tag { color: var(--muted); }
+
+.pillar-name {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  line-height: 1.3;
+}
+
+.pillar-desc {
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+/* PLATFORM */
+.platform-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+}
+
+@media (max-width: 700px) { .platform-grid { grid-template-columns: 1fr; } }
+
+.platform-card {
+  border: 1.5px solid var(--rule);
+  border-radius: 8px;
+  overflow: hidden;
+  background: white;
+}
+
+.platform-header {
+  padding: 1rem 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--rule);
+}
+
+.platform-name {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.4rem;
+  letter-spacing: 0.04em;
+}
+
+.platform-role {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border-radius: 100px;
+}
+
+.ig .platform-header { background: #fdf0f7; }
+.ig .platform-name { color: #c13584; }
+.ig .platform-role { background: #fbe0f0; color: #c13584; }
+
+.tt .platform-header { background: #f0fdf8; }
+.tt .platform-name { color: #010101; }
+.tt .platform-role { background: #e0f8f0; color: #010101; }
+
+.fb .platform-header { background: #eef3fc; }
+.fb .platform-name { color: #1877f2; }
+.fb .platform-role { background: #dce8fc; color: #1877f2; }
+
+.li .platform-header { background: #f0f5fb; }
+.li .platform-name { color: #0a66c2; }
+.li .platform-role { background: #dceaf8; color: #0a66c2; }
+
+.platform-body { padding: 1.1rem 1.25rem; }
+
+.platform-row {
+  display: flex;
+  gap: 0.75rem;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--rule);
+  font-size: 12.5px;
+  line-height: 1.5;
+}
+
+.platform-row:last-child { border-bottom: none; padding-bottom: 0; }
+.platform-row:first-child { padding-top: 0; }
+
+.platform-row-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 9.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  flex-shrink: 0;
+  width: 72px;
+  padding-top: 2px;
+}
+
+/* CALENDAR */
+.week-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+  margin-bottom: 1.5rem;
+}
+
+@media (max-width: 700px) {
+  .week-grid { grid-template-columns: repeat(4, 1fr); }
+}
+
+.day-col { }
+
+.day-header {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-align: center;
+  padding: 6px 0;
+  margin-bottom: 6px;
+  border-bottom: 1px solid var(--rule);
+}
+
+.day-post {
+  border-radius: 5px;
+  padding: 6px 8px;
+  font-size: 10px;
+  line-height: 1.4;
+  margin-bottom: 5px;
+  cursor: default;
+}
+
+.day-post.ig { background: #fbe0f0; color: #8b1a5a; border-left: 2px solid #c13584; }
+.day-post.tt { background: #d4f8ee; color: #006644; border-left: 2px solid #00c073; }
+.day-post.fb { background: #dce8fc; color: #0a4a9e; border-left: 2px solid #1877f2; }
+.day-post.li { background: #dceaf8; color: #064a8e; border-left: 2px solid #0a66c2; }
+.day-post.off { background: var(--paper2); color: var(--muted); font-style: italic; border-left: 2px solid var(--rule); }
+
+.post-platform {
+  font-family: 'DM Mono', monospace;
+  font-size: 8px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 500;
+  margin-bottom: 2px;
+}
+
+/* CONTENT IDEAS */
+.ideas-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+@media (max-width: 800px) { .ideas-grid { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 500px) { .ideas-grid { grid-template-columns: 1fr; } }
+
+.idea-card {
+  border: 1.5px solid var(--rule);
+  border-radius: 8px;
+  padding: 1rem;
+  background: white;
+}
+
+.idea-pillar {
+  font-family: 'DM Mono', monospace;
+  font-size: 8.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+
+.idea-title {
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 4px;
+  line-height: 1.3;
+}
+
+.idea-hook {
+  font-size: 11.5px;
+  color: var(--muted);
+  font-style: italic;
+  margin-bottom: 6px;
+  line-height: 1.4;
+  border-left: 2px solid var(--rule);
+  padding-left: 8px;
+}
+
+.idea-format {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+}
+
+/* GOALS */
+.goals-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+}
+
+@media (max-width: 600px) { .goals-grid { grid-template-columns: 1fr; } }
+
+.goal-card {
+  border: 1.5px solid var(--rule);
+  border-radius: 8px;
+  padding: 1.25rem;
+  background: white;
+}
+
+.goal-period {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin-bottom: 0.75rem;
+}
+
+.goal-period.short { color: var(--green); }
+.goal-period.long { color: var(--blue); }
+
+.goal-list { list-style: none; }
+
+.goal-item {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 1rem;
+  padding: 0.45rem 0;
+  border-bottom: 1px solid var(--rule);
+  font-size: 12.5px;
+  align-items: baseline;
+}
+
+.goal-item:last-child { border-bottom: none; padding-bottom: 0; }
+.goal-item:first-child { padding-top: 0; }
+
+.goal-metric {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.goal-metric.short { color: var(--green); }
+.goal-metric.long { color: var(--blue); }
+
+/* NOTES CALLOUT */
+.callout {
+  background: var(--ink);
+  color: var(--paper);
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.callout::before {
+  content: '"';
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 14rem;
+  position: absolute;
+  top: -2.5rem;
+  left: 1rem;
+  color: rgba(255,255,255,0.04);
+  line-height: 1;
+}
+
+.callout-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #4ecb80;
+  margin-bottom: 0.5rem;
+}
+
+.callout-text {
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.6;
+  position: relative;
+}
+
+/* KPI TABLE */
+.kpi-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12.5px;
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1.5px solid var(--rule);
+}
+
+.kpi-table th {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-align: left;
+  padding: 8px 14px;
+  border-bottom: 1.5px solid var(--rule);
+  font-weight: 400;
+  background: var(--paper2);
+}
+
+.kpi-table td {
+  padding: 9px 14px;
+  border-bottom: 1px solid var(--rule);
+  vertical-align: middle;
+}
+
+.kpi-table tr:last-child td { border-bottom: none; }
+.kpi-table tr:hover td { background: var(--paper); }
+
+/* HASHTAG SETS */
+.hashtag-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+@media (max-width: 700px) { .hashtag-grid { grid-template-columns: 1fr 1fr; } }
+
+.hashtag-card {
+  border: 1.5px solid var(--rule);
+  border-radius: 8px;
+  padding: 1rem;
+  background: white;
+}
+
+.hashtag-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 0.5rem;
+}
+
+.hashtag-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.tag {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  padding: 2px 7px;
+  border-radius: 4px;
+  background: var(--paper2);
+  color: var(--ink);
+}
+
+/* FOOTER */
+.doc-footer {
+  background: var(--ink);
+  color: var(--mid);
+  padding: 2rem 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.06em;
+}
+
+.footer-brand {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.25rem;
+  color: var(--paper);
+  letter-spacing: 0.1em;
+}
+
+/* PRINT */
+@media print {
+  .sticky-nav { display: none; }
+  body { background: white; }
+  .masthead::before { display: none; }
+}
+
+/* ACTION LIST */
+.action-section { margin-bottom: 2rem; }
+.action-section-title {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--rule);
+}
+.action-section-title.phase-1 { color: var(--green); }
+.action-section-title.phase-2 { color: var(--blue); }
+.action-section-title.custom { color: var(--amber); }
+
+.action-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 0.6rem 0.75rem;
+  border-radius: 6px;
+  margin-bottom: 4px;
+  transition: background 0.15s;
+  cursor: pointer;
+  border: 1px solid transparent;
+}
+.action-item:hover { background: white; border-color: var(--rule); }
+.action-item.done { opacity: 0.45; }
+
+.action-cb {
+  width: 18px;
+  height: 18px;
+  border-radius: 4px;
+  border: 1.5px solid var(--rule);
+  flex-shrink: 0;
+  margin-top: 1px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  transition: all 0.15s;
+  cursor: pointer;
+  background: white;
+}
+.action-item.done .action-cb {
+  background: var(--green);
+  border-color: var(--green);
+  color: white;
+}
+
+.action-text {
+  font-size: 13px;
+  line-height: 1.5;
+  flex: 1;
+}
+.action-item.done .action-text { text-decoration: line-through; color: var(--muted); }
+
+.action-tag {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.06em;
+  padding: 2px 7px;
+  border-radius: 100px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.action-tag.week1 { background: var(--green-lt); color: var(--green); }
+.action-tag.month1 { background: var(--amber-lt); color: var(--amber); }
+.action-tag.month2 { background: var(--blue-lt); color: var(--blue); }
+.action-tag.month3 { background: var(--purple-lt); color: var(--purple); }
+.action-tag.ongoing { background: var(--paper2); color: var(--muted); }
+
+.add-action-row {
+  display: flex;
+  gap: 8px;
+  margin-top: 0.75rem;
+  align-items: center;
+}
+.add-action-input {
+  flex: 1;
+  border: 1.5px solid var(--rule);
+  border-radius: 6px;
+  padding: 8px 12px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  background: white;
+  outline: none;
+  color: var(--ink);
+  transition: border-color 0.15s;
+}
+.add-action-input:focus { border-color: var(--green); }
+.add-action-input::placeholder { color: var(--mid); }
+
+.add-action-btn {
+  background: var(--ink);
+  color: var(--paper);
+  border: none;
+  border-radius: 6px;
+  padding: 8px 16px;
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s;
+}
+.add-action-btn:hover { background: var(--green); }
+
+.progress-bar-wrap {
+  background: var(--paper2);
+  border-radius: 100px;
+  height: 6px;
+  margin-bottom: 1.5rem;
+  overflow: hidden;
+}
+.progress-bar-fill {
+  background: var(--green);
+  height: 100%;
+  border-radius: 100px;
+  transition: width 0.4s ease;
+}
+.progress-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: var(--muted);
+  letter-spacing: 0.06em;
+  margin-bottom: 6px;
+  display: flex;
+  justify-content: space-between;
+}
+
+/* KPI TRACKER */
+.tracker-controls {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.month-btn {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  padding: 6px 14px;
+  border-radius: 100px;
+  border: 1.5px solid var(--rule);
+  background: white;
+  color: var(--muted);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.month-btn.active { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.month-btn:hover:not(.active) { border-color: var(--ink); color: var(--ink); }
+
+.tracker-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+@media (max-width: 800px) { .tracker-grid { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 500px) { .tracker-grid { grid-template-columns: 1fr; } }
+
+.kpi-card {
+  background: white;
+  border: 1.5px solid var(--rule);
+  border-radius: 8px;
+  padding: 1.1rem;
+  position: relative;
+}
+.kpi-card-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 0.4rem;
+}
+.kpi-card-platform {
+  font-family: 'DM Mono', monospace;
+  font-size: 8px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 0.75rem;
+}
+.kpi-card-platform.ig { color: #c13584; }
+.kpi-card-platform.tt { color: #010101; }
+.kpi-card-platform.fb { color: #1877f2; }
+.kpi-card-platform.li { color: #0a66c2; }
+.kpi-card-platform.all { color: var(--green); }
+
+.kpi-input-wrap { display: flex; align-items: baseline; gap: 6px; margin-bottom: 0.5rem; }
+
+.kpi-value-input {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2.2rem;
+  letter-spacing: 0.04em;
+  color: var(--ink);
+  border: none;
+  border-bottom: 2px solid var(--rule);
+  background: transparent;
+  width: 100%;
+  outline: none;
+  padding: 0 0 2px;
+  transition: border-color 0.15s;
+  line-height: 1;
+}
+.kpi-value-input:focus { border-bottom-color: var(--green); }
+
+.kpi-target {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: var(--muted);
+  margin-bottom: 0.5rem;
+}
+.kpi-target strong { color: var(--ink); }
+
+.kpi-mini-bar-wrap {
+  background: var(--paper2);
+  border-radius: 100px;
+  height: 4px;
+  overflow: hidden;
+}
+.kpi-mini-bar {
+  height: 100%;
+  border-radius: 100px;
+  background: var(--green);
+  transition: width 0.4s ease;
+}
+.kpi-mini-bar.over { background: var(--green); }
+
+.kpi-note-input {
+  width: 100%;
+  border: 1px solid var(--rule);
+  border-radius: 5px;
+  padding: 5px 8px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 11px;
+  color: var(--muted);
+  background: var(--paper);
+  outline: none;
+  margin-top: 0.5rem;
+  resize: none;
+  transition: border-color 0.15s;
+  min-height: 40px;
+}
+.kpi-note-input:focus { border-color: var(--green); color: var(--ink); }
+.kpi-note-input::placeholder { color: var(--mid); }
+
+.tracker-summary {
+  background: var(--ink);
+  color: var(--paper);
+  border-radius: 8px;
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+.summary-stat { text-align: center; }
+.summary-stat-val {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2rem;
+  letter-spacing: 0.06em;
+  color: #4ecb80;
+  line-height: 1;
+}
+.summary-stat-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--mid);
+  margin-top: 2px;
+}
+.save-btn {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 8px 18px;
+  border-radius: 6px;
+  border: 1px solid rgba(255,255,255,0.2);
+  background: rgba(255,255,255,0.08);
+  color: var(--paper);
+  cursor: pointer;
+  transition: all 0.15s;
+  margin-left: auto;
+}
+.save-btn:hover { background: var(--green); border-color: var(--green); color: white; }
+.save-confirm {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: #4ecb80;
+  letter-spacing: 0.06em;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.save-confirm.show { opacity: 1; }
+</style>
+</head>
+<body>
+
+<!-- MASTHEAD -->
+<div class="masthead">
+  <p class="masthead-eyebrow">Social Media Strategy · June 2026</p>
+  <h1>DD THE PT<br><span>SOCIAL STRATEGY</span></h1>
+  <div class="masthead-meta">
+    <div class="masthead-meta-item">Prepared by<strong>Jordan Hall / FORE</strong></div>
+    <div class="masthead-meta-item">Client<strong>Damel Dioum</strong></div>
+    <div class="masthead-meta-item">Platforms<strong>Instagram · TikTok · Facebook · LinkedIn</strong></div>
+    <div class="masthead-meta-item">Phase<strong>Phase 1: Foundation (Months 1-3)</strong></div>
+    <div class="masthead-meta-item">Version<strong>1.0</strong></div>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav class="sticky-nav">
+  <a class="nav-link" href="#diagnosis">Diagnosis</a>
+  <a class="nav-link" href="#mission">Mission</a>
+  <a class="nav-link" href="#pillars">Pillars</a>
+  <a class="nav-link" href="#platforms">Platforms</a>
+  <a class="nav-link" href="#calendar">Calendar</a>
+  <a class="nav-link" href="#content">Content Ideas</a>
+  <a class="nav-link" href="#hashtags">Hashtags</a>
+  <a class="nav-link" href="#goals">Goals & KPIs</a>
+  <a class="nav-link" href="#actions">Action List</a>
+  <a class="nav-link" href="#tracker">KPI Tracker</a>
+</nav>
+
+<div class="page">
+
+<!-- 1. DIAGNOSIS -->
+<div class="section" id="diagnosis">
+  <div class="section-header">
+    <span class="section-num">01</span>
+    <h2 class="section-title">Where We're Starting From</h2>
+  </div>
+
+  <div class="callout" style="margin-bottom:1.5rem;">
+    <p class="callout-label">The honest truth</p>
+    <p class="callout-text">Damel has real results, a real story, and real qualifications. None of them are showing up online. The content that exists doesn't reflect the person doing the work. That's the gap — and it's also the opportunity.</p>
+  </div>
+
+  <div class="diag-grid">
+    <div class="diag-card">
+      <p class="diag-label gap">Current gaps</p>
+      <ul class="diag-list">
+        <li class="diag-item"><span class="diag-icon">✗</span>No PT or training content visible — core service is invisible online</li>
+        <li class="diag-item"><span class="diag-icon">✗</span>Nutrition qualification never mentioned or demonstrated</li>
+        <li class="diag-item"><span class="diag-icon">✗</span>No personal story — footballer to PT via ACL injury is a powerful arc not being used</li>
+        <li class="diag-item"><span class="diag-icon">✗</span>Zero client testimonials or before-and-after social proof</li>
+        <li class="diag-item"><span class="diag-icon">✗</span>Virtual Wellness Sessions (4-year programme) has never been promoted</li>
+        <li class="diag-item"><span class="diag-icon">✗</span>Inconsistent posting with no clear content rhythm or strategy</li>
+        <li class="diag-item"><span class="diag-icon">✗</span>Mental health positioning not communicated — huge differentiator going unused</li>
+        <li class="diag-item"><span class="diag-icon">✗</span>No content funnel connecting social presence to bookings or school outreach</li>
+      </ul>
+    </div>
+    <div class="diag-card">
+      <p class="diag-label opp">Strengths to activate</p>
+      <ul class="diag-list">
+        <li class="diag-item"><span class="diag-icon">✓</span>TikTok content previously drove direct client re-engagement — proof it works</li>
+        <li class="diag-item"><span class="diag-icon">✓</span>Semi-pro football background adds credibility and cultural relevance</li>
+        <li class="diag-item"><span class="diag-icon">✓</span>ACL recovery in real time — authentic, relatable, on-brand content waiting to happen</li>
+        <li class="diag-item"><span class="diag-icon">✓</span>PT, nutrition and mental health qualifications — multi-discipline authority</li>
+        <li class="diag-item"><span class="diag-icon">✓</span>4-year Virtual Wellness Sessions community — loyal base to film and feature</li>
+        <li class="diag-item"><span class="diag-icon">✓</span>Former PE teacher — credibility in school and youth wellness conversations</li>
+        <li class="diag-item"><span class="diag-icon">✓</span>Currently in Senegal — unique backdrop for content, disciplined headspace</li>
+        <li class="diag-item"><span class="diag-icon">✓</span>Deeply care-driven — emotional authenticity is the differentiator in a saturated space</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- 2. MISSION -->
+<div class="section" id="mission">
+  <div class="section-header">
+    <span class="section-num">02</span>
+    <h2 class="section-title">Social Media Mission Statement</h2>
+  </div>
+
+  <div class="callout">
+    <p class="callout-label">The content mission</p>
+    <p class="callout-text">To show the world that true health is not a body — it's a life. Through honest storytelling, expert-led content, and real community, DD The PT builds trust with the people who need it most: urban youth, teachers, and those who've been told wellness isn't for them.</p>
+  </div>
+
+  <div class="diag-card" style="margin-top:1.25rem;">
+    <p class="diag-label opp">Brand voice on social</p>
+    <ul class="diag-list">
+      <li class="diag-item"><span class="diag-icon" style="color:var(--green);">→</span><strong>Real, not polished.</strong> No stock photography energy. Phone-filmed, honest, from the gym floor or the park or the kitchen.</li>
+      <li class="diag-item"><span class="diag-icon" style="color:var(--green);">→</span><strong>Expert, not preachy.</strong> Damel knows things. He shares them with calm authority, not lectures.</li>
+      <li class="diag-item"><span class="diag-icon" style="color:var(--green);">→</span><strong>Community-first, not broadcast.</strong> The content invites people in. Comments, Q&amp;As, shared experiences — not one-way posting.</li>
+      <li class="diag-item"><span class="diag-icon" style="color:var(--green);">→</span><strong>Culturally aware.</strong> He speaks to urban youth and communities that mainstream wellness often ignores. That awareness should come through in language, references and representation.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- 3. PILLARS -->
+<div class="section" id="pillars">
+  <div class="section-header">
+    <span class="section-num">03</span>
+    <h2 class="section-title">Content Pillars</h2>
+  </div>
+
+  <div class="pillars-grid">
+
+    <div class="pillar-card p1">
+      <span class="pillar-num">1</span>
+      <p class="pillar-tag">Pillar 01 · Personal Story</p>
+      <p class="pillar-name">The Journey: From Pitch to Purpose</p>
+      <p class="pillar-desc">Semi-pro footballer. PE teacher. ACL injury. Holistic PT. This arc is the brand. Raw, chapter-by-chapter storytelling about how life, sport, injury and purpose shaped who Damel is and why he does what he does. Mental health destigmatisation for urban youth runs through every chapter.</p>
+    </div>
+
+    <div class="pillar-card p2">
+      <span class="pillar-num">2</span>
+      <p class="pillar-tag">Pillar 02 · Injury Recovery</p>
+      <p class="pillar-name">The Comeback: ACL Recovery in Real Time</p>
+      <p class="pillar-desc">Document the ACL recovery journey — physically, mentally and nutritionally. This is live, ongoing content with a natural narrative arc. Weekly or bi-weekly updates showing the reality of rehab: the progress, the setbacks, the mindset work. Authenticity that money can't buy.</p>
+    </div>
+
+    <div class="pillar-card p3">
+      <span class="pillar-num">3</span>
+      <p class="pillar-tag">Pillar 03 · Expert Content</p>
+      <p class="pillar-name">Holistic Health Education</p>
+      <p class="pillar-desc">Value-led content drawing on PT, nutrition and mental health qualifications. Quick tips, myth-busting, explainer videos. "The thing your PT never tells you about..." style content that positions Damel as a trusted expert, not just a trainer. Builds authority for school conversations.</p>
+    </div>
+
+    <div class="pillar-card p4">
+      <span class="pillar-num">4</span>
+      <p class="pillar-tag">Pillar 04 · Social Proof</p>
+      <p class="pillar-name">Client Stories & Transformations</p>
+      <p class="pillar-desc">Testimonials, before-and-afters, client spotlight interviews and session clips. The community that's quietly attended his Virtual Wellness Sessions for four years — those stories need to be told. Trust is built by showing results, not just claiming them.</p>
+    </div>
+
+    <div class="pillar-card p5">
+      <span class="pillar-num">5</span>
+      <p class="pillar-tag">Pillar 05 · Community & Culture</p>
+      <p class="pillar-name">Wellness for the Culture</p>
+      <p class="pillar-desc">Making holistic health feel relevant and accessible for urban youth and communities who've been left out of mainstream wellness. Commentary on mental health stigma, cultural attitudes to fitness, the gap in school wellness provision. Builds the teacher and school niche credibility.</p>
+    </div>
+
+    <div class="pillar-card p6">
+      <span class="pillar-num">6</span>
+      <p class="pillar-tag">Pillar 06 · Behind the Sessions</p>
+      <p class="pillar-name">The Work: PT Sessions & Classes</p>
+      <p class="pillar-desc">Clips from actual training sessions, the Virtual Wellness Classes (yoga/Pilates + boot camp), and any school or community workshops. This is the content that was missing entirely. Show the product. Film the work. People need to see what he does before they book it.</p>
+    </div>
+
+  </div>
+</div>
+
+<!-- 4. PLATFORMS -->
+<div class="section" id="platforms">
+  <div class="section-header">
+    <span class="section-num">04</span>
+    <h2 class="section-title">Platform Strategy</h2>
+  </div>
+
+  <div class="platform-grid">
+
+    <div class="platform-card ig">
+      <div class="platform-header">
+        <span class="platform-name">Instagram</span>
+        <span class="platform-role">Primary · Community Hub</span>
+      </div>
+      <div class="platform-body">
+        <div class="platform-row">
+          <span class="platform-row-label">Purpose</span>
+          <span>Brand home. Community building. Client acquisition. Credibility for school outreach.</span>
+        </div>
+        <div class="platform-row">
+          <span class="platform-row-label">Formats</span>
+          <span>Reels (primary), Carousels for educational content, Stories for daily life and accountability, Lives for Q&amp;A sessions</span>
+        </div>
+        <div class="platform-row">
+          <span class="platform-row-label">Frequency</span>
+          <span>4-5x per week (3 Reels, 1-2 Carousels). Stories daily where possible.</span>
+        </div>
+        <div class="platform-row">
+          <span class="platform-row-label">Tone</span>
+          <span>Warm, expert, community-led. Slightly more polished than TikTok but still real.</span>
+        </div>
+        <div class="platform-row">
+          <span class="platform-row-label">Key goal</span>
+          <span>Build a community of 1-5k engaged followers who are potential clients and advocates.</span>
+        </div>
+        <div class="platform-row">
+          <span class="platform-row-label">Handle</span>
+          <span>@ddthept — keep consistent across platforms</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="platform-card tt">
+      <div class="platform-header">
+        <span class="platform-name">TikTok</span>
+        <span class="platform-role">Discovery · Reach Engine</span>
+      </div>
+      <div class="platform-body">
+        <div class="platform-row">
+          <span class="platform-row-label">Purpose</span>
+          <span>Top-of-funnel reach. New audience discovery. Viral potential for key narrative content.</span>
+        </div>
+        <div class="platform-row">
+          <span class="platform-row-label">Formats</span>
+          <span>Short-form video (15-60 sec). Storytelling hooks. Talking to camera. Day-in-the-life. Recovery updates.</span>
+        </div>
+        <div class="platform-row">
+          <span class="platform-row-label">Frequency</span>
+          <span>3-4x per week. Repurpose best Instagram Reels here with TikTok-native captions.</span>
+        </div>
+        <div class="platform-row">
+          <span class="platform-row-label">Tone</span>
+          <span>Raw, unfiltered, conversational. TikTok rewards personality over production. Be human.</span>
+        </div>
+        <div class="platform-row">
+          <span class="platform-row-label">Key goal</span>
+          <span>Get one video per month to 10k+ views. Drive traffic to Instagram for deeper community.</span>
+        </div>
+        <div class="platform-row">
+          <span class="platform-row-label">Watch-out</span>
+          <span>Damel dislikes editing — use CapCut auto-captions. Film short, post fast. Imperfect beats absent.</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="platform-card fb">
+      <div class="platform-header">
+        <span class="platform-name">Facebook</span>
+        <span class="platform-role">School Niche · Community Groups</span>
+      </div>
+      <div class="platform-body">
+        <div class="platform-row">
+          <span class="platform-row-label">Purpose</span>
+          <span>Reach teachers, school administrators and older community members. Support grant credibility. Group-building.</span>
+        </div>
+        <div class="platform-row">
+          <span class="platform-row-label">Formats</span>
+          <span>Cross-posted Reels, written posts with strong copy, Facebook Groups (Virtual Wellness community), Events for online sessions</span>
+        </div>
+        <div class="platform-row">
+          <span class="platform-row-label">Frequency</span>
+          <span>2-3x per week. Mostly repurposed from Instagram. Minimal extra production required.</span>
+        </div>
+        <div class="platform-row">
+          <span class="platform-row-label">Tone</span>
+          <span>Slightly warmer and more community-oriented. Less visual, more conversational in captions.</span>
+        </div>
+        <div class="platform-row">
+          <span class="platform-row-label">Key goal</span>
+          <span>Build a Facebook Group for the Virtual Wellness Sessions community. Use as a CIC grant evidence base.</span>
+        </div>
+        <div class="platform-row">
+          <span class="platform-row-label">Priority</span>
+          <span>Secondary to IG and TikTok in Phase 1. Activate properly in Phase 2 once rhythm established.</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="platform-card li">
+      <div class="platform-header">
+        <span class="platform-name">LinkedIn</span>
+        <span class="platform-role">School Contracts · B2B Credibility</span>
+      </div>
+      <div class="platform-body">
+        <div class="platform-row">
+          <span class="platform-row-label">Purpose</span>
+          <span>Professional credibility with school decision-makers, HR leads, headteachers and local authority contacts. Grant body visibility.</span>
+        </div>
+        <div class="platform-row">
+          <span class="platform-row-label">Formats</span>
+          <span>Thought leadership posts (mental health in schools, teacher wellbeing). Stats-led carousels. Case study posts.</span>
+        </div>
+        <div class="platform-row">
+          <span class="platform-row-label">Frequency</span>
+          <span>1-2x per week. Repurpose educational pillar content with a professional frame.</span>
+        </div>
+        <div class="platform-row">
+          <span class="platform-row-label">Tone</span>
+          <span>More formal but still personal. Lead with data and impact. The story still matters — it just wears a suit.</span>
+        </div>
+        <div class="platform-row">
+          <span class="platform-row-label">Key goal</span>
+          <span>Be discoverable by headteachers and wellbeing leads searching for school mental health solutions.</span>
+        </div>
+        <div class="platform-row">
+          <span class="platform-row-label">Priority</span>
+          <span>Phase 2 activation. Set up profile and post 1x per week from Month 2 onwards.</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- 5. WEEKLY CALENDAR -->
+<div class="section" id="calendar">
+  <div class="section-header">
+    <span class="section-num">05</span>
+    <h2 class="section-title">Weekly Content Calendar</h2>
+  </div>
+
+  <p style="font-size:13px;color:var(--muted);margin-bottom:1.25rem;">A repeatable weekly rhythm. Adjust based on what content is available that week — the structure stays consistent even when specific posts rotate.</p>
+
+  <div class="week-grid">
+
+    <div class="day-col">
+      <div class="day-header">Mon</div>
+      <div class="day-post ig">
+        <div class="post-platform">Instagram Reel</div>
+        Motivation / mindset open. Hook the week.
+      </div>
+      <div class="day-post tt">
+        <div class="post-platform">TikTok</div>
+        Same Reel, TikTok caption.
+      </div>
+      <div class="day-post fb">
+        <div class="post-platform">Facebook</div>
+        Written post. "This week I'm focusing on..."
+      </div>
+    </div>
+
+    <div class="day-col">
+      <div class="day-header">Tue</div>
+      <div class="day-post ig">
+        <div class="post-platform">Instagram Carousel</div>
+        Educational content. Tip, myth, nutrition fact, mental health stat.
+      </div>
+      <div class="day-post li">
+        <div class="post-platform">LinkedIn</div>
+        Professional version of educational carousel.
+      </div>
+    </div>
+
+    <div class="day-col">
+      <div class="day-header">Wed</div>
+      <div class="day-post ig">
+        <div class="post-platform">Instagram Reel</div>
+        Recovery or session content. Show the work.
+      </div>
+      <div class="day-post tt">
+        <div class="post-platform">TikTok</div>
+        Raw behind-the-scenes. Gym, rehab, honest moment.
+      </div>
+    </div>
+
+    <div class="day-col">
+      <div class="day-header">Thu</div>
+      <div class="day-post ig">
+        <div class="post-platform">IG Story</div>
+        Q&amp;A, poll, client check-in, day update. Keep community warm.
+      </div>
+      <div class="day-post fb">
+        <div class="post-platform">Facebook</div>
+        Group post or event promo for Virtual Wellness Sessions.
+      </div>
+    </div>
+
+    <div class="day-col">
+      <div class="day-header">Fri</div>
+      <div class="day-post ig">
+        <div class="post-platform">Instagram Reel</div>
+        Client story, testimonial, or before/after. Social proof Friday.
+      </div>
+      <div class="day-post tt">
+        <div class="post-platform">TikTok</div>
+        Storytelling video. A chapter of the personal journey.
+      </div>
+    </div>
+
+    <div class="day-col">
+      <div class="day-header">Sat</div>
+      <div class="day-post ig">
+        <div class="post-platform">IG Story</div>
+        Boot camp / class content. Community energy. Tag attendees.
+      </div>
+      <div class="day-post fb">
+        <div class="post-platform">Facebook</div>
+        Virtual Wellness Session recap or reminder.
+      </div>
+    </div>
+
+    <div class="day-col">
+      <div class="day-header">Sun</div>
+      <div class="day-post off">
+        <div class="post-platform">Rest / Buffer</div>
+        Content rest day. Use to batch film and plan next week.
+      </div>
+    </div>
+
+  </div>
+
+  <div class="diag-card" style="margin-top:1.25rem;">
+    <p class="diag-label" style="color:var(--amber);">Editing note — solving the bottleneck</p>
+    <ul class="diag-list">
+      <li class="diag-item"><span class="diag-icon">→</span><strong>CapCut:</strong> Auto-captions in one tap. Film, auto-caption, done. No desktop editing required.</li>
+      <li class="diag-item"><span class="diag-icon">→</span><strong>Batch filming:</strong> Pick one day a week (Sunday or whenever in Senegal) to film 3-4 videos at once. Post across 4-5 days.</li>
+      <li class="diag-item"><span class="diag-icon">→</span><strong>Repurpose ruthlessly:</strong> Every Instagram Reel should also post to TikTok and Facebook. One piece of content = three posts.</li>
+      <li class="diag-item"><span class="diag-icon">→</span><strong>Stories over pressure:</strong> If nothing is ready, post a Story. A 15-second update keeps the account alive. Stories require zero editing.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- 6. CONTENT IDEAS -->
+<div class="section" id="content">
+  <div class="section-header">
+    <span class="section-num">06</span>
+    <h2 class="section-title">Content Ideas by Pillar</h2>
+  </div>
+
+  <p style="font-size:13px;color:var(--muted);margin-bottom:1.25rem;">These are starter ideas. Each has a hook — the first line or frame that makes someone stop scrolling.</p>
+
+  <div class="ideas-grid">
+
+    <div class="idea-card">
+      <p class="idea-pillar" style="color:var(--green);">Pillar 1 · Personal Story</p>
+      <p class="idea-title">"I was a semi-pro footballer. Then my knee ended it."</p>
+      <p class="idea-hook">"Nobody tells you what happens to your identity when sport is taken from you..."</p>
+      <p class="idea-format">TikTok / Reel · Talking to camera · 60-90 sec</p>
+    </div>
+
+    <div class="idea-card">
+      <p class="idea-pillar" style="color:var(--green);">Pillar 1 · Personal Story</p>
+      <p class="idea-title">The teacher who burned out</p>
+      <p class="idea-hook">"I stood in front of 30 kids every day and couldn't tell you how I was doing..."</p>
+      <p class="idea-format">TikTok / Reel · Storytelling · 45-60 sec</p>
+    </div>
+
+    <div class="idea-card">
+      <p class="idea-pillar" style="color:var(--green);">Pillar 1 · Personal Story</p>
+      <p class="idea-title">Why I left teaching to become a PT</p>
+      <p class="idea-hook">"The system wasn't set up to help the kids. I had to try something different."</p>
+      <p class="idea-format">Reel · 3-part series · Series hook</p>
+    </div>
+
+    <div class="idea-card">
+      <p class="idea-pillar" style="color:var(--amber);">Pillar 2 · Recovery</p>
+      <p class="idea-title">Week [X] of ACL recovery: the honest update</p>
+      <p class="idea-hook">"Still not where I want to be. Here's what's working and what isn't."</p>
+      <p class="idea-format">Weekly update · Reel + Story · Ongoing series</p>
+    </div>
+
+    <div class="idea-card">
+      <p class="idea-pillar" style="color:var(--amber);">Pillar 2 · Recovery</p>
+      <p class="idea-title">What my ACL taught me about mental health</p>
+      <p class="idea-hook">"The physical injury was easy compared to what it did to my head."</p>
+      <p class="idea-format">TikTok · Talking to camera · 45 sec</p>
+    </div>
+
+    <div class="idea-card">
+      <p class="idea-pillar" style="color:var(--amber);">Pillar 2 · Recovery</p>
+      <p class="idea-title">What I'm eating to heal: ACL recovery nutrition</p>
+      <p class="idea-hook">"Your surgeon won't tell you this but what you eat during recovery actually matters."</p>
+      <p class="idea-format">Carousel · 5-slide nutritional breakdown</p>
+    </div>
+
+    <div class="idea-card">
+      <p class="idea-pillar" style="color:var(--blue);">Pillar 3 · Education</p>
+      <p class="idea-title">3 things your PT isn't telling you about recovery</p>
+      <p class="idea-hook">"Being fit and being healthy are not the same thing. Here's the difference."</p>
+      <p class="idea-format">Carousel / Reel · Swipeable or quick-cut · High save potential</p>
+    </div>
+
+    <div class="idea-card">
+      <p class="idea-pillar" style="color:var(--blue);">Pillar 3 · Education</p>
+      <p class="idea-title">The mental health benefits nobody talks about in fitness</p>
+      <p class="idea-hook">"We talk about the body constantly. Here's what exercise actually does to your brain."</p>
+      <p class="idea-format">TikTok / Reel · Educational · Statistic hook</p>
+    </div>
+
+    <div class="idea-card">
+      <p class="idea-pillar" style="color:var(--blue);">Pillar 3 · Education</p>
+      <p class="idea-title">A week of eating for energy (not weight loss)</p>
+      <p class="idea-hook">"I don't train people to lose weight. I train people to feel alive."</p>
+      <p class="idea-format">Weekly series · 7-day nutrition breakdown · High save + share</p>
+    </div>
+
+    <div class="idea-card">
+      <p class="idea-pillar" style="color:var(--purple);">Pillar 4 · Social Proof</p>
+      <p class="idea-title">Client spotlight: [Name]'s transformation</p>
+      <p class="idea-hook">"She came to me unable to walk up stairs. 3 months later..."</p>
+      <p class="idea-format">Reel interview or Before/After carousel · Permission required</p>
+    </div>
+
+    <div class="idea-card">
+      <p class="idea-pillar" style="color:var(--purple);">Pillar 4 · Social Proof</p>
+      <p class="idea-title">What my clients say when they've been with me for 6 months</p>
+      <p class="idea-hook">"They don't just talk about weight. They talk about confidence. Sleep. Relationships."</p>
+      <p class="idea-format">Text testimonial carousel · 5-6 quotes · Clean design</p>
+    </div>
+
+    <div class="idea-card">
+      <p class="idea-pillar" style="color:var(--red);">Pillar 5 · Culture</p>
+      <p class="idea-title">Why mental health conversations are different in Black communities</p>
+      <p class="idea-hook">"I grew up in a house where 'I'm fine' was the only acceptable answer."</p>
+      <p class="idea-format">TikTok · Talking to camera · Cultural commentary · High share potential</p>
+    </div>
+
+    <div class="idea-card">
+      <p class="idea-pillar" style="color:var(--red);">Pillar 5 · Culture</p>
+      <p class="idea-title">Teachers are breaking down. And nobody is looking after them.</p>
+      <p class="idea-hook">"Every school has a wellbeing policy. Almost none of them work."</p>
+      <p class="idea-format">LinkedIn post + Reel · School niche credibility · Authority building</p>
+    </div>
+
+    <div class="idea-card">
+      <p class="idea-pillar" style="color:var(--muted);">Pillar 6 · The Work</p>
+      <p class="idea-title">Virtual Wellness Session: what actually happens</p>
+      <p class="idea-hook">"We've been running this for 4 years. Here's what a session looks like."</p>
+      <p class="idea-format">Reel · Session clip · Call to action to join</p>
+    </div>
+
+    <div class="idea-card">
+      <p class="idea-pillar" style="color:var(--muted);">Pillar 6 · The Work</p>
+      <p class="idea-title">A full training session in 60 seconds</p>
+      <p class="idea-hook">"This is what we do. This is why it works."</p>
+      <p class="idea-format">Speed edit Reel · Session BTS · Booking CTA in caption</p>
+    </div>
+
+    <div class="idea-card">
+      <p class="idea-pillar" style="color:var(--muted);">Pillar 6 · The Work</p>
+      <p class="idea-title">Saturday boot camp — come join us</p>
+      <p class="idea-hook">"Every Saturday, rain or shine. This community shows up for each other."</p>
+      <p class="idea-format">Live session clip · Weekly recurring post · Community signal</p>
+    </div>
+
+  </div>
+</div>
+
+<!-- 7. HASHTAGS -->
+<div class="section" id="hashtags">
+  <div class="section-header">
+    <span class="section-num">07</span>
+    <h2 class="section-title">Hashtag Strategy</h2>
+  </div>
+
+  <p style="font-size:13px;color:var(--muted);margin-bottom:1.25rem;">Use a mix of broad, niche and location tags per post. Rotate sets to avoid Instagram shadowbanning. Aim for 8-15 tags per Instagram post.</p>
+
+  <div class="hashtag-grid">
+    <div class="hashtag-card">
+      <p class="hashtag-label">Core brand (always use)</p>
+      <div class="hashtag-tags">
+        <span class="tag">#ddthept</span>
+        <span class="tag">#holistichealth</span>
+        <span class="tag">#holisticpt</span>
+        <span class="tag">#holisticwellness</span>
+        <span class="tag">#wellnessjourney</span>
+      </div>
+    </div>
+    <div class="hashtag-card">
+      <p class="hashtag-label">PT & fitness</p>
+      <div class="hashtag-tags">
+        <span class="tag">#personaltrainer</span>
+        <span class="tag">#personaltraining</span>
+        <span class="tag">#londonpt</span>
+        <span class="tag">#fitnessmotivation</span>
+        <span class="tag">#trainsmarter</span>
+        <span class="tag">#strengthtraining</span>
+      </div>
+    </div>
+    <div class="hashtag-card">
+      <p class="hashtag-label">Mental health</p>
+      <div class="hashtag-tags">
+        <span class="tag">#mentalhealthmatters</span>
+        <span class="tag">#mentalhealthawareness</span>
+        <span class="tag">#mentalhealthfitness</span>
+        <span class="tag">#endthestigma</span>
+        <span class="tag">#blackmentalhealth</span>
+        <span class="tag">#wellbeingmatters</span>
+      </div>
+    </div>
+    <div class="hashtag-card">
+      <p class="hashtag-label">Recovery & injury</p>
+      <div class="hashtag-tags">
+        <span class="tag">#aclrecovery</span>
+        <span class="tag">#aclrehab</span>
+        <span class="tag">#injuryrecovery</span>
+        <span class="tag">#comeback</span>
+        <span class="tag">#recoveryjourney</span>
+        <span class="tag">#sportinjury</span>
+      </div>
+    </div>
+    <div class="hashtag-card">
+      <p class="hashtag-label">Nutrition</p>
+      <div class="hashtag-tags">
+        <span class="tag">#nutritioncoach</span>
+        <span class="tag">#sportsnutrition</span>
+        <span class="tag">#eatforperformance</span>
+        <span class="tag">#nutritionadvice</span>
+        <span class="tag">#foodismedicine</span>
+        <span class="tag">#holisticnutrition</span>
+      </div>
+    </div>
+    <div class="hashtag-card">
+      <p class="hashtag-label">School / teacher niche</p>
+      <div class="hashtag-tags">
+        <span class="tag">#teacherwellbeing</span>
+        <span class="tag">#schoolwellness</span>
+        <span class="tag">#teachermentalhealth</span>
+        <span class="tag">#educatorwellness</span>
+        <span class="tag">#teacherlife</span>
+        <span class="tag">#schoolhealth</span>
+      </div>
+    </div>
+    <div class="hashtag-card">
+      <p class="hashtag-label">London & community</p>
+      <div class="hashtag-tags">
+        <span class="tag">#londonwellness</span>
+        <span class="tag">#londonfitness</span>
+        <span class="tag">#westlondon</span>
+        <span class="tag">#communityfitness</span>
+        <span class="tag">#virtualwellness</span>
+        <span class="tag">#fitnessclass</span>
+      </div>
+    </div>
+    <div class="hashtag-card">
+      <p class="hashtag-label">Culture & representation</p>
+      <div class="hashtag-tags">
+        <span class="tag">#blackfitness</span>
+        <span class="tag">#blackwellness</span>
+        <span class="tag">#diversewellness</span>
+        <span class="tag">#fitnessdiversity</span>
+        <span class="tag">#urbanwellness</span>
+        <span class="tag">#wellnessforall</span>
+      </div>
+    </div>
+    <div class="hashtag-card">
+      <p class="hashtag-label">Football & sport background</p>
+      <div class="hashtag-tags">
+        <span class="tag">#footballfitness</span>
+        <span class="tag">#sportswellness</span>
+        <span class="tag">#footballtraining</span>
+        <span class="tag">#athletemindset</span>
+        <span class="tag">#sportathletics</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 8. GOALS & KPIs -->
+<div class="section" id="goals">
+  <div class="section-header">
+    <span class="section-num">08</span>
+    <h2 class="section-title">Goals & KPIs</h2>
+  </div>
+
+  <div class="goals-grid" style="margin-bottom:1.5rem;">
+    <div class="goal-card">
+      <p class="goal-period short">Short-term goals (Months 1-3)</p>
+      <ul class="goal-list">
+        <li class="goal-item">
+          <span>Post consistently — minimum 4x per week across platforms</span>
+          <span class="goal-metric short">Week 1</span>
+        </li>
+        <li class="goal-item">
+          <span>Publish first ACL recovery video</span>
+          <span class="goal-metric short">Week 1</span>
+        </li>
+        <li class="goal-item">
+          <span>Publish first personal story video (footballer to PT)</span>
+          <span class="goal-metric short">Week 2</span>
+        </li>
+        <li class="goal-item">
+          <span>Get first 3 client testimonials on camera or in writing</span>
+          <span class="goal-metric short">Month 1</span>
+        </li>
+        <li class="goal-item">
+          <span>Reach 500 Instagram followers (from current base)</span>
+          <span class="goal-metric short">Month 2</span>
+        </li>
+        <li class="goal-item">
+          <span>One TikTok video reaches 10k views</span>
+          <span class="goal-metric short">Month 2</span>
+        </li>
+        <li class="goal-item">
+          <span>Set up Facebook Group for Virtual Wellness Sessions community</span>
+          <span class="goal-metric short">Month 2</span>
+        </li>
+        <li class="goal-item">
+          <span>Generate 2 new client enquiries directly from social content</span>
+          <span class="goal-metric short">Month 3</span>
+        </li>
+        <li class="goal-item">
+          <span>Set up LinkedIn profile and begin posting</span>
+          <span class="goal-metric short">Month 2</span>
+        </li>
+      </ul>
+    </div>
+    <div class="goal-card">
+      <p class="goal-period long">Long-term goals (Months 4-12)</p>
+      <ul class="goal-list">
+        <li class="goal-item">
+          <span>Instagram reach 2,000 engaged followers</span>
+          <span class="goal-metric long">Month 6</span>
+        </li>
+        <li class="goal-item">
+          <span>TikTok reach 1,000 followers</span>
+          <span class="goal-metric long">Month 6</span>
+        </li>
+        <li class="goal-item">
+          <span>Social content directly supports first school outreach meeting</span>
+          <span class="goal-metric long">Month 5</span>
+        </li>
+        <li class="goal-item">
+          <span>Use content as evidence base for Sport England / CIC grant application</span>
+          <span class="goal-metric long">Month 6</span>
+        </li>
+        <li class="goal-item">
+          <span>Virtual Wellness Sessions reach 20+ consistent weekly attendees</span>
+          <span class="goal-metric long">Month 9</span>
+        </li>
+        <li class="goal-item">
+          <span>First school pilot or workshop secured via LinkedIn or referral</span>
+          <span class="goal-metric long">Month 9</span>
+        </li>
+        <li class="goal-item">
+          <span>Monthly income back to £3k+ supported by increased client base</span>
+          <span class="goal-metric long">Month 9</span>
+        </li>
+        <li class="goal-item">
+          <span>Instagram reach 5,000 followers. Content portfolio strong enough to share with grant bodies</span>
+          <span class="goal-metric long">Month 12</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <p style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);margin-bottom:0.75rem;">KPIs to track monthly</p>
+  <table class="kpi-table">
+    <thead>
+      <tr>
+        <th>Metric</th>
+        <th>Platform</th>
+        <th>How to check</th>
+        <th>Why it matters</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Follower growth rate</td>
+        <td>IG, TikTok</td>
+        <td>Instagram Insights / TikTok Analytics</td>
+        <td>Is the audience growing consistently?</td>
+      </tr>
+      <tr>
+        <td>Reel reach</td>
+        <td>Instagram</td>
+        <td>Instagram Insights &gt; Reels</td>
+        <td>How many non-followers are seeing content?</td>
+      </tr>
+      <tr>
+        <td>Video views (TikTok)</td>
+        <td>TikTok</td>
+        <td>TikTok Analytics</td>
+        <td>Reach and discovery engine health</td>
+      </tr>
+      <tr>
+        <td>Saves per post</td>
+        <td>Instagram</td>
+        <td>Instagram Insights</td>
+        <td>Saves = high-value content. Best signal for educational posts.</td>
+      </tr>
+      <tr>
+        <td>Profile visits to link clicks</td>
+        <td>Instagram</td>
+        <td>Instagram Insights</td>
+        <td>Is social traffic converting to enquiries?</td>
+      </tr>
+      <tr>
+        <td>DM enquiries from content</td>
+        <td>IG, TikTok</td>
+        <td>Manual tracking (note in a sheet)</td>
+        <td>Direct business impact of content</td>
+      </tr>
+      <tr>
+        <td>Comments with intent signals</td>
+        <td>IG, TikTok</td>
+        <td>Manual review</td>
+        <td>"How do I book you?" = the metric that matters most</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="callout" style="margin-top:1.5rem;">
+    <p class="callout-label">The one rule that overrides everything</p>
+    <p class="callout-text">Consistency beats perfection every single time. A slightly imperfect video posted on a Tuesday beats a perfect video that never goes up. The goal in Phase 1 is momentum — not viral moments, not a perfect grid, not production quality. Show up. Film. Post. Repeat.</p>
+  </div>
+</div>
+
+</div>
+
+</div>
+
+<!-- ============================== ACTION LIST ============================== -->
+<div class="page" style="padding-top:0;">
+<div class="section" id="actions">
+  <div class="section-header">
+    <span class="section-num">09</span>
+    <h2 class="section-title">Your Action List</h2>
+  </div>
+
+  <div class="progress-label">
+    <span id="progress-text">0 of 0 actions complete</span>
+    <span id="progress-pct">0%</span>
+  </div>
+  <div class="progress-bar-wrap">
+    <div class="progress-bar-fill" id="progress-fill" style="width:0%"></div>
+  </div>
+
+  <!-- PHASE 1 -->
+  <div class="action-section">
+    <p class="action-section-title phase-1">Phase 1 — Week 1 priorities</p>
+    <div id="actions-week1"></div>
+  </div>
+
+  <!-- MONTH 1 -->
+  <div class="action-section">
+    <p class="action-section-title phase-1">Phase 1 — Month 1</p>
+    <div id="actions-month1"></div>
+  </div>
+
+  <!-- MONTH 2-3 -->
+  <div class="action-section">
+    <p class="action-section-title phase-2">Phase 1 — Months 2-3</p>
+    <div id="actions-month2"></div>
+  </div>
+
+  <!-- ONGOING -->
+  <div class="action-section">
+    <p class="action-section-title phase-2">Ongoing habits</p>
+    <div id="actions-ongoing"></div>
+  </div>
+
+  <!-- CUSTOM -->
+  <div class="action-section">
+    <p class="action-section-title custom">Your own actions</p>
+    <div id="actions-custom"></div>
+    <div class="add-action-row">
+      <input class="add-action-input" id="custom-input" type="text" placeholder="Add your own action point and hit Enter...">
+      <button class="add-action-btn" onclick="addCustomAction()">+ Add</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============================== KPI TRACKER ============================== -->
+<div class="section" id="tracker">
+  <div class="section-header">
+    <span class="section-num">10</span>
+    <h2 class="section-title">KPI Tracker</h2>
+  </div>
+
+  <p style="font-size:13px;color:var(--muted);margin-bottom:1.25rem;">Update your numbers each week. Everything saves automatically in your browser. Switch months to track your progress over time.</p>
+
+  <div class="tracker-controls">
+    <button class="month-btn active" onclick="switchMonth(1, this)">Month 1</button>
+    <button class="month-btn" onclick="switchMonth(2, this)">Month 2</button>
+    <button class="month-btn" onclick="switchMonth(3, this)">Month 3</button>
+    <button class="month-btn" onclick="switchMonth(4, this)">Month 4</button>
+    <button class="month-btn" onclick="switchMonth(5, this)">Month 5</button>
+    <button class="month-btn" onclick="switchMonth(6, this)">Month 6</button>
+  </div>
+
+  <div class="tracker-summary" id="tracker-summary">
+    <div class="summary-stat">
+      <div class="summary-stat-val" id="sum-ig">-</div>
+      <div class="summary-stat-label">IG Followers</div>
+    </div>
+    <div class="summary-stat">
+      <div class="summary-stat-val" id="sum-tt">-</div>
+      <div class="summary-stat-label">TikTok Followers</div>
+    </div>
+    <div class="summary-stat">
+      <div class="summary-stat-val" id="sum-enquiries">-</div>
+      <div class="summary-stat-label">DM Enquiries</div>
+    </div>
+    <div class="summary-stat">
+      <div class="summary-stat-val" id="sum-clients">-</div>
+      <div class="summary-stat-label">New Clients</div>
+    </div>
+    <button class="save-btn" onclick="saveData()">Save this month</button>
+    <span class="save-confirm" id="save-confirm">Saved</span>
+  </div>
+
+  <div class="tracker-grid" id="tracker-grid"></div>
+
+  <div class="diag-card">
+    <p class="diag-label" style="color:var(--green);">Monthly review questions</p>
+    <ul class="diag-list">
+      <li class="diag-item"><span class="diag-icon">?</span>Which content pillar drove the most engagement this month?</li>
+      <li class="diag-item"><span class="diag-icon">?</span>Did any post generate DM enquiries? Which one and why?</li>
+      <li class="diag-item"><span class="diag-icon">?</span>What was your most-saved post? What made it save-worthy?</li>
+      <li class="diag-item"><span class="diag-icon">?</span>Did you hit your posting frequency target? If not, what got in the way?</li>
+      <li class="diag-item"><span class="diag-icon">?</span>What one piece of content will you double down on next month?</li>
+    </ul>
+  </div>
+</div>
+</div>
+
+<script>
+// ============================================================
+// ACTION LIST
+// ============================================================
+const DEFAULT_ACTIONS = {
+  'week1': [
+    { text: 'Film and post your first ACL recovery update video', tag: 'week1', done: false },
+    { text: 'Film and post your first personal story video: footballer to PT', tag: 'week1', done: false },
+    { text: 'Post one piece of content showing an actual PT session or class', tag: 'week1', done: false },
+    { text: 'Write a 3-post content schedule for the next 7 days and commit to it', tag: 'week1', done: false },
+    { text: 'Download CapCut and set up auto-captions for faster editing', tag: 'week1', done: false },
+  ],
+  'month1': [
+    { text: 'Get 3 client testimonials on camera or written text', tag: 'month1', done: false },
+    { text: 'Promote the Virtual Wellness Sessions on Instagram and TikTok for the first time', tag: 'month1', done: false },
+    { text: 'Post first nutrition content using your qualification as the hook', tag: 'month1', done: false },
+    { text: 'Set up a Facebook Group for your Virtual Wellness Sessions community', tag: 'month1', done: false },
+    { text: 'Create a Linktree or link-in-bio with booking link and class sign-up', tag: 'month1', done: false },
+    { text: 'Reach out to 5 former clients and ask for a written testimonial', tag: 'month1', done: false },
+    { text: 'Batch film at least 3 videos in a single session using the pillar guide', tag: 'month1', done: false },
+  ],
+  'month2': [
+    { text: 'Set up LinkedIn profile and begin posting 1x per week', tag: 'month2', done: false },
+    { text: 'Publish first teacher wellbeing post on LinkedIn targeting school decision-makers', tag: 'month2', done: false },
+    { text: 'Hit 4+ posts per week consistently for a full calendar month', tag: 'month2', done: false },
+    { text: 'Get one TikTok video to 10k+ views', tag: 'month2', done: false },
+    { text: 'Run a Q&A story or live on Instagram: take questions on holistic health', tag: 'month2', done: false },
+    { text: 'Identify 5-10 local schools and start building contacts list for outreach', tag: 'month3', done: false },
+    { text: 'Generate 2 new client enquiries directly from social content', tag: 'month3', done: false },
+    { text: 'Begin researching Sport England grant requirements using social content as evidence', tag: 'month3', done: false },
+  ],
+  'ongoing': [
+    { text: 'Post ACL recovery update every week (video or Story)', tag: 'ongoing', done: false },
+    { text: 'Respond to every comment and DM within 24 hours', tag: 'ongoing', done: false },
+    { text: 'Batch film content every Sunday to prepare the week ahead', tag: 'ongoing', done: false },
+    { text: 'Check Instagram Insights and TikTok Analytics every Monday morning', tag: 'ongoing', done: false },
+    { text: 'Promote Virtual Wellness Sessions class every Thursday for Saturday attendance', tag: 'ongoing', done: false },
+  ],
+  'custom': []
+};
+
+let actions = JSON.parse(localStorage.getItem('dd_actions') || 'null') || JSON.parse(JSON.stringify(DEFAULT_ACTIONS));
+
+const TAG_LABELS = { week1: 'Week 1', month1: 'Month 1', month2: 'Months 2-3', month3: 'Month 3', ongoing: 'Ongoing' };
+
+function renderActions() {
+  ['week1','month1','month2','ongoing','custom'].forEach(group => {
+    const container = document.getElementById('actions-' + group);
+    if (!container) return;
+    container.innerHTML = '';
+    const list = group === 'month2' ? [...actions.month2] : actions[group] || [];
+    list.forEach((action, idx) => {
+      const div = document.createElement('div');
+      div.className = 'action-item' + (action.done ? ' done' : '');
+      div.onclick = () => toggleAction(group === 'month2' ? 'month2' : group, idx);
+      div.innerHTML = `
+        <div class="action-cb">${action.done ? '✓' : ''}</div>
+        <span class="action-text">${action.text}</span>
+        <span class="action-tag ${action.tag || group}">${TAG_LABELS[action.tag || group] || ''}</span>
+      `;
+      container.appendChild(div);
+    });
+  });
+  updateProgress();
+}
+
+function toggleAction(group, idx) {
+  actions[group][idx].done = !actions[group][idx].done;
+  localStorage.setItem('dd_actions', JSON.stringify(actions));
+  renderActions();
+}
+
+function addCustomAction() {
+  const input = document.getElementById('custom-input');
+  const text = input.value.trim();
+  if (!text) return;
+  actions.custom.push({ text, tag: 'ongoing', done: false });
+  localStorage.setItem('dd_actions', JSON.stringify(actions));
+  input.value = '';
+  renderActions();
+}
+
+document.getElementById('custom-input').addEventListener('keydown', e => {
+  if (e.key === 'Enter') addCustomAction();
+});
+
+function updateProgress() {
+  let total = 0, done = 0;
+  ['week1','month1','month2','ongoing','custom'].forEach(g => {
+    (actions[g] || []).forEach(a => { total++; if (a.done) done++; });
+  });
+  const pct = total ? Math.round((done / total) * 100) : 0;
+  document.getElementById('progress-fill').style.width = pct + '%';
+  document.getElementById('progress-text').textContent = `${done} of ${total} actions complete`;
+  document.getElementById('progress-pct').textContent = pct + '%';
+}
+
+// ============================================================
+// KPI TRACKER
+// ============================================================
+const KPI_DEFS = [
+  { id: 'ig_followers',    label: 'Followers',        platform: 'ig',  platformLabel: 'Instagram',  targets: [null, 300, 500, 750, 1000, 1500, 2000], unit: '' },
+  { id: 'ig_reach',        label: 'Avg Reel Reach',   platform: 'ig',  platformLabel: 'Instagram',  targets: [null, 500, 1000, 2000, 3000, 5000, 7500], unit: '' },
+  { id: 'ig_saves',        label: 'Avg Saves/Post',   platform: 'ig',  platformLabel: 'Instagram',  targets: [null, 5, 15, 25, 40, 60, 80], unit: '' },
+  { id: 'tt_followers',    label: 'Followers',        platform: 'tt',  platformLabel: 'TikTok',     targets: [null, 100, 300, 600, 800, 1000, 1500], unit: '' },
+  { id: 'tt_views',        label: 'Avg Video Views',  platform: 'tt',  platformLabel: 'TikTok',     targets: [null, 1000, 3000, 5000, 7000, 10000, 15000], unit: '' },
+  { id: 'posts_per_week',  label: 'Posts Per Week',   platform: 'all', platformLabel: 'All Platforms', targets: [null, 4, 4, 5, 5, 6, 6], unit: '' },
+  { id: 'dm_enquiries',    label: 'DM Enquiries',     platform: 'all', platformLabel: 'All Platforms', targets: [null, 1, 2, 4, 6, 8, 10], unit: '' },
+  { id: 'new_clients',     label: 'New Clients',      platform: 'all', platformLabel: 'All Platforms', targets: [null, 0, 1, 2, 3, 4, 5], unit: '' },
+];
+
+let currentMonth = 1;
+let kpiData = JSON.parse(localStorage.getItem('dd_kpi') || '{}');
+
+function switchMonth(month, btn) {
+  currentMonth = month;
+  document.querySelectorAll('.month-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderTracker();
+}
+
+function renderTracker() {
+  const grid = document.getElementById('tracker-grid');
+  grid.innerHTML = '';
+  const monthData = kpiData[currentMonth] || {};
+
+  KPI_DEFS.forEach(kpi => {
+    const val = monthData[kpi.id] || '';
+    const target = kpi.targets[currentMonth] || 0;
+    const numVal = parseInt(val) || 0;
+    const pct = target ? Math.min(100, Math.round((numVal / target) * 100)) : 0;
+
+    const card = document.createElement('div');
+    card.className = 'kpi-card';
+    card.innerHTML = `
+      <p class="kpi-card-label">${kpi.label}</p>
+      <p class="kpi-card-platform ${kpi.platform}">${kpi.platformLabel}</p>
+      <div class="kpi-input-wrap">
+        <input class="kpi-value-input" type="number" min="0"
+          value="${val}"
+          placeholder="0"
+          data-id="${kpi.id}"
+          oninput="updateKPI('${kpi.id}', this.value)"
+        >
+      </div>
+      <p class="kpi-target">Target: <strong>${target > 0 ? target.toLocaleString() : 'set own'}</strong> ${pct > 0 ? '&nbsp;&middot;&nbsp;' + pct + '%' : ''}</p>
+      <div class="kpi-mini-bar-wrap">
+        <div class="kpi-mini-bar" style="width:${pct}%"></div>
+      </div>
+      <textarea class="kpi-note-input" placeholder="Notes for this month..." data-note="${kpi.id}" oninput="updateNote('${kpi.id}', this.value)">${monthData[kpi.id + '_note'] || ''}</textarea>
+    `;
+    grid.appendChild(card);
+  });
+
+  updateSummary();
+}
+
+function updateKPI(id, val) {
+  if (!kpiData[currentMonth]) kpiData[currentMonth] = {};
+  kpiData[currentMonth][id] = val;
+  localStorage.setItem('dd_kpi', JSON.stringify(kpiData));
+  updateSummary();
+  updateMiniBar(id, val);
+}
+
+function updateNote(id, val) {
+  if (!kpiData[currentMonth]) kpiData[currentMonth] = {};
+  kpiData[currentMonth][id + '_note'] = val;
+  localStorage.setItem('dd_kpi', JSON.stringify(kpiData));
+}
+
+function updateMiniBar(id, val) {
+  const kpi = KPI_DEFS.find(k => k.id === id);
+  if (!kpi) return;
+  const target = kpi.targets[currentMonth] || 0;
+  const numVal = parseInt(val) || 0;
+  const pct = target ? Math.min(100, Math.round((numVal / target) * 100)) : 0;
+  const input = document.querySelector(`[data-id="${id}"]`);
+  if (!input) return;
+  const bar = input.closest('.kpi-card').querySelector('.kpi-mini-bar');
+  const targetEl = input.closest('.kpi-card').querySelector('.kpi-target');
+  if (bar) bar.style.width = pct + '%';
+  if (targetEl) targetEl.innerHTML = `Target: <strong>${target > 0 ? target.toLocaleString() : 'set own'}</strong>${pct > 0 ? ' &middot; ' + pct + '%' : ''}`;
+}
+
+function updateSummary() {
+  const monthData = kpiData[currentMonth] || {};
+  const fmt = (id) => {
+    const v = parseInt(monthData[id]) || 0;
+    return v > 0 ? v.toLocaleString() : '-';
+  };
+  document.getElementById('sum-ig').textContent = fmt('ig_followers');
+  document.getElementById('sum-tt').textContent = fmt('tt_followers');
+  document.getElementById('sum-enquiries').textContent = fmt('dm_enquiries');
+  document.getElementById('sum-clients').textContent = fmt('new_clients');
+}
+
+function saveData() {
+  localStorage.setItem('dd_kpi', JSON.stringify(kpiData));
+  const confirm = document.getElementById('save-confirm');
+  confirm.classList.add('show');
+  setTimeout(() => confirm.classList.remove('show'), 2500);
+}
+
+// INIT
+renderActions();
+renderTracker();
+</script>
+
+<!-- FOOTER -->
+<div class="doc-footer">
+  <span class="footer-brand">FORE.</span>
+  <span>DD The PT Social Media Strategy · June 2026 · V1.0</span>
+  <span>Prepared by Jordan Hall · jordanhallyankey@gmail.com</span>
+</div>
+
+</body>
+</html>
