@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>DD The PT — Social Strategy Taster</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@300;400;500&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300;1,9..40,400&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --ink: #0d0d0d;
+  --paper: #f7f4ee;
+  --paper2: #eeebe3;
+  --mid: #c8c3b8;
+  --muted: #8a8478;
+  --rule: #d8d4cc;
+  --green: #2a7a4b;
+  --green-lt: #e8f5ee;
+  --green-mid: #c2e0ce;
+  --amber: #b85c00;
+  --amber-lt: #fdf0e5;
+  --blue: #1a4f7a;
+  --blue-lt: #e5eef6;
+  --purple: #5a2d82;
+  --purple-lt: #f0eaf8;
+  --red: #9b2a2a;
+  --red-lt: #faeaea;
+}
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  line-height: 1.65;
+}
+
+/* MASTHEAD */
+.masthead {
+  background: var(--ink);
+  color: var(--paper);
+  padding: 3rem 3rem 2.5rem;
+  position: relative;
+  overflow: hidden;
+}
+.masthead::before {
+  content: 'DD';
+  position: absolute;
+  right: -0.05em;
+  top: -0.1em;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 22rem;
+  color: rgba(255,255,255,0.04);
+  line-height: 1;
+  pointer-events: none;
+  letter-spacing: -0.02em;
+}
+.masthead-eyebrow {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--mid);
+  margin-bottom: 1rem;
+}
+.masthead h1 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(3rem, 8vw, 6rem);
+  letter-spacing: 0.04em;
+  line-height: 0.9;
+  margin-bottom: 1.5rem;
+}
+.masthead h1 span { color: #4ecb80; }
+.masthead-meta {
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+  border-top: 1px solid rgba(255,255,255,0.12);
+  padding-top: 1.25rem;
+  margin-top: 1.25rem;
+}
+.masthead-meta-item {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  color: var(--mid);
+  line-height: 1.8;
+}
+.masthead-meta-item strong {
+  display: block;
+  color: var(--paper);
+  font-size: 12px;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 500;
+  letter-spacing: 0;
+}
+
+/* FREE BANNER */
+.free-banner {
+  background: #4ecb80;
+  color: var(--ink);
+  text-align: center;
+  padding: 0.75rem 2rem;
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+.free-banner span { opacity: 0.6; }
+
+/* PAGE */
+.page { max-width: 1080px; margin: 0 auto; padding: 3rem; }
+@media (max-width: 700px) {
+  .masthead { padding: 2rem; }
+  .page { padding: 1.5rem; }
+}
+
+/* SECTION */
+.section { margin-bottom: 4rem; }
+.section-header {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  margin-bottom: 1.75rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 2px solid var(--ink);
+}
+.section-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2.5rem;
+  color: var(--rule);
+  line-height: 1;
+}
+.section-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.75rem;
+  letter-spacing: 0.04em;
+  line-height: 1;
+}
+
+/* CARDS */
+.diag-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+@media (max-width: 700px) { .diag-grid { grid-template-columns: 1fr; } }
+
+.diag-card {
+  border: 1.5px solid var(--rule);
+  border-radius: 8px;
+  padding: 1.25rem;
+  background: white;
+}
+.diag-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 0.75rem;
+}
+.diag-label.gap { color: var(--red); }
+.diag-label.opp { color: var(--green); }
+.diag-list { list-style: none; }
+.diag-item {
+  padding: 0.4rem 0;
+  border-bottom: 1px solid var(--rule);
+  font-size: 13px;
+  display: flex;
+  gap: 8px;
+  line-height: 1.5;
+}
+.diag-item:last-child { border-bottom: none; padding-bottom: 0; }
+.diag-item:first-child { padding-top: 0; }
+.diag-icon { flex-shrink: 0; font-size: 12px; padding-top: 2px; }
+
+/* CALLOUT */
+.callout {
+  background: var(--ink);
+  color: var(--paper);
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  position: relative;
+  overflow: hidden;
+}
+.callout::before {
+  content: '"';
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 14rem;
+  position: absolute;
+  top: -2.5rem;
+  left: 1rem;
+  color: rgba(255,255,255,0.04);
+  line-height: 1;
+}
+.callout-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #4ecb80;
+  margin-bottom: 0.5rem;
+}
+.callout-text {
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.6;
+  position: relative;
+}
+
+/* PILLARS */
+.pillars-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+  margin-bottom: 1.25rem;
+}
+@media (max-width: 800px) { .pillars-grid { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 500px) { .pillars-grid { grid-template-columns: 1fr; } }
+
+.pillar-card {
+  border-radius: 8px;
+  padding: 1.4rem;
+  position: relative;
+  overflow: hidden;
+}
+.pillar-card.p1 { background: var(--green-lt); border: 1.5px solid var(--green-mid); }
+.pillar-card.p2 { background: var(--amber-lt); border: 1.5px solid #f0c898; }
+.pillar-card.p3 { background: var(--blue-lt); border: 1.5px solid #b0c8e0; }
+
+.pillar-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 3rem;
+  line-height: 1;
+  opacity: 0.18;
+  position: absolute;
+  top: 0.75rem;
+  right: 1rem;
+}
+.p1 .pillar-num { color: var(--green); }
+.p2 .pillar-num { color: var(--amber); }
+.p3 .pillar-num { color: var(--blue); }
+
+.pillar-tag {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+.p1 .pillar-tag { color: var(--green); }
+.p2 .pillar-tag { color: var(--amber); }
+.p3 .pillar-tag { color: var(--blue); }
+
+.pillar-name {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  line-height: 1.3;
+}
+.pillar-desc {
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+/* PLATFORM TEASER */
+.platform-teaser-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+@media (max-width: 800px) { .platform-teaser-grid { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 500px) { .platform-teaser-grid { grid-template-columns: 1fr 1fr; } }
+
+.pt-card {
+  border-radius: 8px;
+  padding: 1.25rem 1rem;
+  text-align: center;
+  border: 1.5px solid var(--rule);
+  background: white;
+}
+.pt-icon {
+  font-size: 1.75rem;
+  margin-bottom: 0.5rem;
+}
+.pt-name {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.2rem;
+  letter-spacing: 0.06em;
+  margin-bottom: 0.35rem;
+}
+.pt-role {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+.pt-card.ig .pt-name { color: #c13584; }
+.pt-card.ig .pt-role { color: #c13584; }
+.pt-card.tt .pt-role { color: #555; }
+.pt-card.fb .pt-name { color: #1877f2; }
+.pt-card.fb .pt-role { color: #1877f2; }
+.pt-card.li .pt-name { color: #0a66c2; }
+.pt-card.li .pt-role { color: #0a66c2; }
+.pt-freq {
+  font-size: 11px;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+/* CONTENT IDEAS */
+.ideas-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+@media (max-width: 600px) { .ideas-grid { grid-template-columns: 1fr; } }
+
+.idea-card {
+  border: 1.5px solid var(--rule);
+  border-radius: 8px;
+  padding: 1rem;
+  background: white;
+}
+.idea-pillar {
+  font-family: 'DM Mono', monospace;
+  font-size: 8.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+.idea-title {
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 4px;
+  line-height: 1.3;
+}
+.idea-hook {
+  font-size: 11.5px;
+  color: var(--muted);
+  font-style: italic;
+  margin-bottom: 6px;
+  line-height: 1.4;
+  border-left: 2px solid var(--rule);
+  padding-left: 8px;
+}
+.idea-format {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+}
+
+/* LOCKED SECTION */
+.locked-section {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 4rem;
+}
+
+.locked-preview {
+  filter: blur(5px);
+  pointer-events: none;
+  user-select: none;
+  opacity: 0.6;
+}
+
+.lock-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(247,244,238,0) 0%, rgba(247,244,238,0.6) 30%, rgba(247,244,238,0.96) 60%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  padding-bottom: 2.5rem;
+  z-index: 10;
+}
+
+.lock-box {
+  background: var(--ink);
+  color: var(--paper);
+  border-radius: 12px;
+  padding: 2rem 2.5rem;
+  text-align: center;
+  max-width: 480px;
+  width: 90%;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.2);
+}
+
+.lock-icon {
+  font-size: 2rem;
+  margin-bottom: 0.75rem;
+  display: block;
+}
+
+.lock-eyebrow {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #4ecb80;
+  margin-bottom: 0.5rem;
+}
+
+.lock-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.75rem;
+  letter-spacing: 0.06em;
+  margin-bottom: 0.75rem;
+  line-height: 1.1;
+}
+
+.lock-desc {
+  font-size: 13px;
+  color: var(--mid);
+  line-height: 1.6;
+  margin-bottom: 1.25rem;
+}
+
+.lock-list {
+  list-style: none;
+  text-align: left;
+  margin-bottom: 1.5rem;
+}
+.lock-list li {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  color: var(--mid);
+  padding: 5px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  display: flex;
+  gap: 8px;
+  align-items: baseline;
+}
+.lock-list li:last-child { border-bottom: none; }
+.lock-list li::before {
+  content: '→';
+  color: #4ecb80;
+  flex-shrink: 0;
+}
+
+.lock-cta {
+  display: inline-block;
+  background: #4ecb80;
+  color: var(--ink);
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 500;
+  padding: 12px 28px;
+  border-radius: 100px;
+  text-decoration: none;
+  transition: all 0.2s;
+  border: none;
+  cursor: pointer;
+}
+.lock-cta:hover { background: white; }
+
+/* WHAT'S INSIDE STRIP */
+.inside-strip {
+  background: var(--paper2);
+  border: 1.5px solid var(--rule);
+  border-radius: 8px;
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 1.5rem;
+}
+.inside-strip-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 0.75rem;
+}
+.inside-items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.inside-item {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  padding: 4px 12px;
+  border-radius: 100px;
+  background: white;
+  border: 1.5px solid var(--rule);
+  color: var(--ink);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.inside-item .lock-tag {
+  font-size: 9px;
+  opacity: 0.5;
+}
+
+/* FOOTER */
+.doc-footer {
+  background: var(--ink);
+  color: var(--mid);
+  padding: 2rem 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.06em;
+}
+.footer-brand {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.25rem;
+  color: var(--paper);
+  letter-spacing: 0.1em;
+}
+</style>
+</head>
+<body>
+
+<!-- MASTHEAD -->
+<div class="masthead">
+  <p class="masthead-eyebrow">Social Media Strategy · Free Taster · June 2026</p>
+  <h1>DD THE PT<br><span>YOUR STRATEGY STARTS HERE.</span></h1>
+  <div class="masthead-meta">
+    <div class="masthead-meta-item">Prepared by<strong>Jordan Hall / FORE</strong></div>
+    <div class="masthead-meta-item">Client<strong>Damel Dioum</strong></div>
+    <div class="masthead-meta-item">This document<strong>Free Taster</strong></div>
+    <div class="masthead-meta-item">Full strategy<strong>Unlocked in session</strong></div>
+  </div>
+</div>
+
+<!-- FREE BANNER -->
+<div class="free-banner">
+  <span>Free taster</span>
+  This is yours to keep.
+  <span>The full strategy unlocks in your next session.</span>
+</div>
+
+<div class="page">
+
+<!-- 1. DIAGNOSIS -->
+<div class="section" id="diagnosis">
+  <div class="section-header">
+    <span class="section-num">01</span>
+    <h2 class="section-title">Where You're Starting From</h2>
+  </div>
+
+  <div class="callout" style="margin-bottom:1.5rem;">
+    <p class="callout-label">The honest truth</p>
+    <p class="callout-text">You have real results, a real story, and real qualifications. None of them are showing up online. The content that exists doesn't reflect the person doing the work. That's the gap. It's also the opportunity.</p>
+  </div>
+
+  <div class="diag-grid">
+    <div class="diag-card">
+      <p class="diag-label gap">What's missing right now</p>
+      <ul class="diag-list">
+        <li class="diag-item"><span class="diag-icon">✗</span>No PT or training content visible. Your core service is invisible online.</li>
+        <li class="diag-item"><span class="diag-icon">✗</span>Nutrition qualification never mentioned or demonstrated.</li>
+        <li class="diag-item"><span class="diag-icon">✗</span>No personal story. Footballer to PT via ACL injury is a powerful arc not being used.</li>
+        <li class="diag-item"><span class="diag-icon">✗</span>Zero client testimonials or before-and-after social proof.</li>
+        <li class="diag-item"><span class="diag-icon">✗</span>Virtual Wellness Sessions (4-year programme) has never been promoted.</li>
+        <li class="diag-item"><span class="diag-icon">✗</span>Mental health positioning not communicated. Your biggest differentiator, unused.</li>
+      </ul>
+    </div>
+    <div class="diag-card">
+      <p class="diag-label opp">What you already have to work with</p>
+      <ul class="diag-list">
+        <li class="diag-item"><span class="diag-icon">✓</span>TikTok content previously drove direct client re-engagement. Proof it works.</li>
+        <li class="diag-item"><span class="diag-icon">✓</span>ACL recovery in real time. Authentic, ongoing content waiting to happen.</li>
+        <li class="diag-item"><span class="diag-icon">✓</span>PT, nutrition and mental health qualifications. Multi-discipline authority.</li>
+        <li class="diag-item"><span class="diag-icon">✓</span>4-year Virtual Wellness Sessions community. Loyal base. Never been filmed.</li>
+        <li class="diag-item"><span class="diag-icon">✓</span>Former PE teacher. Credibility in school and youth wellness conversations.</li>
+        <li class="diag-item"><span class="diag-icon">✓</span>Deeply care-driven. Emotional authenticity is the differentiator in a saturated market.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- 2. MISSION -->
+<div class="section" id="mission">
+  <div class="section-header">
+    <span class="section-num">02</span>
+    <h2 class="section-title">Your Content Mission</h2>
+  </div>
+
+  <div class="callout">
+    <p class="callout-label">Why you show up online</p>
+    <p class="callout-text">To show the world that true health is not a body. It's a life. Through honest storytelling, expert-led content, and real community, DD The PT builds trust with the people who need it most: urban youth, teachers, and those who've been told wellness isn't for them.</p>
+  </div>
+
+  <div class="diag-card" style="margin-top:1.25rem;">
+    <p class="diag-label opp">How you sound on social</p>
+    <ul class="diag-list">
+      <li class="diag-item"><span class="diag-icon" style="color:var(--green);">→</span><strong>Real, not polished.</strong> Phone-filmed, honest, from the gym floor or the park or the kitchen.</li>
+      <li class="diag-item"><span class="diag-icon" style="color:var(--green);">→</span><strong>Expert, not preachy.</strong> You know things. Share them with calm authority, not lectures.</li>
+      <li class="diag-item"><span class="diag-icon" style="color:var(--green);">→</span><strong>Community-first, not broadcast.</strong> The content invites people in. Comments, Q&As, shared experiences.</li>
+      <li class="diag-item"><span class="diag-icon" style="color:var(--green);">→</span><strong>Culturally aware.</strong> You speak to communities that mainstream wellness ignores. That needs to come through.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- 3. PILLARS (first 3 only) -->
+<div class="section" id="pillars">
+  <div class="section-header">
+    <span class="section-num">03</span>
+    <h2 class="section-title">Your Content Pillars</h2>
+  </div>
+
+  <p style="font-size:13px;color:var(--muted);margin-bottom:1.25rem;">Your full strategy has 6 content pillars. Here are the first 3.</p>
+
+  <div class="pillars-grid">
+    <div class="pillar-card p1">
+      <span class="pillar-num">1</span>
+      <p class="pillar-tag">Pillar 01 · Personal Story</p>
+      <p class="pillar-name">The Journey: From Pitch to Purpose</p>
+      <p class="pillar-desc">Semi-pro footballer. PE teacher. ACL injury. Holistic PT. This arc is the brand. Raw, chapter-by-chapter storytelling about how life, sport, injury and purpose shaped who you are and why you do what you do. Mental health destigmatisation for urban youth runs through every chapter.</p>
+    </div>
+    <div class="pillar-card p2">
+      <span class="pillar-num">2</span>
+      <p class="pillar-tag">Pillar 02 · Injury Recovery</p>
+      <p class="pillar-name">The Comeback: ACL Recovery in Real Time</p>
+      <p class="pillar-desc">Document the ACL recovery journey: physically, mentally and nutritionally. This is live, ongoing content with a natural narrative arc. Weekly updates showing the reality of rehab. The progress, the setbacks, the mindset work. Authenticity that money can't buy.</p>
+    </div>
+    <div class="pillar-card p3">
+      <span class="pillar-num">3</span>
+      <p class="pillar-tag">Pillar 03 · Expert Content</p>
+      <p class="pillar-name">Holistic Health Education</p>
+      <p class="pillar-desc">Value-led content drawing on your PT, nutrition and mental health qualifications. Quick tips, myth-busting, explainer videos. "The thing your PT never tells you about..." style content that positions you as a trusted expert, not just a trainer.</p>
+    </div>
+  </div>
+
+  <!-- LOCKED PILLARS PREVIEW -->
+  <div class="locked-section">
+    <div class="locked-preview">
+      <div class="pillars-grid" style="margin-bottom:0;">
+        <div class="pillar-card" style="background:#f0eaf8;border:1.5px solid #c8a8e8;">
+          <p class="pillar-tag" style="color:#5a2d82;">Pillar 04 · Social Proof</p>
+          <p class="pillar-name">Client Stories and Transformations</p>
+          <p class="pillar-desc">Testimonials, before-and-afters, client spotlight interviews and session clips. The community attending your Virtual Wellness Sessions for four years — those stories need to be told publicly.</p>
+        </div>
+        <div class="pillar-card" style="background:#faeaea;border:1.5px solid #e0a8a8;">
+          <p class="pillar-tag" style="color:#9b2a2a;">Pillar 05 · Community</p>
+          <p class="pillar-name">Wellness for the Culture</p>
+          <p class="pillar-desc">Making holistic health feel relevant for urban youth and communities left out of mainstream wellness. Commentary on mental health stigma, cultural attitudes to fitness, the school wellness gap.</p>
+        </div>
+        <div class="pillar-card" style="background:var(--paper2);border:1.5px solid var(--rule);">
+          <p class="pillar-tag" style="color:var(--muted);">Pillar 06 · The Work</p>
+          <p class="pillar-name">Behind the Sessions</p>
+          <p class="pillar-desc">Clips from actual training sessions, Virtual Wellness Classes and school/community workshops. This is the content that was missing entirely. Show the product. Film the work.</p>
+        </div>
+      </div>
+    </div>
+    <div class="lock-overlay">
+      <div class="lock-box">
+        <span class="lock-icon">🔒</span>
+        <p class="lock-eyebrow">Pillars 4, 5 and 6</p>
+        <p class="lock-title">3 more pillars inside the full strategy.</p>
+        <p class="lock-desc">Social proof, community and culture content, and the session content that's been completely missing from your channels. Unlocked in your strategy session.</p>
+        <a href="https://calendly.com/jordanhallyankey/complimentary-consultancy-session" class="lock-cta">Book your strategy session</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 4. PLATFORMS (teaser) -->
+<div class="section" id="platforms">
+  <div class="section-header">
+    <span class="section-num">04</span>
+    <h2 class="section-title">Platforms Overview</h2>
+  </div>
+
+  <p style="font-size:13px;color:var(--muted);margin-bottom:1.25rem;">Your strategy covers 4 platforms. Each has a distinct role. Here's the overview — the full platform breakdown, posting frequency, format guidance and tone specs are in the full strategy.</p>
+
+  <div class="platform-teaser-grid">
+    <div class="pt-card ig">
+      <div class="pt-icon">📸</div>
+      <p class="pt-name">Instagram</p>
+      <p class="pt-role">Primary · Community Hub</p>
+      <p class="pt-freq">Your brand home. Where clients find you, follow you, and book you.</p>
+    </div>
+    <div class="pt-card tt">
+      <div class="pt-icon">🎵</div>
+      <p class="pt-name">TikTok</p>
+      <p class="pt-role">Discovery · Reach Engine</p>
+      <p class="pt-freq">Top-of-funnel. Where new audiences find you for the first time.</p>
+    </div>
+    <div class="pt-card fb">
+      <div class="pt-icon">👥</div>
+      <p class="pt-name">Facebook</p>
+      <p class="pt-role">School Niche · Groups</p>
+      <p class="pt-freq">Teachers, administrators, and your Virtual Wellness community.</p>
+    </div>
+    <div class="pt-card li">
+      <div class="pt-icon">💼</div>
+      <p class="pt-name">LinkedIn</p>
+      <p class="pt-role">B2B · School Contracts</p>
+      <p class="pt-freq">Decision-makers, headteachers, and grant bodies.</p>
+    </div>
+  </div>
+
+  <!-- LOCKED PLATFORM DETAIL -->
+  <div class="locked-section" style="margin-bottom:0;">
+    <div class="locked-preview" style="padding:1.5rem;background:white;border:1.5px solid var(--rule);border-radius:8px;">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+        <div>
+          <p style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:#c13584;margin-bottom:0.5rem;">Instagram</p>
+          <p style="font-size:12px;color:var(--muted);line-height:1.5;">Formats: Reels, Carousels, Stories, Lives. Frequency: 4-5x per week. Tone: warm, expert, community-led. Goal: 1-5k engaged followers who are potential clients...</p>
+        </div>
+        <div>
+          <p style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:#010101;margin-bottom:0.5rem;">TikTok</p>
+          <p style="font-size:12px;color:var(--muted);line-height:1.5;">Formats: 15-60 sec video. Storytelling hooks. Talking to camera. Frequency: 3-4x per week. Tone: raw, unfiltered, conversational...</p>
+        </div>
+      </div>
+    </div>
+    <div class="lock-overlay">
+      <div class="lock-box">
+        <span class="lock-icon">🔒</span>
+        <p class="lock-eyebrow">Full platform breakdown</p>
+        <p class="lock-title">Exact formats, frequencies and tone for every platform.</p>
+        <p class="lock-desc">Including the posting schedule, content format breakdown per platform, and exactly how to repurpose one piece of content across all four channels with minimal extra effort.</p>
+        <a href="https://calendly.com/jordanhallyankey/complimentary-consultancy-session" class="lock-cta">Unlock the full strategy</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 5. CONTENT IDEAS (4 only) -->
+<div class="section" id="content" style="margin-top:4rem;">
+  <div class="section-header">
+    <span class="section-num">05</span>
+    <h2 class="section-title">Content Ideas: A Taster</h2>
+  </div>
+
+  <p style="font-size:13px;color:var(--muted);margin-bottom:1.25rem;">Your full strategy includes 16 content ideas across all 6 pillars, each with a hook and format guide. Here are 4 to get you started.</p>
+
+  <div class="ideas-grid">
+    <div class="idea-card">
+      <p class="idea-pillar" style="color:var(--green);">Pillar 1 · Personal Story</p>
+      <p class="idea-title">"I was a semi-pro footballer. Then my knee ended it."</p>
+      <p class="idea-hook">"Nobody tells you what happens to your identity when sport is taken from you..."</p>
+      <p class="idea-format">TikTok / Reel · Talking to camera · 60-90 sec</p>
+    </div>
+    <div class="idea-card">
+      <p class="idea-pillar" style="color:var(--amber);">Pillar 2 · Recovery</p>
+      <p class="idea-title">Week [X] of ACL recovery: the honest update</p>
+      <p class="idea-hook">"Still not where I want to be. Here's what's working and what isn't."</p>
+      <p class="idea-format">Weekly update · Reel + Story · Ongoing series</p>
+    </div>
+    <div class="idea-card">
+      <p class="idea-pillar" style="color:var(--blue);">Pillar 3 · Education</p>
+      <p class="idea-title">3 things your PT isn't telling you about recovery</p>
+      <p class="idea-hook">"Being fit and being healthy are not the same thing. Here's the difference."</p>
+      <p class="idea-format">Carousel / Reel · High save potential</p>
+    </div>
+    <div class="idea-card">
+      <p class="idea-pillar" style="color:var(--amber);">Pillar 2 · Recovery</p>
+      <p class="idea-title">What I'm eating to heal: ACL recovery nutrition</p>
+      <p class="idea-hook">"Your surgeon won't tell you this but what you eat during recovery actually matters."</p>
+      <p class="idea-format">Carousel · 5-slide nutritional breakdown</p>
+    </div>
+  </div>
+
+  <!-- LOCKED IDEAS -->
+  <div class="locked-section" style="margin-bottom:0;">
+    <div class="locked-preview" style="padding:1.5rem;background:white;border:1.5px solid var(--rule);border-radius:8px;">
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:0.75rem;">
+        <div style="border:1.5px solid var(--rule);border-radius:6px;padding:0.75rem;">
+          <p style="font-size:11px;font-weight:600;margin-bottom:3px;">Why I left teaching to become a PT</p>
+          <p style="font-size:10px;color:var(--muted);">"The system wasn't set up to help the kids..."</p>
+        </div>
+        <div style="border:1.5px solid var(--rule);border-radius:6px;padding:0.75rem;">
+          <p style="font-size:11px;font-weight:600;margin-bottom:3px;">Client spotlight transformation</p>
+          <p style="font-size:10px;color:var(--muted);">"She came to me unable to walk up stairs..."</p>
+        </div>
+        <div style="border:1.5px solid var(--rule);border-radius:6px;padding:0.75rem;">
+          <p style="font-size:11px;font-weight:600;margin-bottom:3px;">Teachers are breaking down</p>
+          <p style="font-size:10px;color:var(--muted);">"Every school has a wellbeing policy. Almost none of them work..."</p>
+        </div>
+      </div>
+    </div>
+    <div class="lock-overlay">
+      <div class="lock-box">
+        <span class="lock-icon">🔒</span>
+        <p class="lock-eyebrow">12 more content ideas inside</p>
+        <p class="lock-title">Plus a full weekly calendar, hashtag strategy, goals and an interactive action list.</p>
+        <ul class="lock-list">
+          <li>Full weekly content calendar with daily post guidance</li>
+          <li>16 content ideas across all 6 pillars with hooks and format specs</li>
+          <li>9 hashtag sets organised by audience and topic</li>
+          <li>Short and long-term goals with monthly KPI targets</li>
+          <li>Interactive action checklist you can tick off as you go</li>
+          <li>Live KPI tracker to log your monthly numbers</li>
+        </ul>
+        <a href="https://calendly.com/jordanhallyankey/complimentary-consultancy-session" class="lock-cta">Book your strategy session to unlock</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- WHAT'S INSIDE -->
+<div style="margin:4rem 0 3rem;">
+  <div class="inside-strip">
+    <p class="inside-strip-label">Everything waiting for you in the full strategy</p>
+    <div class="inside-items">
+      <span class="inside-item">All 6 content pillars <span class="lock-tag">🔒</span></span>
+      <span class="inside-item">Full platform breakdown <span class="lock-tag">🔒</span></span>
+      <span class="inside-item">Weekly content calendar <span class="lock-tag">🔒</span></span>
+      <span class="inside-item">16 content ideas + hooks <span class="lock-tag">🔒</span></span>
+      <span class="inside-item">9 hashtag sets <span class="lock-tag">🔒</span></span>
+      <span class="inside-item">Monthly KPI targets <span class="lock-tag">🔒</span></span>
+      <span class="inside-item">Interactive action checklist <span class="lock-tag">🔒</span></span>
+      <span class="inside-item">Live KPI tracker <span class="lock-tag">🔒</span></span>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<!-- FOOTER -->
+<div class="doc-footer">
+  <span class="footer-brand">FORE.</span>
+  <span>DD The PT Social Strategy · Free Taster · June 2026</span>
+  <span>Jordan Hall · jordanhallyankey@gmail.com</span>
+</div>
+
+</body>
+</html>
