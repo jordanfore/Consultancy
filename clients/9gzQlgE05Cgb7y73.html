@@ -1,0 +1,1077 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Eaze Studio — Brand Identity and Customer Persona Worksheet</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300;1,9..40,400&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --sand: #F5F0E8;
+  --sand2: #EDE7DA;
+  --sand3: #E2DAC8;
+  --ink: #1A1612;
+  --ink-soft: #2E2820;
+  --muted: #8C7E6A;
+  --rule: #D4CCB8;
+  --terracotta: #C4603A;
+  --terracotta-lt: #FBF0EB;
+  --terracotta-mid: #EAB09A;
+  --sage: #4A6741;
+  --sage-lt: #EBF0E8;
+  --navy: #1E3148;
+  --navy-lt: #E6EBF0;
+  --cream: #FEFBF5;
+}
+
+body {
+  background: var(--sand);
+  color: var(--ink);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+/* PROGRESS */
+.progress-bar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--ink);
+  padding: 0.5rem 2.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.prog-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--terracotta-mid);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.prog-track {
+  flex: 1;
+  height: 2px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 100px;
+  overflow: hidden;
+}
+.prog-fill {
+  height: 100%;
+  background: var(--terracotta);
+  border-radius: 100px;
+  transition: width 0.5s ease;
+  width: 0%;
+}
+.prog-pct {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: var(--terracotta);
+  letter-spacing: 0.06em;
+  flex-shrink: 0;
+  width: 32px;
+  text-align: right;
+}
+
+/* HEADER */
+.header {
+  background: var(--ink);
+  color: var(--sand);
+  padding: 4rem 2.5rem 3rem;
+  position: relative;
+  overflow: hidden;
+}
+.header-bg-text {
+  position: absolute;
+  bottom: -0.15em;
+  right: -0.02em;
+  font-family: 'Playfair Display', serif;
+  font-size: 16rem;
+  font-style: italic;
+  color: rgba(255,255,255,0.03);
+  line-height: 1;
+  pointer-events: none;
+  letter-spacing: -0.02em;
+}
+.header-eyebrow {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--terracotta);
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.header-eyebrow::before {
+  content: '';
+  display: block;
+  width: 24px;
+  height: 1px;
+  background: var(--terracotta);
+}
+.header h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.2rem, 6vw, 4.5rem);
+  font-weight: 500;
+  line-height: 1;
+  margin-bottom: 1rem;
+  letter-spacing: -0.01em;
+}
+.header h1 em {
+  font-style: italic;
+  color: var(--terracotta-mid);
+}
+.header-sub {
+  font-size: 14px;
+  color: rgba(245,240,232,0.5);
+  max-width: 500px;
+  line-height: 1.65;
+  margin-bottom: 2rem;
+}
+.header-meta {
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(255,255,255,0.08);
+}
+.meta-item {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(245,240,232,0.3);
+  line-height: 1.9;
+}
+.meta-item strong {
+  display: block;
+  color: var(--sand);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+/* HOW TO USE BANNER */
+.how-to {
+  background: var(--terracotta-lt);
+  border-bottom: 1px solid var(--terracotta-mid);
+  padding: 1rem 2.5rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+.how-to-icon { color: var(--terracotta); font-size: 15px; flex-shrink: 0; padding-top: 1px; }
+.how-to p { font-size: 13px; color: var(--ink-soft); line-height: 1.55; }
+.how-to strong { font-weight: 600; color: var(--ink); }
+
+/* BODY */
+.body { max-width: 820px; margin: 0 auto; padding: 2.5rem; }
+@media (max-width: 700px) {
+  .header { padding: 2.5rem 1.5rem; }
+  .body { padding: 1.5rem; }
+  .how-to { padding: 1rem 1.5rem; }
+}
+
+/* DIVIDER */
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 3rem 0 2.5rem;
+}
+.divider::before, .divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--rule);
+}
+.divider-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+  flex-shrink: 0;
+}
+
+/* SECTION */
+.section { margin-bottom: 3rem; }
+.section-eyebrow {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--terracotta);
+  margin-bottom: 0.4rem;
+}
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.75rem;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.01em;
+}
+.section-desc {
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.65;
+  margin-bottom: 1.5rem;
+  max-width: 580px;
+}
+
+/* Q BLOCKS */
+.q-block {
+  background: var(--cream);
+  border: 1.5px solid var(--rule);
+  border-radius: 8px;
+  padding: 1.2rem 1.4rem;
+  margin-bottom: 0.9rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.q-block:focus-within {
+  border-color: var(--terracotta);
+  box-shadow: 0 0 0 3px rgba(196,96,58,0.06);
+}
+.q-block.complete { border-color: rgba(196,96,58,0.4); background: var(--terracotta-lt); }
+
+.q-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 0.3rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.q-done {
+  font-size: 9px;
+  color: var(--terracotta);
+  letter-spacing: 0.1em;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.q-block.complete .q-done { opacity: 1; }
+
+.q-prompt {
+  font-family: 'Playfair Display', serif;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.45;
+  color: var(--ink);
+  margin-bottom: 0.65rem;
+}
+.q-context {
+  font-size: 12px;
+  color: var(--muted);
+  font-style: italic;
+  margin-bottom: 0.65rem;
+  line-height: 1.55;
+}
+.q-textarea {
+  width: 100%;
+  background: var(--sand);
+  border: 1px solid var(--rule);
+  border-radius: 5px;
+  padding: 0.7rem 0.85rem;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  color: var(--ink);
+  line-height: 1.65;
+  resize: vertical;
+  min-height: 76px;
+  outline: none;
+  transition: border-color 0.15s;
+}
+.q-textarea:focus { border-color: var(--terracotta); background: var(--cream); }
+.q-textarea::placeholder { color: var(--muted); opacity: 0.65; }
+.q-input {
+  width: 100%;
+  background: var(--sand);
+  border: 1px solid var(--rule);
+  border-radius: 5px;
+  padding: 0.6rem 0.85rem;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  color: var(--ink);
+  outline: none;
+  transition: border-color 0.15s;
+}
+.q-input:focus { border-color: var(--terracotta); background: var(--cream); }
+.q-input::placeholder { color: var(--muted); opacity: 0.65; }
+
+/* CHOICE GRID */
+.choice-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.4rem;
+  margin-bottom: 0.65rem;
+}
+@media (max-width: 500px) { .choice-grid { grid-template-columns: 1fr; } }
+.choice-item {
+  border: 1.5px solid var(--rule);
+  border-radius: 6px;
+  padding: 0.55rem 0.85rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  transition: all 0.12s;
+  background: var(--sand);
+  user-select: none;
+}
+.choice-item:hover { border-color: var(--terracotta-mid); background: var(--terracotta-lt); }
+.choice-item.selected { border-color: var(--terracotta); background: var(--terracotta-lt); }
+.choice-cb {
+  width: 14px; height: 14px;
+  border: 1.5px solid var(--rule);
+  border-radius: 3px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 9px;
+  transition: all 0.12s;
+}
+.choice-item.selected .choice-cb { background: var(--terracotta); border-color: var(--terracotta); color: white; }
+
+/* MULTI INPUTS */
+.multi-inputs { display: flex; flex-direction: column; gap: 0.4rem; }
+.multi-row { display: grid; grid-template-columns: 1fr auto; gap: 0.4rem; align-items: center; }
+.remove-btn {
+  width: 24px; height: 24px;
+  border-radius: 50%;
+  border: 1px solid var(--rule);
+  background: none;
+  color: var(--muted);
+  cursor: pointer;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.12s;
+}
+.remove-btn:hover { border-color: var(--terracotta); color: var(--terracotta); }
+.add-btn {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  color: var(--terracotta);
+  background: none;
+  border: 1.5px dashed var(--terracotta-mid);
+  border-radius: 5px;
+  padding: 5px 12px;
+  cursor: pointer;
+  margin-top: 0.35rem;
+  width: 100%;
+  transition: all 0.12s;
+}
+.add-btn:hover { background: var(--terracotta-lt); }
+
+/* SCALE */
+.scale-wrap { display: flex; gap: 0.3rem; flex-wrap: wrap; margin-bottom: 0.4rem; }
+.scale-btn {
+  width: 36px; height: 36px;
+  border-radius: 5px;
+  border: 1.5px solid var(--rule);
+  background: var(--sand);
+  font-family: 'DM Mono', monospace;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.12s;
+  flex-shrink: 0;
+}
+.scale-btn:hover { border-color: var(--terracotta-mid); background: var(--terracotta-lt); }
+.scale-btn.active { background: var(--terracotta); border-color: var(--terracotta); color: white; }
+.scale-labels { display: flex; justify-content: space-between; font-family: 'DM Mono', monospace; font-size: 9px; color: var(--muted); letter-spacing: 0.06em; margin-top: 3px; }
+
+/* PERSONA CARD */
+.persona-preview {
+  background: var(--ink);
+  color: var(--sand);
+  border-radius: 10px;
+  padding: 1.75rem;
+  margin-top: 2.5rem;
+}
+.persona-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.4rem;
+  font-weight: 400;
+  margin-bottom: 1.25rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  font-style: italic;
+  color: var(--terracotta-mid);
+}
+.persona-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+@media (max-width: 600px) { .persona-grid { grid-template-columns: 1fr; } }
+.persona-item-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--terracotta-mid);
+  margin-bottom: 0.3rem;
+}
+.persona-item-val {
+  font-size: 13px;
+  color: rgba(245,240,232,0.7);
+  line-height: 1.6;
+  min-height: 20px;
+  font-style: italic;
+}
+.persona-item-val:empty::before { content: 'Not filled in yet.'; opacity: 0.25; }
+
+/* BUILDING IN PUBLIC */
+.bip-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.9rem;
+  margin-bottom: 1.25rem;
+}
+@media (max-width: 700px) { .bip-grid { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 450px) { .bip-grid { grid-template-columns: 1fr; } }
+
+.bip-card {
+  border-radius: 8px;
+  padding: 1.1rem;
+  border: 1.5px solid transparent;
+}
+.bip-card.phase-0 { background: var(--sage-lt); border-color: #B8CEB5; }
+.bip-card.phase-1 { background: var(--terracotta-lt); border-color: var(--terracotta-mid); }
+.bip-card.phase-2 { background: var(--navy-lt); border-color: #B0C4D8; }
+
+.bip-phase {
+  font-family: 'DM Mono', monospace;
+  font-size: 8.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  margin-bottom: 0.4rem;
+  font-weight: 500;
+}
+.phase-0 .bip-phase { color: var(--sage); }
+.phase-1 .bip-phase { color: var(--terracotta); }
+.phase-2 .bip-phase { color: var(--navy); }
+
+.bip-title {
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 0.4rem;
+  line-height: 1.3;
+}
+.bip-desc {
+  font-size: 11.5px;
+  color: var(--muted);
+  line-height: 1.55;
+  margin-bottom: 0.65rem;
+}
+.bip-examples {
+  list-style: none;
+}
+.bip-ex {
+  font-size: 11px;
+  color: var(--ink-soft);
+  padding: 2.5px 0;
+  display: flex;
+  gap: 6px;
+  line-height: 1.4;
+}
+.bip-ex::before { content: '→'; flex-shrink: 0; opacity: 0.5; font-size: 10px; padding-top: 1px; }
+
+/* PLATFORM STRIP */
+.platform-strip {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.25rem;
+}
+.platform-pill {
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  flex: 1;
+  min-width: 140px;
+  border: 1.5px solid var(--rule);
+  background: var(--cream);
+}
+.platform-pill-name {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-weight: 500;
+  margin-bottom: 3px;
+}
+.platform-pill-role {
+  font-size: 11.5px;
+  color: var(--muted);
+  line-height: 1.45;
+}
+.pp-ig .platform-pill-name { color: #c13584; }
+.pp-tt .platform-pill-name { color: #010101; }
+.pp-li .platform-pill-name { color: #0a66c2; }
+
+/* SEND */
+.send-wrap {
+  margin-top: 2.5rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--rule);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.send-btn {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 11px 26px;
+  border-radius: 100px;
+  border: none;
+  background: var(--ink);
+  color: var(--sand);
+  cursor: pointer;
+  transition: all 0.18s;
+}
+.send-btn:hover { background: var(--terracotta); }
+.send-note {
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+/* FOOTER */
+.footer {
+  background: var(--ink);
+  color: rgba(245,240,232,0.3);
+  padding: 1.5rem 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 3rem;
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.08em;
+}
+.footer-brand {
+  font-family: 'Playfair Display', serif;
+  font-size: 1rem;
+  color: var(--sand);
+  font-style: italic;
+}
+</style>
+</head>
+<body>
+
+<div class="progress-bar">
+  <span class="prog-label">Worksheet progress</span>
+  <div class="prog-track"><div class="prog-fill" id="prog-fill"></div></div>
+  <span class="prog-pct" id="prog-pct">0%</span>
+</div>
+
+<div class="header">
+  <div class="header-bg-text">E</div>
+  <p class="header-eyebrow">Brand Identity and Customer Persona</p>
+  <h1>Know your brand.<br><em>Know your person.</em></h1>
+  <p class="header-sub">Before you post anything, you need to know who you are and who you are talking to. This worksheet gives you both. Work through it once, honestly, and everything after becomes easier.</p>
+  <div class="header-meta">
+    <div class="meta-item">Prepared by<strong>Jordan Hall / FORE</strong></div>
+    <div class="meta-item">For<strong>Emma Morton</strong></div>
+    <div class="meta-item">Project<strong>Eaze Studio</strong></div>
+    <div class="meta-item">Phase<strong>Pre-Launch · Brand Foundation</strong></div>
+  </div>
+</div>
+
+<div class="how-to">
+  <span class="how-to-icon">→</span>
+  <p><strong>How to use this.</strong> Work through each section in order. Be specific and honest rather than aspirational. Your answers save automatically. When you are done, hit send at the bottom and everything comes to Jordan in one email. Aim to finish it within the next 48 hours so name testing can start immediately.</p>
+</div>
+
+<div class="body">
+
+<!-- PART 1: BRAND IDENTITY -->
+<div class="section">
+  <p class="section-eyebrow">Part One</p>
+  <h2 class="section-title">Brand Identity</h2>
+  <p class="section-desc">Who is Eaze Studio as a brand? Not what it sells. What it stands for, how it feels, and what makes it different from everything else in the market.</p>
+
+  <div class="q-block" data-key="brand_one_line">
+    <div class="q-label">1.1 <span class="q-done">ANSWERED</span></div>
+    <p class="q-prompt">Describe Eaze Studio in one sentence. Not a tagline. A clear statement of what it is.</p>
+    <p class="q-context">Pretend someone at a dinner party asks what your brand is. What do you say?</p>
+    <textarea class="q-textarea" data-key="brand_one_line" placeholder="e.g. Eaze Studio is a made-to-order sustainable fashion label creating effortless two-piece sets from deadstock materials for women who want to get dressed with intention."></textarea>
+  </div>
+
+  <div class="q-block" data-key="brand_why">
+    <div class="q-label">1.2 <span class="q-done">ANSWERED</span></div>
+    <p class="q-prompt">Why does Eaze Studio exist? What is the problem it solves?</p>
+    <p class="q-context">Not the environmental problem. The personal one. What frustration or desire does your customer have that your brand answers?</p>
+    <textarea class="q-textarea" data-key="brand_why" placeholder="e.g. Women who care about how they dress don't want to spend hours getting ready or feel guilty about their wardrobe. Eaze exists because ease and intention should not be mutually exclusive."></textarea>
+  </div>
+
+  <div class="q-block" data-key="brand_values">
+    <div class="q-label">1.3 · Values <span class="q-done">ANSWERED</span></div>
+    <p class="q-prompt">What does Eaze Studio never compromise on?</p>
+    <div id="values-inputs" class="multi-inputs">
+      <div class="multi-row">
+        <input class="q-input" type="text" placeholder="e.g. Sustainable sourcing" data-key="val_0">
+        <button class="remove-btn" onclick="removeRow(this)">×</button>
+      </div>
+      <div class="multi-row">
+        <input class="q-input" type="text" placeholder="e.g. Made to order only, no overproduction" data-key="val_1">
+        <button class="remove-btn" onclick="removeRow(this)">×</button>
+      </div>
+      <div class="multi-row">
+        <input class="q-input" type="text" placeholder="e.g. Transparency about materials and process" data-key="val_2">
+        <button class="remove-btn" onclick="removeRow(this)">×</button>
+      </div>
+    </div>
+    <button class="add-btn" onclick="addRow('values-inputs','val')">+ Add value</button>
+  </div>
+
+  <div class="q-block" data-key="brand_personality">
+    <div class="q-label">1.4 · Personality <span class="q-done">ANSWERED</span></div>
+    <p class="q-prompt">If Eaze Studio was a person, how would you describe them at a party?</p>
+    <div class="choice-grid">
+      <div class="choice-item" onclick="toggleChoice(this,'bp_effortless')"><span class="choice-cb"></span>Effortlessly put together</div>
+      <div class="choice-item" onclick="toggleChoice(this,'bp_quiet')"><span class="choice-cb"></span>Quietly confident</div>
+      <div class="choice-item" onclick="toggleChoice(this,'bp_warm')"><span class="choice-cb"></span>Warm and considered</div>
+      <div class="choice-item" onclick="toggleChoice(this,'bp_minimal')"><span class="choice-cb"></span>Minimal, not cold</div>
+      <div class="choice-item" onclick="toggleChoice(this,'bp_intentional')"><span class="choice-cb"></span>Intentional about everything</div>
+      <div class="choice-item" onclick="toggleChoice(this,'bp_slow')"><span class="choice-cb"></span>Slow, deliberate, quality-led</div>
+      <div class="choice-item" onclick="toggleChoice(this,'bp_independent')"><span class="choice-cb"></span>Independent-minded</div>
+      <div class="choice-item" onclick="toggleChoice(this,'bp_community')"><span class="choice-cb"></span>Community-oriented</div>
+    </div>
+    <input class="q-input" type="text" data-key="brand_personality_other" placeholder="Any other words that feel right...">
+  </div>
+
+  <div class="q-block" data-key="brand_voice">
+    <div class="q-label">1.5 · Voice <span class="q-done">ANSWERED</span></div>
+    <p class="q-prompt">How does Eaze Studio sound? Write the same idea three ways: too formal, too casual, and exactly right.</p>
+    <p class="q-context">The idea: "This piece was made from deadstock fabric that would have ended up in landfill."</p>
+    <div style="display:flex;flex-direction:column;gap:0.5rem;">
+      <div>
+        <p style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:4px;">Too formal (wrong)</p>
+        <input class="q-input" type="text" data-key="voice_formal" placeholder="Eaze Studio is committed to utilising post-consumer deadstock textile waste...">
+      </div>
+      <div>
+        <p style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:4px;">Too casual (wrong)</p>
+        <input class="q-input" type="text" data-key="voice_casual" placeholder="omg saved this fabric from going to waste, obsessed with how it turned out lol">
+      </div>
+      <div>
+        <p style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:4px;">Just right</p>
+        <input class="q-input" type="text" data-key="voice_right" placeholder="This started as fabric that had nowhere to go. Now it's yours.">
+      </div>
+    </div>
+  </div>
+
+  <div class="q-block" data-key="brand_visual">
+    <div class="q-label">1.6 · Visual identity <span class="q-done">ANSWERED</span></div>
+    <p class="q-prompt">Describe the look and feel of Eaze Studio. What does it look like on a phone screen?</p>
+    <div style="display:flex;flex-direction:column;gap:0.5rem;">
+      <div>
+        <p style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:4px;">Colours and mood</p>
+        <textarea class="q-textarea" data-key="visual_colours" placeholder="e.g. Warm neutrals, natural textures, earthy tones. Nothing clinical or stark." style="min-height:60px;"></textarea>
+      </div>
+      <div>
+        <p style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:4px;">Brands that inspire the look (not competitors, just visual reference)</p>
+        <textarea class="q-textarea" data-key="visual_refs" placeholder="e.g. Aesop for the restraint. Toteme for the quiet luxury. Veja for the transparency." style="min-height:60px;"></textarea>
+      </div>
+      <div>
+        <p style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:4px;">What it should NEVER look like</p>
+        <textarea class="q-textarea" data-key="visual_never" placeholder="e.g. Fast fashion editorial. Heavy filters. Overly glossy or corporate." style="min-height:60px;"></textarea>
+      </div>
+    </div>
+  </div>
+
+  <div class="q-block" data-key="brand_diff">
+    <div class="q-label">1.7 · Differentiation <span class="q-done">ANSWERED</span></div>
+    <p class="q-prompt">What makes Eaze Studio impossible to replicate exactly?</p>
+    <p class="q-context">Think about the combination of things: Emma's background, the production method, the sourcing story, the community. What could someone not just copy tomorrow?</p>
+    <textarea class="q-textarea" data-key="brand_diff" placeholder="e.g. The supply chain is the product. Each piece comes with a traceable story from fabric to finished garment. That's not a marketing line, it's a production method."></textarea>
+  </div>
+</div>
+
+<div class="divider"><span class="divider-label">Part Two</span></div>
+
+<!-- PART 2: CUSTOMER PERSONA -->
+<div class="section">
+  <p class="section-eyebrow">Part Two</p>
+  <h2 class="section-title">Your Customer</h2>
+  <p class="section-desc">The more specific you are about who she is, the easier every decision becomes. Name her, know her, talk to her. Everyone else is a bonus.</p>
+
+  <div class="q-block" data-key="persona_name">
+    <div class="q-label">2.1 · Give her a name <span class="q-done">ANSWERED</span></div>
+    <p class="q-prompt">What is her name? Pick one. This makes her feel real.</p>
+    <input class="q-input" type="text" data-key="persona_name" placeholder="e.g. Maya">
+  </div>
+
+  <div class="q-block" data-key="persona_basics">
+    <div class="q-label">2.2 · The basics <span class="q-done">ANSWERED</span></div>
+    <p class="q-prompt">Paint the picture of her everyday life.</p>
+    <div style="display:flex;flex-direction:column;gap:0.5rem;">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.5rem;">
+        <div>
+          <p style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:4px;">Age</p>
+          <input class="q-input" type="text" data-key="persona_age" placeholder="e.g. 28-35">
+        </div>
+        <div>
+          <p style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:4px;">Location</p>
+          <input class="q-input" type="text" data-key="persona_location" placeholder="e.g. London, major UK cities">
+        </div>
+        <div>
+          <p style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:4px;">Occupation</p>
+          <input class="q-input" type="text" data-key="persona_job" placeholder="e.g. Works in creative, marketing or professional services">
+        </div>
+        <div>
+          <p style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:4px;">Income bracket</p>
+          <input class="q-input" type="text" data-key="persona_income" placeholder="e.g. £35k-65k per year">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="q-block" data-key="persona_wardrobe">
+    <div class="q-label">2.3 · Her wardrobe today <span class="q-done">ANSWERED</span></div>
+    <p class="q-prompt">What does she currently buy and wear? What brands does she shop with?</p>
+    <p class="q-context">Be honest. If she's currently buying from ASOS and Zara, that's useful information. You're not judging her, you're understanding where she is so you can meet her there.</p>
+    <textarea class="q-textarea" data-key="persona_wardrobe" placeholder="e.g. Buys from ASOS and Zara for basics, splurges on COS or & Other Stories occasionally. Aspires to more considered pieces but finds sustainable fashion either too expensive or too earnest."></textarea>
+  </div>
+
+  <div class="q-block" data-key="persona_values">
+    <div class="q-label">2.4 · What she values <span class="q-done">ANSWERED</span></div>
+    <p class="q-prompt">What does she care about when she is getting dressed? Choose everything that applies.</p>
+    <div class="choice-grid">
+      <div class="choice-item" onclick="toggleChoice(this,'pv_ease')"><span class="choice-cb"></span>Getting ready without thinking</div>
+      <div class="choice-item" onclick="toggleChoice(this,'pv_quality')"><span class="choice-cb"></span>Quality over quantity</div>
+      <div class="choice-item" onclick="toggleChoice(this,'pv_ethics')"><span class="choice-cb"></span>Knowing where her clothes come from</div>
+      <div class="choice-item" onclick="toggleChoice(this,'pv_versatile')"><span class="choice-cb"></span>Pieces that work across occasions</div>
+      <div class="choice-item" onclick="toggleChoice(this,'pv_style')"><span class="choice-cb"></span>Looking put together, not try-hard</div>
+      <div class="choice-item" onclick="toggleChoice(this,'pv_unique')"><span class="choice-cb"></span>Not looking like everyone else</div>
+      <div class="choice-item" onclick="toggleChoice(this,'pv_investment')"><span class="choice-cb"></span>Buying less but better</div>
+      <div class="choice-item" onclick="toggleChoice(this,'pv_story')"><span class="choice-cb"></span>Owning pieces with a story</div>
+    </div>
+  </div>
+
+  <div class="q-block" data-key="persona_problem">
+    <div class="q-label">2.5 · Her real frustration <span class="q-done">ANSWERED</span></div>
+    <p class="q-prompt">What does she say to herself when she stands in front of her wardrobe and feels like she has nothing to wear?</p>
+    <p class="q-context">This is the emotional insight. The thought she has that Eaze Studio is the answer to.</p>
+    <textarea class="q-textarea" data-key="persona_problem" placeholder="e.g. She has a wardrobe full of clothes but nothing that feels intentional or cohesive. She knows she's bought things without thinking and they don't work together. She wants to feel like herself when she gets dressed, not like she's just wearing whatever was cheap or convenient."></textarea>
+  </div>
+
+  <div class="q-block" data-key="persona_social">
+    <div class="q-label">2.6 · Where she lives online <span class="q-done">ANSWERED</span></div>
+    <p class="q-prompt">Where does she spend time online and what kind of content does she engage with?</p>
+    <div class="choice-grid">
+      <div class="choice-item" onclick="toggleChoice(this,'ps_ig')"><span class="choice-cb"></span>Instagram (browsing, saving)</div>
+      <div class="choice-item" onclick="toggleChoice(this,'ps_tt')"><span class="choice-cb"></span>TikTok (discovery, getting lost)</div>
+      <div class="choice-item" onclick="toggleChoice(this,'ps_pin')"><span class="choice-cb"></span>Pinterest (mood boarding)</div>
+      <div class="choice-item" onclick="toggleChoice(this,'ps_sub')"><span class="choice-cb"></span>Substack / newsletters</div>
+      <div class="choice-item" onclick="toggleChoice(this,'ps_yt')"><span class="choice-cb"></span>YouTube (longer content)</div>
+      <div class="choice-item" onclick="toggleChoice(this,'ps_reddit')"><span class="choice-cb"></span>Reddit communities</div>
+    </div>
+    <textarea class="q-textarea" data-key="persona_social_notes" placeholder="What kind of accounts does she follow? What does she save? What makes her click through to a brand?" style="min-height:60px;margin-top:0.5rem;"></textarea>
+  </div>
+
+  <div class="q-block" data-key="persona_trigger">
+    <div class="q-label">2.7 · What makes her buy <span class="q-done">ANSWERED</span></div>
+    <p class="q-prompt">What would make her stop scrolling and actually click through to buy something from a brand she has never heard of?</p>
+    <textarea class="q-textarea" data-key="persona_trigger" placeholder="e.g. She sees someone wearing a piece and thinks it looks effortless. She clicks through, reads the story about where the fabric came from, sees it was made to order, and that combination of story plus quality plus ethics makes her feel like this is the brand she has been looking for."></textarea>
+  </div>
+
+  <div class="q-block" data-key="persona_price">
+    <div class="q-label">2.8 · Price sensitivity <span class="q-done">ANSWERED</span></div>
+    <p class="q-prompt">What would she be willing to pay for a made-to-order two-piece set from a brand she trusts?</p>
+    <div class="choice-grid" style="grid-template-columns:1fr 1fr 1fr;">
+      <div class="choice-item" onclick="toggleChoice(this,'pp_low')"><span class="choice-cb"></span>Under £80</div>
+      <div class="choice-item" onclick="toggleChoice(this,'pp_mid')"><span class="choice-cb"></span>£80 to £150</div>
+      <div class="choice-item" onclick="toggleChoice(this,'pp_high')"><span class="choice-cb"></span>£150 to £250</div>
+    </div>
+    <textarea class="q-textarea" data-key="persona_price_notes" placeholder="What would make her feel the price was justified? What would make her hesitate?" style="min-height:55px;margin-top:0.5rem;"></textarea>
+  </div>
+
+  <!-- PERSONA PREVIEW -->
+  <div class="persona-preview" id="persona-card">
+    <p class="persona-title">Your customer at a glance</p>
+    <div class="persona-grid">
+      <div>
+        <p class="persona-item-label">Her name</p>
+        <p class="persona-item-val" id="sum-name"></p>
+      </div>
+      <div>
+        <p class="persona-item-label">Age and location</p>
+        <p class="persona-item-val" id="sum-age-loc"></p>
+      </div>
+      <div>
+        <p class="persona-item-label">Her real frustration</p>
+        <p class="persona-item-val" id="sum-problem"></p>
+      </div>
+      <div>
+        <p class="persona-item-label">What makes her buy</p>
+        <p class="persona-item-val" id="sum-trigger"></p>
+      </div>
+      <div>
+        <p class="persona-item-label">Brand in one line</p>
+        <p class="persona-item-val" id="sum-one-line"></p>
+      </div>
+      <div>
+        <p class="persona-item-label">Brand voice (just right)</p>
+        <p class="persona-item-val" id="sum-voice"></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"><span class="divider-label">Part Three</span></div>
+
+<!-- PART 3: BUILDING IN PUBLIC -->
+<div class="section">
+  <p class="section-eyebrow">Part Three</p>
+  <h2 class="section-title">Building in Public</h2>
+  <p class="section-desc">You do not need a name, a logo or a finished product to start posting. The journey to the product is the content. Here is what pre-launch building in public looks like for Eaze Studio, and what to post on each platform.</p>
+
+  <div class="bip-grid">
+    <div class="bip-card phase-0">
+      <p class="bip-phase">Right now · No name locked</p>
+      <p class="bip-title">The Idea Stage</p>
+      <p class="bip-desc">Post about the why before the what. The frustration that started this. The decision to build something real.</p>
+      <ul class="bip-examples">
+        <li class="bip-ex">Why I'm building a fashion brand and what's wrong with the industry</li>
+        <li class="bip-ex">What "deadstock" actually means and why it matters</li>
+        <li class="bip-ex">The fabric sourcing trip to Tottenham (film it)</li>
+        <li class="bip-ex">Three things I wish I knew before starting a fashion brand</li>
+        <li class="bip-ex">The wardrobe problem I'm trying to solve</li>
+      </ul>
+    </div>
+    <div class="bip-card phase-1">
+      <p class="bip-phase">Soon · Name and prototype forming</p>
+      <p class="bip-title">The Build Stage</p>
+      <p class="bip-desc">Show the process. The prototype sessions, the material decisions, the mistakes. This is the most compelling content you can make.</p>
+      <ul class="bip-examples">
+        <li class="bip-ex">First prototype try-on (messy is fine)</li>
+        <li class="bip-ex">Why I chose this fabric over that one</li>
+        <li class="bip-ex">The name reveal and the thinking behind it</li>
+        <li class="bip-ex">What made-to-order actually means for the customer</li>
+        <li class="bip-ex">What I am learning from building this in public</li>
+      </ul>
+    </div>
+    <div class="bip-card phase-2">
+      <p class="bip-phase">August onwards · Pre-launch</p>
+      <p class="bip-title">The Launch Stage</p>
+      <p class="bip-desc">Build the waitlist. Let people feel like they are part of it before it exists. Create anticipation, not announcement.</p>
+      <ul class="bip-examples">
+        <li class="bip-ex">First finished piece content (the September trip)</li>
+        <li class="bip-ex">How to be first on the waitlist</li>
+        <li class="bip-ex">Behind the scenes of the first order being made</li>
+        <li class="bip-ex">The story behind piece number one</li>
+        <li class="bip-ex">Community Q&A before launch</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="platform-strip">
+    <div class="platform-pill pp-ig">
+      <p class="platform-pill-name">Instagram</p>
+      <p class="platform-pill-role">Your home base. Reels for discovery, Stories for daily process, carousels for storytelling. Post here first, cross-post elsewhere.</p>
+    </div>
+    <div class="platform-pill pp-tt">
+      <p class="platform-pill-name">TikTok</p>
+      <p class="platform-pill-role">Raw, talking to camera, unfiltered. "I'm building a fashion brand" content. The algorithm will find your person if you are specific and honest.</p>
+    </div>
+    <div class="platform-pill pp-li">
+      <p class="platform-pill-name">LinkedIn</p>
+      <p class="platform-pill-role">Founder storytelling. The production worker building a fashion brand. The sustainability angle. Post once a week, same content reframed for a professional reader.</p>
+    </div>
+  </div>
+
+  <div class="q-block" data-key="posting_block">
+    <div class="q-label">3.1 · Your posting block <span class="q-done">ANSWERED</span></div>
+    <p class="q-prompt">What is the real reason you have not started posting yet? Be honest with yourself.</p>
+    <div class="choice-grid">
+      <div class="choice-item" onclick="toggleChoice(this,'pb_name')"><span class="choice-cb"></span>Waiting for the name to be locked</div>
+      <div class="choice-item" onclick="toggleChoice(this,'pb_logo')"><span class="choice-cb"></span>Waiting for a logo</div>
+      <div class="choice-item" onclick="toggleChoice(this,'pb_perfect')"><span class="choice-cb"></span>Want it to look perfect first</div>
+      <div class="choice-item" onclick="toggleChoice(this,'pb_judge')"><span class="choice-cb"></span>Fear of being judged</div>
+      <div class="choice-item" onclick="toggleChoice(this,'pb_know')"><span class="choice-cb"></span>Don't know what to say first</div>
+      <div class="choice-item" onclick="toggleChoice(this,'pb_camera')"><span class="choice-cb"></span>Not comfortable on camera yet</div>
+    </div>
+    <textarea class="q-textarea" data-key="posting_block_notes" placeholder="Write what the voice in your head says when you're about to post and then don't..." style="min-height:55px;margin-top:0.5rem;"></textarea>
+  </div>
+
+  <div class="q-block" data-key="first_post">
+    <div class="q-label">3.2 · Your first post <span class="q-done">ANSWERED</span></div>
+    <p class="q-prompt">If you had to post something in the next 24 hours, what would it be? Write the caption or the hook line here.</p>
+    <p class="q-context">Remember: you do not need a name. You do not need a logo. You need a story and a camera. The fabric sourcing trip this Saturday is a perfect starting point.</p>
+    <textarea class="q-textarea" data-key="first_post" placeholder="e.g. I'm building a fashion brand in my spare time from a full-time job. Here's what I found on a deadstock warehouse visit in Tottenham today..."></textarea>
+  </div>
+
+  <div class="q-block" data-key="commit">
+    <div class="q-label">3.3 · The commitment <span class="q-done">ANSWERED</span></div>
+    <p class="q-prompt">What is the date you will post your first piece of content?</p>
+    <p class="q-context">Write the actual date. Not "soon." Not "when it feels right." A date.</p>
+    <input class="q-input" type="text" data-key="commit_date" placeholder="e.g. Thursday 3 July 2026">
+    <textarea class="q-textarea" data-key="commit_what" placeholder="And what will it be?" style="min-height:55px;margin-top:0.5rem;"></textarea>
+  </div>
+</div>
+
+<div class="send-wrap">
+  <button class="send-btn" onclick="sendAll()">Send to Jordan</button>
+  <p class="send-note">Compiles all your answers and opens a pre-filled email. Takes 30 seconds.</p>
+</div>
+
+</div>
+
+<div class="footer">
+  <span class="footer-brand">Eaze Studio × FORE</span>
+  <span>Brand Identity and Customer Persona Worksheet · July 2026</span>
+  <span>Prepared by Jordan Hall · 07903480039</span>
+</div>
+
+<script>
+const STORE = 'eaze_worksheet';
+let data = JSON.parse(localStorage.getItem(STORE) || '{}');
+let choices = JSON.parse(localStorage.getItem(STORE + '_c') || '{}');
+let scales = JSON.parse(localStorage.getItem(STORE + '_s') || '{}');
+let saveTimer;
+
+function save() {
+  localStorage.setItem(STORE, JSON.stringify(data));
+  localStorage.setItem(STORE + '_c', JSON.stringify(choices));
+  localStorage.setItem(STORE + '_s', JSON.stringify(scales));
+  updateProgress();
+  updatePersona();
+}
+
+function scheduleSave() { clearTimeout(saveTimer); saveTimer = setTimeout(save, 700); }
+
+function wireInputs() {
+  document.querySelectorAll('[data-key]').forEach(el => {
+    if (el.tagName !== 'TEXTAREA' && el.tagName !== 'INPUT') return;
+    const key = el.dataset.key;
+    if (data[key]) el.value = data[key];
+    el.addEventListener('input', () => {
+      data[key] = el.value;
+      const block = el.closest('.q-block');
+      if (block) block.classList.toggle('complete', el.value.trim().length > 0);
+      scheduleSave();
+    });
+    if (data[key] && data[key].trim()) {
+      const block = el.closest('.q-block');
+      if (block) block.classList.add('complete');
+    }
+  });
+}
+
+function toggleChoice(el, key) {
+  el.classList.toggle('selected');
+  choices[key] = el.classList.contains('selected');
+  scheduleSave();
+}
+
+function restoreChoices() {
+  Object.entries(choices).forEach(([key, val]) => {
+    if (!val) return;
+    document.querySelectorAll('.choice-item').forEach(item => {
+      const oc = item.getAttribute('onclick') || '';
+      if (oc.includes("'" + key + "'")) item.classList.add('selected');
+    });
+  });
+}
+
+function setScale(name, val, btn) {
+  scales[name] = val;
+  const wrap = document.getElementById('scale-' + name);
+  if (wrap) wrap.querySelectorAll('.scale-btn').forEach(b => b.classList.toggle('active', parseInt(b.textContent) === val));
+  scheduleSave();
+}
+
+function restoreScales() {
+  Object.entries(scales).forEach(([name, val]) => {
+    const wrap = document.getElementById('scale-' + name);
+    if (!wrap) return;
+    wrap.querySelectorAll('.scale-btn').forEach(b => { if (parseInt(b.textContent) === val) b.classList.add('active'); });
+  });
+}
+
+function addRow(containerId, prefix) {
+  const container = document.getElementById(containerId);
+  const n = container.querySelectorAll('.multi-row').length;
+  const key = prefix + '_' + n;
+  const row = document.createElement('div');
+  row.className = 'multi-row';
+  row.innerHTML = `<input class="q-input" type="text" placeholder="Add another..." data-key="${key}"><button class="remove-btn" onclick="removeRow(this)">×</button>`;
+  container.appendChild(row);
+  const input = row.querySelector('input');
+  input.addEventListener('input', () => { data[key] = input.value; scheduleSave(); });
+  input.focus();
+}
+
+function removeRow(btn) { btn.closest('.multi-row').remove(); scheduleSave(); }
+
+function updateProgress() {
+  const all = document.querySelectorAll('.q-block');
+  const done = document.querySelectorAll('.q-block.complete').length;
+  const pct = all.length ? Math.round((done / all.length) * 100) : 0;
+  document.getElementById('prog-fill').style.width = pct + '%';
+  document.getElementById('prog-pct').textContent = pct + '%';
+}
+
+function trunc(s, n) { return s && s.length > n ? s.slice(0,n) + '...' : (s || ''); }
+
+function updatePersona() {
+  const el = id => document.getElementById(id);
+  const name = data['persona_name'] || '';
+  const age = data['persona_age'] || '';
+  const loc = data['persona_location'] || '';
+  el('sum-name').textContent = name;
+  el('sum-age-loc').textContent = [age, loc].filter(Boolean).join(', ');
+  el('sum-problem').textContent = trunc(data['persona_problem'] || '', 100);
+  el('sum-trigger').textContent = trunc(data['persona_trigger'] || '', 100);
+  el('sum-one-line').textContent = trunc(data['brand_one_line'] || '', 100);
+  el('sum-voice').textContent = trunc(data['voice_right'] || '', 100);
+}
+
+function sendAll() {
+  const lines = ['EAZE STUDIO — BRAND IDENTITY AND CUSTOMER PERSONA WORKSHEET\nCompleted by Emma Morton\n'];
+  const sections = [
+    ['BRAND IDENTITY', ['brand_one_line','brand_why','brand_diff','voice_right','visual_colours','visual_refs','visual_never']],
+    ['CUSTOMER PERSONA', ['persona_name','persona_age','persona_location','persona_job','persona_income','persona_wardrobe','persona_problem','persona_trigger','persona_price_notes','persona_social_notes']],
+    ['BUILDING IN PUBLIC', ['posting_block_notes','first_post','commit_date','commit_what']],
+  ];
+  sections.forEach(([title, keys]) => {
+    lines.push('--- ' + title + ' ---');
+    keys.forEach(k => { if (data[k] && data[k].trim()) lines.push(k.replace(/_/g,' ').toUpperCase() + ':\n' + data[k]); });
+    lines.push('');
+  });
+  const sub = encodeURIComponent('Eaze Studio - Brand Identity and Persona Worksheet');
+  const body = encodeURIComponent(lines.join('\n'));
+  window.location.href = `mailto:jordanhallyankey@gmail.com?subject=${sub}&body=${body}`;
+}
+
+wireInputs();
+restoreChoices();
+restoreScales();
+updateProgress();
+updatePersona();
+</script>
+
+</body>
+</html>
