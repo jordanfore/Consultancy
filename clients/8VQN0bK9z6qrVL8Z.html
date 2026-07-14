@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Pretty Bandit — Audience Analysis</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=DM+Mono:wght@300;400;500&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --void:#060606;--dark:#0F0F0F;--card:#161616;--card2:#1E1E1E;--mid:#2A2A2A;
+  --rule:rgba(255,255,255,0.07);--rule2:rgba(255,255,255,0.13);
+  --paper:#F0EDE6;--muted:#606060;--muted2:#3E3E3E;
+  --red:#CC2222;--red-lt:rgba(204,34,34,0.1);
+  --amber:#E8A020;--amber-lt:rgba(232,160,32,0.08);
+  --green:#28A050;--green-lt:rgba(40,160,80,0.1);
+  --blue:#2255CC;--blue-lt:rgba(34,85,204,0.1);
+  --purple:#9030D0;--purple-lt:rgba(144,48,208,0.1);
+  --tt:#69C9D0;--ig:#E060A0;--sp:#1DB954;
+}
+body{background:var(--void);color:var(--paper);font-family:'DM Sans',sans-serif;font-size:14px;line-height:1.7}
+
+/* HERO */
+.hero{background:var(--dark);border-bottom:1px solid var(--rule2);padding:2.5rem 3rem;position:relative;overflow:hidden}
+.hero::before{content:'DATA';position:absolute;right:-0.02em;bottom:-0.1em;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:18rem;color:rgba(255,255,255,0.02);line-height:1;pointer-events:none;letter-spacing:-0.04em}
+.hero-eyebrow{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.22em;text-transform:uppercase;color:var(--amber);margin-bottom:0.75rem;display:flex;align-items:center;gap:0.75rem}
+.hero-eyebrow::before{content:'';display:block;width:20px;height:1px;background:var(--amber)}
+.hero h1{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(2rem,5vw,3.5rem);line-height:0.9;letter-spacing:-0.03em}
+.hero h1 span{color:var(--amber)}
+.hero-sub{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);margin-top:1rem;line-height:2}
+.platform-tags{display:flex;gap:0.5rem;margin-top:1.25rem;flex-wrap:wrap}
+.ptag{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.1em;text-transform:uppercase;padding:4px 12px;border-radius:100px;border:1px solid;font-weight:500}
+.ptag.tt{color:var(--tt);border-color:rgba(105,201,208,0.4);background:rgba(105,201,208,0.08)}
+.ptag.ig{color:var(--ig);border-color:rgba(224,96,160,0.4);background:rgba(224,96,160,0.08)}
+.ptag.sp{color:var(--sp);border-color:rgba(29,185,84,0.4);background:rgba(29,185,84,0.08)}
+
+/* NAV */
+.nav{position:sticky;top:0;z-index:100;background:rgba(6,6,6,0.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--rule);padding:0 3rem;display:flex;gap:0;overflow-x:auto}
+.nav a{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);text-decoration:none;padding:0.8rem 1rem;border-bottom:2px solid transparent;white-space:nowrap;transition:all 0.15s}
+.nav a:hover{color:var(--paper);border-bottom-color:var(--amber)}
+@media(max-width:700px){.hero{padding:2rem 1.5rem}.nav{padding:0 1rem}.doc{padding:1.5rem}}
+
+/* BODY */
+.doc{max-width:1060px;margin:0 auto;padding:3rem}
+
+/* SECTION */
+.sec{margin-bottom:3.5rem}
+.sec-hdr{display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem;padding-bottom:0.75rem;border-bottom:1px solid var(--rule2)}
+.sec-lbl{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:var(--amber);flex-shrink:0}
+.sec-title{font-family:'Space Grotesk',sans-serif;font-size:1.35rem;font-weight:600;letter-spacing:-0.02em;line-height:1}
+.sec-rule{flex:1;height:1px;background:var(--rule)}
+
+/* STAT GRID */
+.stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0.75rem;margin-bottom:1rem}
+.stat-grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:0.75rem;margin-bottom:1rem}
+.stat-grid-2{display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;margin-bottom:1rem}
+@media(max-width:900px){.stat-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:600px){.stat-grid,.stat-grid-3,.stat-grid-2{grid-template-columns:1fr}}
+
+.stat-card{background:var(--card);border:1px solid var(--rule);border-radius:8px;padding:1.1rem 1.2rem;position:relative;overflow:hidden}
+.stat-card.highlight{border-color:rgba(232,160,32,0.3);background:rgba(232,160,32,0.04)}
+.stat-label{font-family:'DM Mono',monospace;font-size:8.5px;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);margin-bottom:0.4rem}
+.stat-val{font-family:'Space Grotesk',sans-serif;font-size:2rem;font-weight:700;line-height:1;letter-spacing:-0.03em;margin-bottom:0.2rem}
+.stat-sub{font-size:11.5px;color:var(--muted);line-height:1.5}
+.stat-sub strong{color:rgba(240,237,230,0.7);font-weight:500}
+.stat-platform{font-family:'DM Mono',monospace;font-size:8px;letter-spacing:0.1em;text-transform:uppercase;position:absolute;top:0.75rem;right:0.75rem;padding:2px 7px;border-radius:100px;border:1px solid}
+.tt-tag{color:var(--tt);border-color:rgba(105,201,208,0.3)}
+.ig-tag{color:var(--ig);border-color:rgba(224,96,160,0.3)}
+.sp-tag{color:var(--sp);border-color:rgba(29,185,84,0.3)}
+
+/* PROSE */
+.prose{font-size:13.5px;line-height:1.85;color:rgba(240,237,230,0.7);margin-bottom:1rem;max-width:720px}
+.prose strong{color:var(--paper);font-weight:500}
+
+/* CALLOUT */
+.callout{background:var(--amber-lt);border:1px solid rgba(232,160,32,0.25);border-radius:6px;padding:1rem 1.2rem;margin:1rem 0}
+.callout.red{background:var(--red-lt);border-color:rgba(204,34,34,0.25)}
+.callout.green{background:var(--green-lt);border-color:rgba(40,160,80,0.25)}
+.callout-lbl{font-family:'DM Mono',monospace;font-size:8.5px;letter-spacing:0.16em;text-transform:uppercase;color:var(--amber);margin-bottom:0.3rem}
+.callout.red .callout-lbl{color:var(--red)}
+.callout.green .callout-lbl{color:var(--green)}
+.callout p{font-size:13px;line-height:1.65;color:rgba(240,237,230,0.8)}
+.callout strong{color:var(--paper)}
+
+/* BAR CHART */
+.bar-chart{margin:1rem 0}
+.bar-row{display:grid;grid-template-columns:90px 1fr 60px;gap:0.75rem;align-items:center;margin-bottom:0.5rem}
+.bar-lbl{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.06em;color:var(--muted);text-align:right}
+.bar-track{height:26px;background:var(--card2);border-radius:4px;overflow:hidden;position:relative}
+.bar-fill{height:100%;border-radius:4px;display:flex;align-items:center;padding-left:8px;font-family:'DM Mono',monospace;font-size:10px;font-weight:500;transition:width 0.8s ease}
+.bar-val{font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:0.06em}
+
+/* GENDER COMPARE */
+.gender-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0.75rem;margin:1rem 0}
+.gender-card{background:var(--card);border:1px solid var(--rule);border-radius:8px;padding:1.1rem}
+.gender-title{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.14em;text-transform:uppercase;margin-bottom:0.75rem}
+.gender-split{display:flex;height:28px;border-radius:5px;overflow:hidden;margin-bottom:0.5rem}
+.gs-m{background:var(--blue);display:flex;align-items:center;justify-content:center;font-family:'DM Mono',monospace;font-size:10px;font-weight:500;color:white}
+.gs-f{background:#CC5090;display:flex;align-items:center;justify-content:center;font-family:'DM Mono',monospace;font-size:10px;font-weight:500;color:white}
+.gender-legend{display:flex;gap:1rem;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.06em;color:var(--muted)}
+.gl-dot{width:8px;height:8px;border-radius:2px;flex-shrink:0}
+@media(max-width:700px){.gender-grid{grid-template-columns:1fr}}
+
+/* AGE BREAKDOWN */
+.age-table{width:100%;border-collapse:collapse;font-size:12px;margin:1rem 0}
+.age-table th{font-family:'DM Mono',monospace;font-size:8.5px;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);text-align:left;padding:6px 10px;border-bottom:1px solid var(--rule2);font-weight:400;background:var(--card2)}
+.age-table td{padding:7px 10px;border-bottom:1px solid var(--rule);font-family:'DM Mono',monospace;font-size:11px;color:rgba(240,237,230,0.7)}
+.age-table tr:last-child td{border-bottom:none}
+.age-table td:first-child{color:var(--paper);font-weight:500}
+.mini-bar{display:inline-block;height:8px;border-radius:2px;vertical-align:middle;margin-left:6px}
+
+/* TIMELINE */
+.timeline-chart{margin:1.25rem 0;background:var(--card);border:1px solid var(--rule);border-radius:8px;padding:1.25rem}
+.tl-title{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.16em;text-transform:uppercase;color:var(--muted);margin-bottom:1rem}
+.spark{display:flex;align-items:flex-end;gap:1px;height:60px}
+.spark-bar{flex:1;border-radius:1px 1px 0 0;min-width:1px;transition:opacity 0.15s}
+.spark-bar:hover{opacity:0.7}
+.tl-labels{display:flex;justify-content:space-between;margin-top:6px}
+.tl-lbl{font-family:'DM Mono',monospace;font-size:8.5px;color:var(--muted);letter-spacing:0.04em}
+
+/* INSIGHT LIST */
+.insight-list{list-style:none;margin:0.75rem 0}
+.insight-list li{display:flex;gap:10px;padding:0.5rem 0;border-bottom:1px solid var(--rule);font-size:13px;color:rgba(240,237,230,0.7);line-height:1.55}
+.insight-list li:last-child{border-bottom:none}
+.insight-list li::before{content:'→';color:var(--amber);flex-shrink:0;font-size:11px;padding-top:2px}
+.insight-list strong{color:var(--paper);font-weight:500}
+
+/* FOOTER */
+.footer{background:var(--dark);border-top:1px solid var(--rule);padding:1.5rem 3rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;margin-top:3rem}
+.footer-brand{font-family:'Space Grotesk',sans-serif;font-size:1rem;font-weight:700;letter-spacing:-0.02em}
+.footer-brand span{color:var(--amber)}
+.footer-meta{font-family:'DM Mono',monospace;font-size:9px;color:var(--muted);letter-spacing:0.08em;text-align:right;line-height:2}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <p class="hero-eyebrow">Cross-Platform Audience Analysis</p>
+  <h1>PRETTY<br><span>BANDIT</span></h1>
+  <p class="hero-sub">TikTok · Instagram · Spotify &nbsp;·&nbsp; Jan 2024 – Jul 2026 &nbsp;·&nbsp; Prepared by Jordan Hall / FORE</p>
+  <div class="platform-tags">
+    <span class="ptag tt">TikTok · 3M+ views</span>
+    <span class="ptag ig">Instagram · 379k reach</span>
+    <span class="ptag sp">Spotify · 73k streams</span>
+  </div>
+</div>
+
+<nav class="nav">
+  <a href="#headline">Headline Numbers</a>
+  <a href="#audiences">Audience by Platform</a>
+  <a href="#tiktok">TikTok</a>
+  <a href="#instagram">Instagram</a>
+  <a href="#spotify">Spotify</a>
+  <a href="#gap">The Critical Gap</a>
+  <a href="#strategy">Strategy Implications</a>
+</nav>
+
+<div class="doc">
+
+<!-- HEADLINE NUMBERS -->
+<div id="headline" class="sec">
+  <div class="sec-hdr">
+    <span class="sec-lbl">Overview</span>
+    <h2 class="sec-title">Headline Numbers</h2>
+    <div class="sec-rule"></div>
+  </div>
+
+  <div class="stat-grid">
+    <div class="stat-card highlight">
+      <span class="stat-platform tt-tag">TikTok</span>
+      <p class="stat-label">Total video views (12 months)</p>
+      <p class="stat-val" style="color:var(--tt)">3.0M</p>
+      <p class="stat-sub">Avg <strong>8,244/day</strong> · 93 days above 10k</p>
+    </div>
+    <div class="stat-card">
+      <span class="stat-platform ig-tag">Instagram</span>
+      <p class="stat-label">Total reach (Jun–Jul 2026)</p>
+      <p class="stat-val" style="color:var(--ig)">379k</p>
+      <p class="stat-sub">Peak day <strong>192,401</strong> (Jun 28 viral event)</p>
+    </div>
+    <div class="stat-card">
+      <span class="stat-platform sp-tag">Spotify</span>
+      <p class="stat-label">Total streams (all time)</p>
+      <p class="stat-val" style="color:var(--sp)">73.4k</p>
+      <p class="stat-sub">Peak month <strong>18.1k</strong> (May 2024)</p>
+    </div>
+    <div class="stat-card">
+      <span class="stat-platform sp-tag">Spotify</span>
+      <p class="stat-label">Current monthly listeners</p>
+      <p class="stat-val">85</p>
+      <p class="stat-sub"><strong>177</strong> followers · was 2,763 at peak (Jun 2024)</p>
+    </div>
+  </div>
+
+  <div class="stat-grid">
+    <div class="stat-card">
+      <span class="stat-platform tt-tag">TikTok</span>
+      <p class="stat-label">Like rate</p>
+      <p class="stat-val" style="color:var(--tt)">6.5%</p>
+      <p class="stat-sub">Industry average is <strong>2–4%</strong> — above benchmark</p>
+    </div>
+    <div class="stat-card">
+      <span class="stat-platform tt-tag">TikTok</span>
+      <p class="stat-label">Share rate</p>
+      <p class="stat-val" style="color:var(--tt)">0.65%</p>
+      <p class="stat-sub"><strong>19,544</strong> total shares — strong shareability signal</p>
+    </div>
+    <div class="stat-card">
+      <span class="stat-platform ig-tag">Instagram</span>
+      <p class="stat-label">Link clicks (full period)</p>
+      <p class="stat-val" style="color:var(--red)">0</p>
+      <p class="stat-sub"><strong>Zero</strong> link clicks across all 28 days tracked</p>
+    </div>
+    <div class="stat-card">
+      <span class="stat-platform ig-tag">Instagram</span>
+      <p class="stat-label">New follows (Jun–Jul)</p>
+      <p class="stat-val">147</p>
+      <p class="stat-sub">42 in a single day <strong>(Jun 28)</strong> — all viral-driven</p>
+    </div>
+  </div>
+</div>
+
+<!-- AUDIENCE BREAKDOWN -->
+<div id="audiences" class="sec">
+  <div class="sec-hdr">
+    <span class="sec-lbl">Audiences</span>
+    <h2 class="sec-title">Gender and Age by Platform</h2>
+    <div class="sec-rule"></div>
+  </div>
+
+  <div class="callout">
+    <p class="callout-lbl">The key finding</p>
+    <p>The gender split <strong>flips completely between platforms.</strong> Instagram is 57% male. Spotify is 56% female. TikTok, based on conversation data, is 65–70% female. This is not a contradiction — it is a map. Each platform is reaching a different version of the same audience, and the campaign strategy needs to treat them differently.</p>
+  </div>
+
+  <div class="gender-grid">
+    <div class="gender-card">
+      <p class="gender-title" style="color:var(--tt)">TikTok</p>
+      <div class="gender-split">
+        <div class="gs-f" style="width:67.5%">67.5% F</div>
+        <div class="gs-m" style="width:32.5%">32.5% M</div>
+      </div>
+      <div class="gender-legend">
+        <span style="display:flex;align-items:center;gap:4px"><span class="gl-dot" style="background:#CC5090"></span>Female-led discovery</span>
+      </div>
+      <p style="font-size:11.5px;color:var(--muted);margin-top:0.5rem;line-height:1.5">Personality and entertainment driven. Women share, comment and create conversations. This is where the Demon campaign narrative will spread.</p>
+    </div>
+    <div class="gender-card">
+      <p class="gender-title" style="color:var(--ig)">Instagram</p>
+      <div class="gender-split">
+        <div class="gs-m" style="width:57.4%">57.4% M</div>
+        <div class="gs-f" style="width:42.6%">42.6% F</div>
+      </div>
+      <div class="gender-legend">
+        <span style="display:flex;align-items:center;gap:4px"><span class="gl-dot" style="background:var(--blue)"></span>Male-majority follower base</span>
+      </div>
+      <p style="font-size:11.5px;color:var(--muted);margin-top:0.5rem;line-height:1.5">Core fan base skews male, 25–34 dominating at 33.7% of audience. London-heavy (23.3%). This audience already knows him — they're the early adopters.</p>
+    </div>
+    <div class="gender-card">
+      <p class="gender-title" style="color:var(--sp)">Spotify</p>
+      <div class="gender-split">
+        <div class="gs-f" style="width:56.1%">56.1% F</div>
+        <div class="gs-m" style="width:43.9%">43.9% M</div>
+      </div>
+      <div class="gender-legend">
+        <span style="display:flex;align-items:center;gap:4px"><span class="gl-dot" style="background:#CC5090"></span>Older female listeners</span>
+      </div>
+      <p style="font-size:11.5px;color:var(--muted);margin-top:0.5rem;line-height:1.5">Strikingly older than social — 35–44 is the single biggest female cohort at 12.3%. 100% UK. Very small and dormant right now but quality listeners who save and return.</p>
+    </div>
+  </div>
+
+  <!-- AGE TABLE -->
+  <div class="stat-grid-2" style="margin-top:1.25rem">
+    <div>
+      <p style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:var(--ig);margin-bottom:0.5rem">Instagram Age/Gender</p>
+      <table class="age-table">
+        <thead><tr><th>Age</th><th>Men %</th><th>Women %</th><th>Chart</th></tr></thead>
+        <tbody>
+          <tr><td>18-24</td><td>10.4</td><td>7.0</td><td><span class="mini-bar" style="width:52px;background:var(--blue);opacity:0.7"></span></td></tr>
+          <tr><td>25-34</td><td>33.7</td><td>26.5</td><td><span class="mini-bar" style="width:120px;background:var(--blue)"></span></td></tr>
+          <tr><td>35-44</td><td>11.1</td><td>6.7</td><td><span class="mini-bar" style="width:56px;background:var(--blue);opacity:0.7"></span></td></tr>
+          <tr><td>45-54</td><td>1.7</td><td>1.6</td><td><span class="mini-bar" style="width:9px;background:var(--muted)"></span></td></tr>
+          <tr><td>55-64</td><td>0.2</td><td>0.5</td><td><span class="mini-bar" style="width:4px;background:var(--muted)"></span></td></tr>
+          <tr><td>65+</td><td>0.3</td><td>0.3</td><td><span class="mini-bar" style="width:3px;background:var(--muted)"></span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <p style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:var(--sp);margin-bottom:0.5rem">Spotify Age/Gender</p>
+      <table class="age-table">
+        <thead><tr><th>Age</th><th>Women %</th><th>Men %</th><th>Chart</th></tr></thead>
+        <tbody>
+          <tr><td>18-24</td><td>4.3</td><td>3.9</td><td><span class="mini-bar" style="width:22px;background:var(--sp);opacity:0.5"></span></td></tr>
+          <tr><td>25-34</td><td>10.8</td><td>10.4</td><td><span class="mini-bar" style="width:55px;background:var(--sp)"></span></td></tr>
+          <tr><td>35-44</td><td>12.3</td><td>9.9</td><td><span class="mini-bar" style="width:62px;background:var(--sp)"></span></td></tr>
+          <tr><td>45-54</td><td>9.6</td><td>7.4</td><td><span class="mini-bar" style="width:48px;background:var(--sp);opacity:0.8"></span></td></tr>
+          <tr><td>55-64</td><td>9.3</td><td>6.2</td><td><span class="mini-bar" style="width:47px;background:var(--sp);opacity:0.7"></span></td></tr>
+          <tr><td>65+</td><td>9.8</td><td>6.1</td><td><span class="mini-bar" style="width:49px;background:var(--sp);opacity:0.6"></span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="callout" style="margin-top:1rem">
+    <p class="callout-lbl">Spotify age anomaly</p>
+    <p>Spotify listeners skew dramatically older than the social audience — <strong>the 35–44 cohort is the single largest female group at 12.3%</strong>, and the listening audience is evenly spread across all age groups above 25, including 65+. This suggests his music is finding an older, more serious listener who may have discovered him via playlist adds rather than social media. This audience converts better but is nearly invisible right now.</p>
+  </div>
+</div>
+
+<!-- TIKTOK -->
+<div id="tiktok" class="sec">
+  <div class="sec-hdr">
+    <span class="sec-lbl" style="color:var(--tt)">TikTok</span>
+    <h2 class="sec-title">Performance Deep Dive</h2>
+    <div class="sec-rule"></div>
+  </div>
+
+  <div class="stat-grid">
+    <div class="stat-card">
+      <p class="stat-label">Total views (12 months)</p>
+      <p class="stat-val" style="color:var(--tt)">3.0M</p>
+    </div>
+    <div class="stat-card">
+      <p class="stat-label">Best month</p>
+      <p class="stat-val" style="color:var(--tt)">June</p>
+      <p class="stat-sub"><strong>731,864</strong> views · 49,054 likes</p>
+    </div>
+    <div class="stat-card">
+      <p class="stat-label">Best single day</p>
+      <p class="stat-val" style="color:var(--tt)">90.8k</p>
+      <p class="stat-sub">29 June 2026 · 5,339 likes</p>
+    </div>
+    <div class="stat-card">
+      <p class="stat-label">Total likes</p>
+      <p class="stat-val" style="color:var(--tt)">195k</p>
+      <p class="stat-sub">6.5% like rate — above average</p>
+    </div>
+  </div>
+
+  <!-- Monthly bar chart -->
+  <div class="timeline-chart">
+    <p class="tl-title">Monthly TikTok Views — Jul 2025 to Jun 2026</p>
+    <div class="bar-chart">
+      <div class="bar-row"><span class="bar-lbl">Jul 25</span><div class="bar-track"><div class="bar-fill" style="width:28.9%;background:var(--tt);opacity:0.5;color:var(--void)">211k</div></div><span class="bar-val"></span></div>
+      <div class="bar-row"><span class="bar-lbl">Aug</span><div class="bar-track"><div class="bar-fill" style="width:20.7%;background:var(--tt);opacity:0.5;color:var(--void)">151k</div></div><span class="bar-val"></span></div>
+      <div class="bar-row"><span class="bar-lbl">Sep</span><div class="bar-track"><div class="bar-fill" style="width:5.9%;background:var(--muted);color:var(--void)">44k</div></div><span class="bar-val"></span></div>
+      <div class="bar-row"><span class="bar-lbl">Oct</span><div class="bar-track"><div class="bar-fill" style="width:4.9%;background:var(--muted);color:var(--void)">36k</div></div><span class="bar-val"></span></div>
+      <div class="bar-row"><span class="bar-lbl">Nov</span><div class="bar-track"><div class="bar-fill" style="width:20.0%;background:var(--tt);opacity:0.6;color:var(--void)">147k</div></div><span class="bar-val"></span></div>
+      <div class="bar-row"><span class="bar-lbl">Dec</span><div class="bar-track"><div class="bar-fill" style="width:11.2%;background:var(--tt);opacity:0.5;color:var(--void)">82k</div></div><span class="bar-val"></span></div>
+      <div class="bar-row"><span class="bar-lbl">Jan 26</span><div class="bar-track"><div class="bar-fill" style="width:42.1%;background:var(--tt);opacity:0.7;color:var(--void)">308k</div></div><span class="bar-val"></span></div>
+      <div class="bar-row"><span class="bar-lbl">Feb</span><div class="bar-track"><div class="bar-fill" style="width:64.6%;background:var(--tt);opacity:0.8;color:var(--void)">472k</div></div><span class="bar-val"></span></div>
+      <div class="bar-row"><span class="bar-lbl">Mar</span><div class="bar-track"><div class="bar-fill" style="width:41.8%;background:var(--tt);opacity:0.7;color:var(--void)">305k</div></div><span class="bar-val"></span></div>
+      <div class="bar-row"><span class="bar-lbl">Apr</span><div class="bar-track"><div class="bar-fill" style="width:24.1%;background:var(--tt);opacity:0.6;color:var(--void)">176k</div></div><span class="bar-val"></span></div>
+      <div class="bar-row"><span class="bar-lbl">May</span><div class="bar-track"><div class="bar-fill" style="width:47.2%;background:var(--tt);opacity:0.7;color:var(--void)">345k</div></div><span class="bar-val"></span></div>
+      <div class="bar-row"><span class="bar-lbl">Jun</span><div class="bar-track"><div class="bar-fill" style="width:100%;background:var(--amber);color:var(--void);font-weight:600">731k ← PEAK</div></div><span class="bar-val"></span></div>
+    </div>
+  </div>
+
+  <div class="prose">TikTok has delivered <strong>three distinct viral moments</strong> in this period: a strong November spike (81k day on 13 Nov), a sustained January–February run (consistently 10k–56k daily for nearly 6 weeks), and then the biggest wave of all in late May–June 2026. The June peak is not random — something specific went viral around 31 May/1 June (59–60k views those two days) and it sustained at high levels for 10+ days, with a second spike on 28–29 June (71k and 90k) that then crossed over into the Instagram viral event the same days.</div>
+
+  <div class="callout">
+    <p class="callout-lbl">Critical observation — viral but inconsistent</p>
+    <p>There is a pattern of <strong>spike and collapse.</strong> September and October dropped to 36–43k total for entire months after the August run. The platform rewards him when he posts consistently (Jan–Feb was a long sustained run) and punishes inactivity hard. The Demon campaign's daily posting requirement is not just a marketing tactic — it is what the algorithm needs to maintain reach.</p>
+  </div>
+</div>
+
+<!-- INSTAGRAM -->
+<div id="instagram" class="sec">
+  <div class="sec-hdr">
+    <span class="sec-lbl" style="color:var(--ig)">Instagram</span>
+    <h2 class="sec-title">The Jun 28 Viral Event</h2>
+    <div class="sec-rule"></div>
+  </div>
+
+  <div class="stat-grid-3">
+    <div class="stat-card">
+      <p class="stat-label">Pre-viral avg daily reach</p>
+      <p class="stat-val" style="color:var(--muted)">400</p>
+      <p class="stat-sub">Jun 10–27 baseline</p>
+    </div>
+    <div class="stat-card highlight">
+      <p class="stat-label">Peak day reach (Jun 28)</p>
+      <p class="stat-val" style="color:var(--ig)">192k</p>
+      <p class="stat-sub"><strong>452x</strong> the daily baseline</p>
+    </div>
+    <div class="stat-card">
+      <p class="stat-label">Post-viral avg daily reach</p>
+      <p class="stat-val">37k</p>
+      <p class="stat-sub">Jun 29–Jul 7 sustained level</p>
+    </div>
+  </div>
+
+  <div class="bar-chart" style="margin-top:1.25rem">
+    <div class="timeline-chart">
+      <p class="tl-title">Instagram Daily Reach — Jun 10 to Jul 7</p>
+      <div class="bar-row" style="margin-bottom:3px"><span class="bar-lbl" style="font-size:9px">Jun 10–27</span><div class="bar-track" style="height:20px"><div class="bar-fill" style="width:0.2%;background:var(--muted);height:100%"></div></div><span class="bar-val" style="font-size:9px">~400/day</span></div>
+      <div class="bar-row" style="margin-bottom:3px"><span class="bar-lbl" style="font-size:9px">Jun 28</span><div class="bar-track" style="height:20px"><div class="bar-fill" style="width:100%;background:var(--ig);height:100%;font-size:10px;font-weight:700">192,401 ← VIRAL EVENT</div></div><span class="bar-val"></span></div>
+      <div class="bar-row" style="margin-bottom:3px"><span class="bar-lbl" style="font-size:9px">Jun 29</span><div class="bar-track" style="height:20px"><div class="bar-fill" style="width:45.7%;background:var(--ig);opacity:0.7;height:100%;font-size:10px">87,968</div></div><span class="bar-val"></span></div>
+      <div class="bar-row" style="margin-bottom:3px"><span class="bar-lbl" style="font-size:9px">Jun 30</span><div class="bar-track" style="height:20px"><div class="bar-fill" style="width:7.6%;background:var(--ig);opacity:0.6;height:100%;font-size:10px">14,675</div></div><span class="bar-val"></span></div>
+      <div class="bar-row" style="margin-bottom:3px"><span class="bar-lbl" style="font-size:9px">Jul 1</span><div class="bar-track" style="height:20px"><div class="bar-fill" style="width:5.4%;background:var(--ig);opacity:0.5;height:100%;font-size:10px">10,378</div></div><span class="bar-val"></span></div>
+      <div class="bar-row" style="margin-bottom:3px"><span class="bar-lbl" style="font-size:9px">Jul 4-5</span><div class="bar-track" style="height:20px"><div class="bar-fill" style="width:9.5%;background:var(--ig);opacity:0.5;height:100%;font-size:10px">17–18k</div></div><span class="bar-val"></span></div>
+    </div>
+  </div>
+
+  <div class="stat-grid-2" style="margin-top:0.75rem">
+    <div class="stat-card">
+      <p class="stat-label">New Instagram followers (Jun 28)</p>
+      <p class="stat-val" style="color:var(--ig)">42</p>
+      <p class="stat-sub">Out of 147 total across the whole Jun–Jul period. <strong>29% of all new follows from one day.</strong></p>
+    </div>
+    <div class="stat-card">
+      <p class="stat-label">Link clicks (entire period)</p>
+      <p class="stat-val" style="color:var(--red)">0</p>
+      <p class="stat-sub">192k reach, 8,326 interactions on peak day, <strong>zero people clicked the bio link.</strong> There is no active link or CTA in the bio.</p>
+    </div>
+  </div>
+
+  <div class="callout red">
+    <p class="callout-lbl">The biggest missed opportunity in this dataset</p>
+    <p>On June 28, 192,401 people reached his Instagram. 8,326 interacted. 2,936 visited his profile. <strong>Zero clicked a link because there was nothing to click through to.</strong> On the day the biggest viral moment of his Instagram career happened, there was no Spotify link, no presave, no website, no CTA of any kind in the bio. That is 192k people who touched the brand and had nowhere to go.</p>
+  </div>
+
+  <!-- IG posts table -->
+  <div style="margin-top:1.25rem">
+    <p style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:var(--ig);margin-bottom:0.75rem">Recent Instagram posts performance</p>
+    <table class="age-table">
+      <thead><tr><th>Date</th><th>Type</th><th>Views</th><th>Likes</th><th>Shares</th><th>Follows</th></tr></thead>
+      <tbody>
+        <tr><td>Jul 6</td><td>IG Reel</td><td>1,163</td><td>40</td><td>10</td><td>0</td></tr>
+        <tr><td>Jul 2</td><td>IG Reel</td><td>1,556</td><td>27</td><td>1</td><td>0</td></tr>
+        <tr><td>Jul 2</td><td>Carousel</td><td>2,003</td><td>—</td><td>—</td><td>0</td></tr>
+        <tr><td>Jul 8</td><td>FORE collab reel</td><td>434</td><td>19</td><td>0</td><td>0</td></tr>
+      </tbody>
+    </table>
+    <p style="font-size:11.5px;color:var(--muted);margin-top:0.5rem">Post-viral content is performing at pre-viral levels. The audience surge did not convert to sustained engagement because there was no structured follow-up content plan.</p>
+  </div>
+</div>
+
+<!-- SPOTIFY -->
+<div id="spotify" class="sec">
+  <div class="sec-hdr">
+    <span class="sec-lbl" style="color:var(--sp)">Spotify</span>
+    <h2 class="sec-title">Streaming History</h2>
+    <div class="sec-rule"></div>
+  </div>
+
+  <div class="stat-grid">
+    <div class="stat-card">
+      <p class="stat-label">All-time streams</p>
+      <p class="stat-val" style="color:var(--sp)">73.4k</p>
+      <p class="stat-sub">Jan 2024 – Jul 2026</p>
+    </div>
+    <div class="stat-card">
+      <p class="stat-label">Peak monthly streams</p>
+      <p class="stat-val" style="color:var(--sp)">18.2k</p>
+      <p class="stat-sub">May 2024 · 2,081 peak monthly listeners</p>
+    </div>
+    <div class="stat-card">
+      <p class="stat-label">Current monthly listeners</p>
+      <p class="stat-val" style="color:var(--red)">85</p>
+      <p class="stat-sub">Was 2,763 in Jun 2024 — now almost dormant</p>
+    </div>
+    <div class="stat-card">
+      <p class="stat-label">Follower growth (2.5 years)</p>
+      <p class="stat-val">+153</p>
+      <p class="stat-sub">From 24 to 177 since Jan 2024</p>
+    </div>
+  </div>
+
+  <div class="bar-chart" style="margin-top:1rem">
+    <div class="timeline-chart">
+      <p class="tl-title">Monthly Spotify Streams — Jan 2024 to Jul 2026</p>
+      <div class="bar-row"><span class="bar-lbl">Jan 24</span><div class="bar-track"><div class="bar-fill" style="width:1.5%;background:var(--muted)">276</div></div></div>
+      <div class="bar-row"><span class="bar-lbl">Feb–Apr</span><div class="bar-track"><div class="bar-fill" style="width:13.6%;background:var(--sp);opacity:0.5">276–2,127</div></div></div>
+      <div class="bar-row"><span class="bar-lbl">May 24</span><div class="bar-track"><div class="bar-fill" style="width:100%;background:var(--sp);font-weight:700">18,161 ← ALL-TIME PEAK</div></div></div>
+      <div class="bar-row"><span class="bar-lbl">Jun 24</span><div class="bar-track"><div class="bar-fill" style="width:89.3%;background:var(--sp);opacity:0.8">16,222</div></div></div>
+      <div class="bar-row"><span class="bar-lbl">Jul 24</span><div class="bar-track"><div class="bar-fill" style="width:53.7%;background:var(--sp);opacity:0.6">9,758</div></div></div>
+      <div class="bar-row"><span class="bar-lbl">Aug–Dec 24</span><div class="bar-track"><div class="bar-fill" style="width:8.2%;background:var(--muted)">700–1,809</div></div></div>
+      <div class="bar-row"><span class="bar-lbl">2025</span><div class="bar-track"><div class="bar-fill" style="width:20.2%;background:var(--sp);opacity:0.4">avg 1,044/mo</div></div></div>
+      <div class="bar-row"><span class="bar-lbl">Sep 25</span><div class="bar-track"><div class="bar-fill" style="width:15.8%;background:var(--sp);opacity:0.5">2,869</div></div></div>
+      <div class="bar-row"><span class="bar-lbl">Oct 25</span><div class="bar-track"><div class="bar-fill" style="width:20.2%;background:var(--sp);opacity:0.6">3,667</div></div></div>
+      <div class="bar-row"><span class="bar-lbl">2026</span><div class="bar-track"><div class="bar-fill" style="width:5.3%;background:var(--muted)">42–1,891/mo</div></div></div>
+    </div>
+  </div>
+
+  <div class="callout red" style="margin-top:1rem">
+    <p class="callout-lbl">The Spotify cliff — what happened</p>
+    <p>There was clearly a song or release in May–June 2024 that drove 34k streams in two months with a peak of 2,763 monthly listeners. Then it collapsed completely — by August 2024 it was back to 1,393 streams and never recovered. <strong>There was no social campaign sustaining that spike.</strong> The audience found the music once, nothing pulled them back, and they left. This is the exact pattern the Demon campaign is designed to break.</p>
+  </div>
+
+  <div class="prose" style="margin-top:1rem">The 100% UK Spotify audience is significant. His listeners are all domestic — which is both a constraint and an advantage for the Demon campaign. Every piece of UK-specific content, every London cultural reference, every carnival clip is speaking directly to the people who could stream. The platform is not globally spread — it is concentrated and targetable.</div>
+</div>
+
+<!-- THE CRITICAL GAP -->
+<div id="gap" class="sec">
+  <div class="sec-hdr">
+    <span class="sec-lbl" style="color:var(--red)">The Problem</span>
+    <h2 class="sec-title">The Critical Gap</h2>
+    <div class="sec-rule"></div>
+  </div>
+
+  <div class="callout red">
+    <p class="callout-lbl">Social reach is not converting to streams</p>
+    <p>In June 2026, TikTok delivered <strong>731,864 video views</strong> — his best month ever. Instagram had a viral event reaching <strong>192,401 people in a single day</strong>. In the same period, Spotify recorded <strong>194 streams</strong> for the entire month of June 2026. <strong>The audience is watching but not listening.</strong></p>
+  </div>
+
+  <div class="stat-grid-3" style="margin-top:1rem">
+    <div class="stat-card">
+      <p class="stat-label">TikTok views (June 2026)</p>
+      <p class="stat-val" style="color:var(--tt)">731k</p>
+    </div>
+    <div class="stat-card">
+      <p class="stat-label">Instagram reach (Jun 28 alone)</p>
+      <p class="stat-val" style="color:var(--ig)">192k</p>
+    </div>
+    <div class="stat-card">
+      <p class="stat-label">Spotify streams (June 2026)</p>
+      <p class="stat-val" style="color:var(--red)">194</p>
+    </div>
+  </div>
+
+  <ul class="insight-list" style="margin-top:1.25rem">
+    <li><strong>No link in bio during the viral event.</strong> Zero link clicks across the entire June–July Instagram period confirms there was no Spotify CTA active when 192k people reached his profile.</li>
+    <li><strong>No music being promoted on TikTok.</strong> The content driving 731k views in June was personality-led, not music-led. Views are not converting because the content is not pointing anywhere.</li>
+    <li><strong>The previous spike (May–Jun 2024) shows the same pattern</strong> — 34k streams then nothing. Each time a social wave hits, there is no infrastructure to catch and convert it.</li>
+    <li><strong>The TikTok audience (65–70% female) is the right demographic for the Demon narrative</strong> — but they are watching entertainment content, not being directed to music.</li>
+    <li><strong>Instagram's male-majority follower base has nowhere to go</strong> — they interact but do not click because there is nothing to click to.</li>
+  </ul>
+</div>
+
+<!-- STRATEGY IMPLICATIONS -->
+<div id="strategy" class="sec">
+  <div class="sec-hdr">
+    <span class="sec-lbl" style="color:var(--green)">Strategy</span>
+    <h2 class="sec-title">What the Data Says to Do</h2>
+    <div class="sec-rule"></div>
+  </div>
+
+  <div class="stat-grid-2">
+    <div class="stat-card" style="border-color:rgba(105,201,208,0.3)">
+      <p class="stat-label" style="color:var(--tt)">TikTok strategy</p>
+      <ul class="insight-list" style="margin-top:0.5rem">
+        <li>Daily posting is non-negotiable. Sep–Oct collapse proves it. The algorithm punishes gaps immediately.</li>
+        <li>The female 65–70% audience is exactly who the Demon narrative targets. The content fits the platform perfectly.</li>
+        <li>Transition from pure entertainment to entertainment-plus-music CTA mid-campaign (Day 20 onwards).</li>
+        <li>The June viral window (60k+ views daily for 10+ days) shows what consistent quality content can sustain. That is the benchmark to match for the Demon launch window.</li>
+      </ul>
+    </div>
+    <div class="stat-card" style="border-color:rgba(224,96,160,0.3)">
+      <p class="stat-label" style="color:var(--ig)">Instagram strategy</p>
+      <ul class="insight-list" style="margin-top:0.5rem">
+        <li><strong>Add a Spotify link to the bio immediately.</strong> Jun 28 will happen again — next time there needs to be somewhere for 192k people to go.</li>
+        <li>The male 57% audience on IG skews 25–34 London-heavy. These are core fans — use IG for deeper content, Stories for the campaign narrative.</li>
+        <li>3 feed posts per week minimum. Current posting is too sporadic to hold the audience that the viral event brought in.</li>
+        <li>Create a link-in-bio destination before the Demon campaign kicks off. Presave page, Linktree, or direct Spotify.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="stat-card" style="margin-top:0.75rem;border-color:rgba(29,185,84,0.3)">
+    <p class="stat-label" style="color:var(--sp)">Spotify strategy</p>
+    <ul class="insight-list" style="margin-top:0.5rem">
+      <li><strong>The first 48 hours after Demon releases are critical.</strong> The May–Jun 2024 spike proves the algorithm will respond to concentrated streaming. Every social post on launch day must drive directly to Spotify.</li>
+      <li>The existing 177 followers are warm — they chose to follow and are 100% UK. On launch day, these people need a direct notification. Make sure the release goes through a distributor that triggers artist follower notifications (DistroKid, Amuse, TuneCore all do this).</li>
+      <li>The 35–44 female Spotify cohort is older than the social audience. Curtains (Summer Walker aesthetic, intimate) will likely perform better with this group than Demon. Sequence matters.</li>
+      <li>Pitch Demon for UK R&amp;B, UK trap and mood-based editorial playlists immediately on release. The 2024 peak suggests playlist adds drove that spike — replicate it intentionally this time.</li>
+      <li>Monthly listener count of 85 is the floor. The ceiling, based on the 2024 data, is at least 2,700+. That gap is closed by consistent releases with social campaigns — exactly what this plan is.</li>
+    </ul>
+  </div>
+
+  <div class="callout green" style="margin-top:1.25rem">
+    <p class="callout-lbl">The single most important action before Demon launches</p>
+    <p><strong>Put a Spotify presave link in the Instagram and TikTok bio today.</strong> Not on launch day. Today. The next viral event could happen any time — the Jun 28 spike came with no warning. Every day without a link is a day of potential conversions left on the table.</p>
+  </div>
+</div>
+
+</div>
+
+<div class="footer">
+  <span class="footer-brand">PRETTY <span>BANDIT</span></span>
+  <div class="footer-meta">
+    Cross-Platform Audience Analysis · July 2026<br>
+    Prepared by Jordan Hall / FORE · Confidential
+  </div>
+</div>
+
+</body>
+</html>

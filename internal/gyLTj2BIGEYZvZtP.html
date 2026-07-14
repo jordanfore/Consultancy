@@ -110,6 +110,7 @@
   .tab-btn[data-client="chantal"].active { color: var(--accent-3); border-bottom-color: var(--accent-3); }
   .tab-btn[data-client="zhara"].active { color: var(--accent-4); border-bottom-color: var(--accent-4); }
   .tab-btn[data-client="emma"].active { color: #6edba0; border-bottom-color: #6edba0; }
+  .tab-btn[data-client="prettybandit"].active { color: #E8A020; border-bottom-color: #E8A020; }
 
   /* PANEL */
   .panel { display: none; padding: 2rem; max-width: 1100px; }
@@ -144,6 +145,7 @@
   .av-chantal { background: rgba(96,200,240,0.12); color: var(--accent-3); border: 1px solid rgba(96,200,240,0.3); }
   .av-zhara { background: rgba(240,96,168,0.12); color: var(--accent-4); border: 1px solid rgba(240,96,168,0.3); }
   .av-emma { background: rgba(110,219,160,0.12); color: #6edba0; border: 1px solid rgba(110,219,160,0.3); }
+  .av-prettybandit { background: rgba(232,160,32,0.12); color: #E8A020; border: 1px solid rgba(232,160,32,0.3); }
 
   .client-info h1 {
     font-family: 'Bebas Neue', sans-serif;
@@ -386,6 +388,7 @@
   <button class="tab-btn" data-client="chantal" onclick="switchTab('chantal')">03 — Chantal Kryou</button>
   <button class="tab-btn" data-client="zhara" onclick="switchTab('zhara')">04 — Zhara Randall</button>
   <button class="tab-btn" data-client="emma" onclick="switchTab('emma')">05 — Emma Jenkins</button>
+  <button class="tab-btn" data-client="prettybandit" onclick="switchTab('prettybandit')">06 — Pretty Bandit</button>
 </nav>
 
 <!-- ============================== JOHN ============================== -->
@@ -911,6 +914,62 @@
   <div class="card">
     <p class="card-label">Additional notes</p>
     <textarea class="notes-area">Call complete 11 Jun 2026. Emma has done more groundwork than she realises - the brand building PDF is genuinely solid for this stage. Her production background is an underused asset: she understands process, craft and timelines. The perfectionism is the real blocker, not the idea. Her post-call email the same evening showed immediate momentum - she'd already pivoted to two-pieces and was rethinking the name unprompted. That's a great sign. Key watch-out: don't let her spiral into naming debates for weeks. Set a testing deadline and move on. Follow-up call to be booked once initial tasks are complete - target late June/early July.</textarea>
+    <div class="status-row">
+      <select class="status-select">
+        <option value="">— Fit assessment —</option>
+        <option selected>Strong fit</option>
+        <option>Good fit</option>
+        <option>Possible fit</option>
+        <option>Not the right time</option>
+        <option>Not a fit</option>
+      </select>
+      <select class="status-select">
+        <option value="">— Next action —</option>
+        <option>Send proposal</option>
+        <option>Follow-up call booked</option>
+        <option selected>Send resources</option>
+        <option>Check back in 4 weeks</option>
+        <option>Close — not progressing</option>
+      </select>
+    </div>
+  </div>
+</div>
+
+<!-- ============================== PRETTY BANDIT ============================== -->
+<div class="panel" id="panel-prettybandit">
+  <div class="client-header">
+    <div class="client-avatar av-prettybandit">PB</div>
+    <div class="client-info">
+      <h1>Pretty Bandit</h1>
+      <p>Artist / musician &nbsp;·&nbsp; TikTok · Instagram · Spotify</p>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:6px;align-items:flex-end;">
+      <div class="call-badge" style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;padding:6px 14px;border-radius:100px;border:1px solid rgba(232,160,32,0.6);color:#E8A020;background:rgba(232,160,32,0.15);white-space:nowrap;">Audience Analysis Ready</div>
+      <a href="https://jordanfore.github.io/Consultancy/clients/8VQN0bK9z6qrVL8Z.html" target="_blank" style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.08em;padding:4px 12px;border-radius:100px;border:1px solid rgba(232,160,32,0.4);color:#E8A020;text-decoration:none;white-space:nowrap;">↗ Audience Analysis</a>
+    </div>
+  </div>
+
+  <div class="grid-3">
+    <div class="card" style="border-color: rgba(232,160,32,0.25);">
+      <p class="card-label">Deliverable</p>
+      <p style="font-family: 'Bebas Neue', sans-serif; font-size: 26px; color: #E8A020; letter-spacing: 0.06em; margin-bottom: 6px;">Audience Analysis</p>
+      <p class="context-block" style="font-size: 12px;">Cross-platform report covering TikTok, Instagram and Spotify (Jan 2024 – Jul 2026). Share the private link above with the client.</p>
+    </div>
+    <div class="card">
+      <p class="card-label">Core finding</p>
+      <p style="font-family: 'Bebas Neue', sans-serif; font-size: 26px; color: var(--white); letter-spacing: 0.06em; margin-bottom: 6px;">Watch ≠ Listen</p>
+      <p class="context-block" style="font-size: 12px;">Strong viral reach on TikTok/Instagram; Spotify conversion is broken — no CTAs during peak moments.</p>
+    </div>
+    <div class="card">
+      <p class="card-label">Next action</p>
+      <p style="font-family: 'Bebas Neue', sans-serif; font-size: 26px; color: var(--white); letter-spacing: 0.06em; margin-bottom: 6px;">Share Report</p>
+      <p class="context-block" style="font-size: 12px;">Send the audience analysis link. Align follow-up on funnel fixes (bio CTA, music-led TikTok, platform-specific targeting).</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <p class="card-label">Additional notes</p>
+    <textarea class="notes-area">Audience analysis deliverable live Jul 2026. Report covers gender/age splits across platforms, TikTok view spikes, Instagram viral event (192k reach Jun 28 with zero link clicks), and Spotify gap. Dashboard panel is a stub — expand after next client call.</textarea>
     <div class="status-row">
       <select class="status-select">
         <option value="">— Fit assessment —</option>
