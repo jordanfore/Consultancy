@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Pretty Bandit — Strategy Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Mono:wght@400;500&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;1,9..40,400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --void:#060606;--dark:#0F0F0F;--card:#161616;--card2:#1E1E1E;--mid:#2A2A2A;
+  --rule:rgba(255,255,255,0.07);--rule2:rgba(255,255,255,0.13);
+  --paper:#F0EDE6;--muted:#606060;--muted2:#3A3A3A;
+  --tt:#69C9D0;--ig:#E060A0;--sp:#1DB954;
+  --red:#CC2222;--amber:#E8A020;--green:#28A050;--blue:#2255CC;--purple:#9030D0;
+  --act1:#E8A020;--act2:#CC2222;--act3:#9030D0;--launch:#28A050;
+}
+html{scroll-behavior:smooth}
+body{background:var(--void);color:var(--paper);font-family:'DM Sans',sans-serif;font-size:14px;line-height:1.7}
+
+/* MASTHEAD */
+.masthead{background:var(--dark);border-bottom:1px solid var(--rule2);padding:1.1rem 2rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;position:sticky;top:0;z-index:300}
+.mast-brand{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.05rem;letter-spacing:-0.02em}.mast-brand span{color:var(--amber)}
+.mast-sub{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted)}
+.mast-tag{font-family:'DM Mono',monospace;font-size:9px;color:var(--muted);border:1px solid var(--rule2);padding:3px 10px;border-radius:100px}
+
+/* TAB NAV */
+.tab-nav{background:var(--dark);border-bottom:1px solid var(--rule2);padding:0 2rem;display:flex;overflow-x:auto;position:sticky;top:48px;z-index:299}
+.tb{font-family:'DM Mono',monospace;font-size:9.5px;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);background:none;border:none;border-bottom:2px solid transparent;padding:0.8rem 1.1rem;cursor:pointer;white-space:nowrap;transition:all 0.15s}
+.tb:hover{color:var(--paper)}.tb.active{color:var(--amber);border-bottom-color:var(--amber)}
+
+/* PANELS */
+.panel{display:none;max-width:1160px;margin:0 auto;padding:2rem}.panel.active{display:block}
+
+/* SHARED */
+.sh{display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem;padding-bottom:0.75rem;border-bottom:1px solid var(--rule2)}
+.sl{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:var(--amber);flex-shrink:0}
+.st{font-family:'Space Grotesk',sans-serif;font-size:1.25rem;font-weight:600;letter-spacing:-0.02em;line-height:1}
+.sr{flex:1;height:1px;background:var(--rule)}.sec{margin-bottom:2.5rem}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-bottom:.75rem}
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:.75rem;margin-bottom:.75rem}
+.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:.75rem;margin-bottom:.75rem}
+@media(max-width:900px){.g4{grid-template-columns:1fr 1fr}}
+@media(max-width:650px){.g2,.g3,.g4{grid-template-columns:1fr}}
+.card{background:var(--card);border:1px solid var(--rule);border-radius:8px;padding:1.1rem 1.2rem}
+.card.c-amber{border-color:rgba(232,160,32,0.3)}.card.c-red{border-color:rgba(204,34,34,0.3)}.card.c-green{border-color:rgba(40,160,80,0.3)}
+.cl{font-family:'DM Mono',monospace;font-size:8.5px;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);margin-bottom:.4rem}
+.sv{font-family:'Space Grotesk',sans-serif;font-size:2rem;font-weight:700;line-height:1;letter-spacing:-0.03em;margin-bottom:.2rem}
+.ss{font-size:11.5px;color:var(--muted);line-height:1.5}.ss strong{color:rgba(240,237,230,.7);font-weight:500}
+.ca{border-radius:6px;padding:1rem 1.2rem;margin:1rem 0}
+.ca.amber{background:rgba(232,160,32,.08);border:1px solid rgba(232,160,32,.25)}
+.ca.red{background:rgba(204,34,34,.1);border:1px solid rgba(204,34,34,.25)}
+.ca.green{background:rgba(40,160,80,.1);border:1px solid rgba(40,160,80,.25)}
+.cal{font-family:'DM Mono',monospace;font-size:8.5px;letter-spacing:0.16em;text-transform:uppercase;margin-bottom:.3rem}
+.ca.amber .cal{color:var(--amber)}.ca.red .cal{color:var(--red)}.ca.green .cal{color:var(--green)}
+.ca p{font-size:13px;line-height:1.65;color:rgba(240,237,230,.8)}.ca strong{color:var(--paper)}
+.dl{list-style:none;margin:.5rem 0}
+.dl li{display:flex;gap:8px;padding:.4rem 0;border-bottom:1px solid var(--rule);font-size:13px;color:rgba(240,237,230,.7);line-height:1.55}
+.dl li:last-child{border-bottom:none}.dl li::before{content:'→';color:var(--amber);flex-shrink:0;font-size:11px;padding-top:2px}
+.dl strong{color:var(--paper);font-weight:500}
+.pb{display:inline-flex;align-items:center;font-family:'DM Mono',monospace;font-size:8px;letter-spacing:.08em;text-transform:uppercase;padding:2px 8px;border-radius:100px;border:1px solid;margin:2px}
+.pb-tt{color:var(--tt);border-color:rgba(105,201,208,.3);background:rgba(105,201,208,.06)}
+.pb-ig{color:var(--ig);border-color:rgba(224,96,160,.3);background:rgba(224,96,160,.06)}
+.pb-sp{color:var(--sp);border-color:rgba(29,185,84,.3);background:rgba(29,185,84,.06)}
+.pb-all{color:var(--amber);border-color:rgba(232,160,32,.3);background:rgba(232,160,32,.06)}
+.bw{margin:1rem 0}.br{display:grid;grid-template-columns:80px 1fr;gap:.75rem;align-items:center;margin-bottom:.45rem}
+.bl{font-family:'DM Mono',monospace;font-size:9.5px;color:var(--muted);text-align:right}
+.bt{height:24px;background:var(--card2);border-radius:4px;overflow:hidden}
+.bf{height:100%;border-radius:4px;display:flex;align-items:center;padding:0 8px;font-family:'DM Mono',monospace;font-size:9.5px;font-weight:500;white-space:nowrap}
+.gs{display:flex;height:26px;border-radius:5px;overflow:hidden;margin:.4rem 0}
+.gsm{background:var(--blue);display:flex;align-items:center;justify-content:center;font-family:'DM Mono',monospace;font-size:9px;font-weight:600;color:white}
+.gsf{background:#CC5090;display:flex;align-items:center;justify-content:center;font-family:'DM Mono',monospace;font-size:9px;font-weight:600;color:white}
+.kt{width:100%;border-collapse:collapse;font-size:12.5px;border:1px solid var(--rule);border-radius:8px;overflow:hidden;margin-bottom:2rem}
+.kt th{font-family:'DM Mono',monospace;font-size:8.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-align:left;padding:8px 12px;border-bottom:1px solid var(--rule2);font-weight:400;background:var(--card2)}
+.kt td{padding:9px 12px;border-bottom:1px solid var(--rule);vertical-align:top;line-height:1.5;color:rgba(240,237,230,.7)}
+.kt tr:last-child td{border-bottom:none}.kt td:first-child{color:var(--paper);font-weight:500}
+.kc{font-family:'DM Mono',monospace;font-size:11px;color:var(--muted)}
+.kg{font-family:'DM Mono',monospace;font-size:11px;font-weight:600}
+.kg.tt{color:var(--tt)}.kg.ig{color:var(--ig)}.kg.sp{color:var(--sp)}.kg.am{color:var(--amber)}
+.ic{background:var(--card);border:1px solid var(--rule);border-radius:6px;padding:.85rem 1rem;margin-bottom:.5rem;display:grid;grid-template-columns:auto 1fr auto;gap:.75rem;align-items:start}
+.isev{font-family:'DM Mono',monospace;font-size:8px;letter-spacing:.1em;text-transform:uppercase;padding:3px 8px;border-radius:100px;border:1px solid;flex-shrink:0;white-space:nowrap;margin-top:2px}
+.isev.hi{color:var(--red);border-color:rgba(204,34,34,.4)}.isev.md{color:var(--amber);border-color:rgba(232,160,32,.4)}.isev.lo{color:var(--green);border-color:rgba(40,160,80,.4)}
+.ib .it{font-size:13px;font-weight:600;color:var(--paper);margin-bottom:.2rem}.ib .id{font-size:12px;color:var(--muted);line-height:1.5}
+.ifix{font-family:'DM Mono',monospace;font-size:9px;color:var(--green);flex-shrink:0;white-space:nowrap;margin-top:2px}
+.as-row{display:flex;gap:1.5rem;flex-wrap:wrap;margin-bottom:1rem}
+.astat{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);line-height:2}
+.astat strong{display:block;font-family:'Space Grotesk',sans-serif;font-size:1.1rem;font-weight:700;color:var(--paper);text-transform:none;letter-spacing:0}
+.ph{background:var(--card);border:1px solid var(--rule);border-radius:8px;padding:1.75rem;margin-bottom:1rem;position:relative;overflow:hidden}
+.phbg{position:absolute;right:-.02em;bottom:-.1em;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:12rem;color:rgba(232,160,32,.04);line-height:1;pointer-events:none}
+.pn{font-family:'Space Grotesk',sans-serif;font-size:2.5rem;font-weight:700;letter-spacing:-.03em;margin-bottom:.25rem}
+.ph2{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.1em;color:var(--amber);margin-bottom:1rem}
+.pg{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+@media(max-width:700px){.pg{grid-template-columns:1fr}}
+.pil{font-family:'DM Mono',monospace;font-size:8.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--amber);margin-bottom:.25rem}
+.piv{font-size:12.5px;color:rgba(240,237,230,.7);line-height:1.55}
+.tg{display:grid;grid-template-columns:repeat(3,1fr);gap:.75rem;margin:1rem 0}
+@media(max-width:700px){.tg{grid-template-columns:1fr}}
+.tc{background:var(--card);border:1px solid var(--rule);border-radius:6px;padding:1rem}
+.tcl{font-family:'DM Mono',monospace;font-size:8.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--amber);margin-bottom:.5rem}
+.tcv{font-size:13px;color:rgba(240,237,230,.75);line-height:1.6}
+.ch{margin-bottom:2rem}
+.chh{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--amber);margin-bottom:.75rem;padding-bottom:.5rem;border-bottom:1px solid var(--rule);margin-top:1.25rem}
+.chh:first-child{margin-top:0}
+.ci{display:flex;align-items:flex-start;gap:10px;padding:.6rem 0;border-bottom:1px solid var(--rule);font-size:13px}
+.ci:last-child{border-bottom:none}
+.cb{width:18px;height:18px;border:1.5px solid var(--rule2);border-radius:4px;flex-shrink:0;margin-top:1px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .12s}
+.cb:hover{border-color:var(--amber)}.cb.checked{background:var(--amber);border-color:var(--amber)}
+.cb.checked::after{content:'✓';font-size:11px;color:var(--void);font-weight:700}
+.ct{color:rgba(240,237,230,.75);line-height:1.5;flex:1}.ct strong{color:var(--paper);font-weight:500}
+.co{font-family:'DM Mono',monospace;font-size:9px;color:var(--muted);flex-shrink:0;padding-top:2px}
+.pr-t{height:8px;background:var(--card2);border-radius:100px;overflow:hidden;margin:.5rem 0}
+.pr-f{height:100%;background:var(--amber);border-radius:100px;transition:width .5s ease}
+.pr-s{display:flex;justify-content:space-between;font-family:'DM Mono',monospace;font-size:9px;color:var(--muted)}
+
+/* ===== 30-DAY PLAN SPECIFIC ===== */
+.plan-controls{background:var(--dark);border:1px solid var(--rule2);border-radius:8px;padding:1rem 1.25rem;margin-bottom:1.5rem;display:flex;align-items:center;gap:1rem;flex-wrap:wrap}
+.plan-controls-label{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.16em;text-transform:uppercase;color:var(--muted);flex-shrink:0}
+.filter-btns{display:flex;gap:.4rem;flex-wrap:wrap}
+.filter-btn{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.1em;text-transform:uppercase;padding:5px 12px;border-radius:100px;border:1px solid var(--rule2);background:none;color:var(--muted);cursor:pointer;transition:all 0.15s}
+.filter-btn:hover{color:var(--paper);border-color:var(--muted)}
+.filter-btn.active{color:var(--void);background:var(--amber);border-color:var(--amber)}
+.filter-btn.f-tt.active{background:var(--tt);border-color:var(--tt);color:var(--void)}
+.filter-btn.f-ig.active{background:var(--ig);border-color:var(--ig);color:white}
+.filter-btn.f-shoot.active{background:var(--purple);border-color:var(--purple);color:white}
+.view-btns{display:flex;gap:.4rem;margin-left:auto}
+.view-btn{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.1em;text-transform:uppercase;padding:5px 14px;border-radius:100px;border:1px solid var(--rule2);background:none;color:var(--muted);cursor:pointer;transition:all 0.15s}
+.view-btn.active{background:var(--amber);border-color:var(--amber);color:var(--void)}
+.view-btn:hover{color:var(--paper)}
+
+/* ACT HEADERS */
+.act-hdr{border-radius:6px;padding:.75rem 1.1rem;margin:1.5rem 0 1rem}
+.act-hdr.a1{background:rgba(232,160,32,.08);border:1px solid rgba(232,160,32,.2)}
+.act-hdr.a2{background:rgba(204,34,34,.08);border:1px solid rgba(204,34,34,.2)}
+.act-hdr.a3{background:rgba(144,48,208,.08);border:1px solid rgba(144,48,208,.2)}
+.act-hdr.al{background:rgba(40,160,80,.08);border:1px solid rgba(40,160,80,.2)}
+.act-hdr.apl{background:rgba(105,201,208,.08);border:1px solid rgba(105,201,208,.2)}
+.ahlbl{font-family:'DM Mono',monospace;font-size:8.5px;letter-spacing:.18em;text-transform:uppercase;font-weight:500;margin-bottom:.15rem}
+.a1 .ahlbl{color:var(--act1)}.a2 .ahlbl{color:var(--act2)}.a3 .ahlbl{color:var(--act3)}.al .ahlbl{color:var(--launch)}.apl .ahlbl{color:var(--tt)}
+.ahttl{font-family:'Space Grotesk',sans-serif;font-size:.95rem;font-weight:600;margin-bottom:.15rem}
+.ahdsc{font-size:12px;color:var(--muted);line-height:1.5}
+
+/* GRID VIEW */
+.day-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:.55rem;margin-bottom:.75rem}
+@media(max-width:1000px){.day-grid{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:600px){.day-grid{grid-template-columns:1fr 1fr}}
+
+.dc{background:var(--card);border:1px solid var(--rule);border-radius:7px;padding:.85rem;position:relative;overflow:hidden;transition:border-color 0.15s,opacity 0.2s}
+.dc::before{content:'';position:absolute;top:0;left:0;right:0;height:2px}
+.dc.a1::before{background:var(--act1)}.dc.a2::before{background:var(--act2)}.dc.a3::before{background:var(--act3)}.dc.al::before{background:var(--launch)}.dc.apl::before{background:var(--tt)}
+.dc.dimmed{opacity:0.2;pointer-events:none}
+.dc.key-card{border-color:rgba(204,34,34,.5)}
+.dc.shoot-card{box-shadow:0 0 0 1px rgba(144,48,208,.4)}
+.dnum{font-family:'Space Grotesk',sans-serif;font-size:1.3rem;font-weight:700;opacity:.12;position:absolute;top:.3rem;right:.55rem;line-height:1}
+.dc.a1 .dnum{color:var(--act1);opacity:.2}.dc.a2 .dnum{color:var(--act2);opacity:.2}.dc.a3 .dnum{color:var(--act3);opacity:.2}.dc.al .dnum{color:var(--launch);opacity:.2}.dc.apl .dnum{color:var(--tt);opacity:.2}
+.dtag{font-family:'DM Mono',monospace;font-size:7.5px;letter-spacing:.12em;text-transform:uppercase;margin-bottom:.2rem}
+.a1 .dtag{color:var(--act1)}.a2 .dtag{color:var(--act2)}.a3 .dtag{color:var(--act3)}.al .dtag{color:var(--launch)}.apl .dtag{color:var(--tt)}
+.dti{font-size:11px;font-weight:600;color:var(--paper);line-height:1.3;margin-bottom:.3rem}
+.dp{display:flex;gap:2px;flex-wrap:wrap;margin-bottom:.3rem}
+.dh{font-size:10px;color:var(--muted);line-height:1.45;font-style:italic;margin-bottom:.3rem}
+.dnote{font-family:'DM Mono',monospace;font-size:8px;color:var(--muted2);margin-top:.3rem;padding-top:.3rem;border-top:1px solid var(--rule);line-height:1.45;letter-spacing:.02em}
+.shoot-badge{display:inline-flex;align-items:center;gap:3px;font-family:'DM Mono',monospace;font-size:7.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--purple);margin-bottom:.3rem}
+.shoot-badge::before{content:'●';font-size:6px}
+
+/* LIST VIEW */
+.list-view{display:none}
+.list-view.active{display:block}
+.grid-view{display:block}
+.grid-view.hidden{display:none}
+.lv-row{display:grid;grid-template-columns:52px 1fr;gap:0;border-bottom:1px solid var(--rule);align-items:stretch;transition:opacity 0.2s}
+.lv-row.dimmed{opacity:0.15;pointer-events:none}
+.lv-day{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:.75rem .5rem;border-right:1px solid var(--rule);flex-shrink:0;gap:2px}
+.lv-daynum{font-family:'Space Grotesk',sans-serif;font-size:1.1rem;font-weight:700;line-height:1}
+.a1 .lv-daynum{color:var(--act1)}.a2 .lv-daynum{color:var(--act2)}.a3 .lv-daynum{color:var(--act3)}.al .lv-daynum{color:var(--launch)}.apl .lv-daynum{color:var(--tt)}
+.lv-acttag{font-family:'DM Mono',monospace;font-size:7px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.lv-body{padding:.75rem 1rem;display:flex;align-items:flex-start;gap:1rem;flex-wrap:wrap}
+.lv-main{flex:1;min-width:200px}
+.lv-title{font-size:13px;font-weight:600;color:var(--paper);margin-bottom:.25rem;line-height:1.3}
+.lv-hook{font-size:12px;color:var(--muted);font-style:italic;margin-bottom:.3rem;line-height:1.45}
+.lv-note{font-family:'DM Mono',monospace;font-size:8.5px;color:var(--muted2);line-height:1.5}
+.lv-meta{display:flex;flex-direction:column;gap:.35rem;align-items:flex-end;flex-shrink:0;padding-top:2px}
+.lv-platforms{display:flex;gap:3px;flex-wrap:wrap;justify-content:flex-end}
+.lv-type{font-family:'DM Mono',monospace;font-size:8px;letter-spacing:.08em;text-transform:uppercase;padding:2px 8px;border-radius:100px;background:var(--card2);color:var(--muted);border:1px solid var(--rule)}
+.lv-shoot{font-family:'DM Mono',monospace;font-size:8px;letter-spacing:.08em;text-transform:uppercase;padding:2px 8px;border-radius:100px;background:rgba(144,48,208,.12);color:var(--purple);border:1px solid rgba(144,48,208,.3)}
+.lv-key{font-family:'DM Mono',monospace;font-size:8px;letter-spacing:.08em;text-transform:uppercase;padding:2px 8px;border-radius:100px;background:rgba(204,34,34,.12);color:var(--red);border:1px solid rgba(204,34,34,.3)}
+
+/* CALENDAR VIEW */
+.cal-view{display:none}
+.cal-view.active{display:block}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;margin-bottom:1rem}
+.cal-hdr{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-align:center;padding:6px 2px;border-bottom:1px solid var(--rule)}
+.cal-cell{background:var(--card);border:1px solid var(--rule);border-radius:5px;padding:5px 6px;min-height:80px;cursor:pointer;transition:border-color 0.15s;position:relative;overflow:hidden}
+.cal-cell::before{content:'';position:absolute;top:0;left:0;right:0;height:2px}
+.cal-cell.a1::before{background:var(--act1)}.cal-cell.a2::before{background:var(--act2)}.cal-cell.a3::before{background:var(--act3)}.cal-cell.al::before{background:var(--launch)}.cal-cell.apl::before{background:var(--tt)}
+.cal-cell:hover{border-color:var(--amber)}
+.cal-cell.empty{background:transparent;border-color:transparent;cursor:default;min-height:0}
+.cal-cell.empty::before{display:none}
+.cal-daynum{font-family:'Space Grotesk',sans-serif;font-size:.9rem;font-weight:700;line-height:1;margin-bottom:3px}
+.a1 .cal-daynum{color:var(--act1)}.a2 .cal-daynum{color:var(--act2)}.a3 .cal-daynum{color:var(--act3)}.al .cal-daynum{color:var(--launch)}.apl .cal-daynum{color:var(--tt)}
+.cal-title{font-size:9.5px;color:var(--paper);line-height:1.3;margin-bottom:4px;font-weight:500}
+.cal-tags{display:flex;gap:2px;flex-wrap:wrap}
+.cal-tag{font-family:'DM Mono',monospace;font-size:7px;padding:1px 5px;border-radius:3px;letter-spacing:.04em}
+.cal-tag.shoot{background:rgba(144,48,208,.2);color:var(--purple)}
+.cal-tag.tt{background:rgba(105,201,208,.15);color:var(--tt)}
+.cal-tag.ig{background:rgba(224,96,160,.15);color:var(--ig)}
+.cal-tag.all{background:rgba(232,160,32,.15);color:var(--amber)}
+.cal-tag.key{background:rgba(204,34,34,.2);color:var(--red)}
+.cal-cell.dimmed{opacity:0.15;cursor:default}
+
+/* MODAL */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:1000;display:none;align-items:center;justify-content:center;padding:1rem}
+.modal-overlay.open{display:flex}
+.modal{background:var(--dark);border:1px solid var(--rule2);border-radius:10px;max-width:520px;width:100%;padding:1.75rem;position:relative;max-height:90vh;overflow-y:auto}
+.modal-close{position:absolute;top:1rem;right:1rem;background:none;border:none;color:var(--muted);cursor:pointer;font-size:1.2rem;line-height:1;transition:color .15s}
+.modal-close:hover{color:var(--paper)}
+.modal-day{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;margin-bottom:.35rem}
+.modal-title{font-family:'Space Grotesk',sans-serif;font-size:1.3rem;font-weight:600;margin-bottom:.75rem;line-height:1.2}
+.modal-section{margin-bottom:1rem}
+.modal-lbl{font-family:'DM Mono',monospace;font-size:8.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:.35rem}
+.modal-val{font-size:13px;color:rgba(240,237,230,.8);line-height:1.6}
+.modal-hook{font-size:13.5px;font-style:italic;color:var(--paper);line-height:1.55;background:var(--card);border-left:2px solid var(--amber);padding:.75rem 1rem;border-radius:0 5px 5px 0;margin:.35rem 0}
+.modal-note{font-size:12.5px;color:var(--muted);line-height:1.6;background:var(--card);padding:.75rem 1rem;border-radius:5px}
+.modal-badges{display:flex;gap:.35rem;flex-wrap:wrap;margin:.35rem 0}
+.modal-badge-shoot{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.08em;text-transform:uppercase;padding:4px 12px;border-radius:100px;background:rgba(144,48,208,.15);color:var(--purple);border:1px solid rgba(144,48,208,.35)}
+.modal-badge-key{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.08em;text-transform:uppercase;padding:4px 12px;border-radius:100px;background:rgba(204,34,34,.15);color:var(--red);border:1px solid rgba(204,34,34,.35)}
+
+.footer{background:var(--dark);border-top:1px solid var(--rule);padding:1.25rem 2rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.75rem;margin-top:2rem}
+.fb{font-family:'Space Grotesk',sans-serif;font-size:.95rem;font-weight:700;letter-spacing:-.02em}.fb span{color:var(--amber)}
+.fm{font-family:'DM Mono',monospace;font-size:8.5px;color:var(--muted);letter-spacing:.08em;text-align:right;line-height:2}
+</style>
+</head>
+<body>
+
+<div class="masthead">
+  <div><div class="mast-brand">PRETTY <span>BANDIT</span> &nbsp;·&nbsp; Strategy Dashboard</div><div class="mast-sub">Prepared by Jordan Hall / FORE</div></div>
+  <div class="mast-tag">July 2026 &nbsp;·&nbsp; Demon Campaign</div>
+</div>
+<nav class="tab-nav">
+  <button class="tb active" onclick="sw('plan')">01 &nbsp;30-Day Plan</button>
+  <button class="tb" onclick="sw('audience')">02 &nbsp;Audience</button>
+  <button class="tb" onclick="sw('audit')">03 &nbsp;Social Audit</button>
+  <button class="tb" onclick="sw('kpi')">04 &nbsp;KPIs</button>
+  <button class="tb" onclick="sw('persona')">05 &nbsp;Brand Persona</button>
+  <button class="tb" onclick="sw('account')">06 &nbsp;Accountability</button>
+</nav>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal-overlay" onclick="closeModal(event)">
+  <div class="modal" id="modal-box">
+    <button class="modal-close" onclick="closeModalBtn()">✕</button>
+    <div id="modal-content"></div>
+  </div>
+</div>
+
+<!-- ==================== TAB 1: 30-DAY PLAN ==================== -->
+<div class="panel active" id="panel-plan">
+
+  <div class="plan-controls">
+    <span class="plan-controls-label">Filter</span>
+    <div class="filter-btns">
+      <button class="filter-btn active" onclick="setFilter('all',this)">All</button>
+      <button class="filter-btn f-tt" onclick="setFilter('tt',this)">TikTok</button>
+      <button class="filter-btn f-ig" onclick="setFilter('ig',this)">Instagram</button>
+      <button class="filter-btn f-shoot" onclick="setFilter('shoot',this)">Shoot days</button>
+    </div>
+    <div class="view-btns">
+      <button class="view-btn active" id="vbtn-grid" onclick="setView('grid')">Grid</button>
+      <button class="view-btn" id="vbtn-list" onclick="setView('list')">List</button>
+      <button class="view-btn" id="vbtn-cal" onclick="setView('cal')">Calendar</button>
+    </div>
+  </div>
+
+  <!-- GRID VIEW -->
+  <div class="grid-view" id="grid-view">
+
+    <div class="act-hdr a1"><p class="ahlbl">Act One · Days 1–10</p><p class="ahttl">The Setup — Normal Life, First Cracks</p><p class="ahdsc">The audience is dropped straight into the middle of something that has already happened. No introduction. No context. They piece it together themselves — which is what makes it feel real.</p></div>
+    <div class="day-grid" id="grid-a1"></div>
+
+    <div class="act-hdr a2"><p class="ahlbl">Act Two · Days 11–22</p><p class="ahttl">The Escalation — She's Clearly in His Head</p><p class="ahdsc">The posting time shifts. The energy changes. Something happened and he's not talking about it directly — but he can't stop posting about it indirectly. Staged drama lands here, spaced to give each moment full impact.</p></div>
+    <div class="day-grid" id="grid-a2"></div>
+
+    <div class="act-hdr a3"><p class="ahlbl">Act Three · Days 23–29</p><p class="ahttl">The Climax — Something Has Been Decided</p><p class="ahdsc">He goes quiet. Returns different. The countdown begins. One black image across all platforms. The audience who has been watching for 29 days knows something is coming.</p></div>
+    <div class="day-grid" id="grid-a3"></div>
+
+    <div class="act-hdr al"><p class="ahlbl">Day 30 — Demon Drops</p><p class="ahttl">The Reveal — Everything Clicks Into Place</p><p class="ahdsc">The song is released. Everything the audience has been watching for 30 days has its explanation. Every post was the story. The song is the ending.</p></div>
+    <div class="day-grid" style="grid-template-columns:repeat(3,1fr)" id="grid-al"></div>
+
+    <div class="act-hdr apl"><p class="ahlbl">Post-Launch · Notting Hill Carnival (August)</p><p class="ahttl">Party Mode — Demon in the Wild</p><p class="ahdsc">The campaign is over. The song is out. Now the content shifts entirely — Demon playing at carnival, real reactions, no narrative needed. The song does the work.</p></div>
+    <div class="day-grid" style="grid-template-columns:repeat(3,1fr)" id="grid-pl"></div>
+
+  </div>
+
+  <!-- LIST VIEW -->
+  <div class="list-view" id="list-view">
+    <div id="list-a1"></div>
+    <div id="list-a2"></div>
+    <div id="list-a3"></div>
+    <div id="list-al"></div>
+    <div id="list-pl"></div>
+  </div>
+
+  <!-- CALENDAR VIEW -->
+  <div class="cal-view" id="cal-view">
+    <div class="cal-grid">
+      <div class="cal-hdr">Mon</div><div class="cal-hdr">Tue</div><div class="cal-hdr">Wed</div>
+      <div class="cal-hdr">Thu</div><div class="cal-hdr">Fri</div><div class="cal-hdr">Sat</div><div class="cal-hdr">Sun</div>
+    </div>
+    <div class="cal-grid" id="cal-grid"></div>
+  </div>
+
+</div>
+
+<!-- ==================== TAB 2: AUDIENCE ==================== -->
+<div class="panel" id="panel-audience">
+  <div class="sec">
+    <div class="sh"><span class="sl">Overview</span><h2 class="st">Cross-Platform Headline Numbers</h2><div class="sr"></div></div>
+    <div class="g4">
+      <div class="card c-amber"><p class="cl"><span class="pb pb-tt">TikTok</span> Total views (12mo)</p><p class="sv" style="color:var(--tt)">3.0M</p><p class="ss">Avg <strong>8,244/day</strong> · 93 days above 10k</p></div>
+      <div class="card"><p class="cl"><span class="pb pb-ig">Instagram</span> Reach Jun–Jul</p><p class="sv" style="color:var(--ig)">379k</p><p class="ss">Peak <strong>192,401</strong> on Jun 28 viral event</p></div>
+      <div class="card"><p class="cl"><span class="pb pb-sp">Spotify</span> All-time streams</p><p class="sv" style="color:var(--sp)">73.4k</p><p class="ss">Peak month <strong>18.1k</strong> (May 2024)</p></div>
+      <div class="card c-red"><p class="cl"><span class="pb pb-sp">Spotify</span> Monthly listeners now</p><p class="sv" style="color:var(--red)">85</p><p class="ss">Was <strong>2,763</strong> at peak (Jun 2024)</p></div>
+    </div>
+    <div class="g4">
+      <div class="card"><p class="cl">TikTok like rate</p><p class="sv" style="color:var(--tt)">6.5%</p><p class="ss">Industry avg is <strong>2–4%</strong></p></div>
+      <div class="card"><p class="cl">TikTok total likes</p><p class="sv" style="color:var(--tt)">195k</p><p class="ss"><strong>19,544</strong> shares across 12 months</p></div>
+      <div class="card c-red"><p class="cl">Instagram link clicks</p><p class="sv" style="color:var(--red)">0</p><p class="ss"><strong>Zero</strong> across the full 28-day period</p></div>
+      <div class="card"><p class="cl">Instagram followers</p><p class="sv">3,640</p><p class="ss"><strong>147</strong> new follows Jun–Jul window</p></div>
+    </div>
+  </div>
+  <div class="sec">
+    <div class="sh"><span class="sl">Gender & Age</span><h2 class="st">Audience by Platform</h2><div class="sr"></div></div>
+    <div class="ca amber"><p class="cal">The key finding</p><p>The gender split <strong>flips completely between platforms.</strong> Instagram is 57% male. Spotify is 56% female. TikTok is 65–70% female. Three different audiences at different stages of the funnel.</p></div>
+    <div class="g3" style="margin-top:1rem">
+      <div class="card"><p class="cl" style="color:var(--tt)">TikTok · estimated</p><div class="gs"><div class="gsf" style="width:67.5%">67.5% F</div><div class="gsm" style="width:32.5%">32.5% M</div></div><p class="ss">Female-led discovery engine. Primary target for the Demon narrative campaign.</p></div>
+      <div class="card"><p class="cl" style="color:var(--ig)">Instagram · confirmed</p><div class="gs"><div class="gsm" style="width:57.4%">57.4% M</div><div class="gsf" style="width:42.6%">42.6% F</div></div><p class="ss">Male-majority core fans. 25–34 is 33.7%. London-heavy (23.3%). Early adopters.</p></div>
+      <div class="card"><p class="cl" style="color:var(--sp)">Spotify · confirmed</p><div class="gs"><div class="gsf" style="width:56.1%">56.1% F</div><div class="gsm" style="width:43.9%">43.9% M</div></div><p class="ss">Female-majority, older. 35–44 is the single biggest cohort at 12.3%. 100% UK.</p></div>
+    </div>
+  </div>
+  <div class="sec">
+    <div class="sh"><span class="sl">TikTok</span><h2 class="st">Monthly Performance</h2><div class="sr"></div></div>
+    <div class="bw">
+      <div class="br"><span class="bl">Jul 25</span><div class="bt"><div class="bf" style="width:28.9%;background:var(--tt);opacity:.5;color:var(--void)">211k</div></div></div>
+      <div class="br"><span class="bl">Aug</span><div class="bt"><div class="bf" style="width:20.7%;background:var(--tt);opacity:.5;color:var(--void)">151k</div></div></div>
+      <div class="br"><span class="bl">Sep</span><div class="bt"><div class="bf" style="width:5.9%;background:var(--muted);color:var(--void)">44k</div></div></div>
+      <div class="br"><span class="bl">Oct</span><div class="bt"><div class="bf" style="width:4.9%;background:var(--muted);color:var(--void)">36k</div></div></div>
+      <div class="br"><span class="bl">Nov</span><div class="bt"><div class="bf" style="width:20%;background:var(--tt);opacity:.6;color:var(--void)">147k</div></div></div>
+      <div class="br"><span class="bl">Dec</span><div class="bt"><div class="bf" style="width:11.2%;background:var(--tt);opacity:.5;color:var(--void)">82k</div></div></div>
+      <div class="br"><span class="bl">Jan 26</span><div class="bt"><div class="bf" style="width:42.1%;background:var(--tt);opacity:.7;color:var(--void)">308k</div></div></div>
+      <div class="br"><span class="bl">Feb</span><div class="bt"><div class="bf" style="width:64.6%;background:var(--tt);opacity:.8;color:var(--void)">472k</div></div></div>
+      <div class="br"><span class="bl">Mar</span><div class="bt"><div class="bf" style="width:41.8%;background:var(--tt);opacity:.7;color:var(--void)">305k</div></div></div>
+      <div class="br"><span class="bl">Apr</span><div class="bt"><div class="bf" style="width:24.1%;background:var(--tt);opacity:.6;color:var(--void)">176k</div></div></div>
+      <div class="br"><span class="bl">May</span><div class="bt"><div class="bf" style="width:47.2%;background:var(--tt);opacity:.7;color:var(--void)">345k</div></div></div>
+      <div class="br"><span class="bl">Jun</span><div class="bt"><div class="bf" style="width:100%;background:var(--amber);color:var(--void);font-weight:600">731k — PEAK MONTH</div></div></div>
+    </div>
+    <div class="ca red"><p class="cal">Spike and collapse pattern</p><p>Sep–Oct dropped to 36–43k total for entire months after the August run. <strong>The algorithm rewards consistency and punishes gaps immediately.</strong></p></div>
+  </div>
+  <div class="sec">
+    <div class="sh"><span class="sl">The Gap</span><h2 class="st">Social Reach vs Spotify Streams</h2><div class="sr"></div></div>
+    <div class="g3">
+      <div class="card"><p class="cl">TikTok views (June 2026)</p><p class="sv" style="color:var(--tt)">731k</p></div>
+      <div class="card"><p class="cl">Instagram reach (Jun 28 alone)</p><p class="sv" style="color:var(--ig)">192k</p></div>
+      <div class="card c-red"><p class="cl">Spotify streams (June 2026)</p><p class="sv" style="color:var(--red)">194</p></div>
+    </div>
+    <div class="ca red"><p class="cal">The single most important problem to solve</p><p>731k TikTok views. 192k Instagram reach in one day. <strong>194 Spotify streams for the entire month.</strong> The Demon campaign bridges this gap — but only if there is a Spotify link in both bios before Day 1.</p></div>
+  </div>
+</div>
+
+<!-- ==================== TAB 3: SOCIAL AUDIT ==================== -->
+<div class="panel" id="panel-audit">
+  <div class="ca amber" style="margin-bottom:2rem"><p class="cal">Audit conducted July 14 2026 via Chrome</p><p>Both profiles audited live. All findings based on what a new follower sees arriving for the first time from a viral clip.</p></div>
+  <div class="sec">
+    <div class="sh"><span class="sl" style="color:var(--ig)">Instagram</span><h2 class="st">@prettybandit.wav</h2><div class="sr"></div></div>
+    <div class="as-row"><div class="astat">Posts<strong>39</strong></div><div class="astat">Followers<strong>3,640</strong></div><div class="astat">Following<strong>999</strong></div><div class="astat">Bio<strong>"Seeking management"</strong></div><div class="astat">Link<strong>1 track only</strong></div></div>
+    <div class="ic"><span class="isev hi">Critical</span><div class="ib"><p class="it">Bio link goes to a single Spotify track, not his artist profile</p><p class="id">Anyone clicking goes to one song only. Cannot see discography, follow on Spotify, or discover other tracks. This was the link 192,401 people would have clicked on Jun 28.</p></div><span class="ifix">Fix: Artist profile or Linktree</span></div>
+    <div class="ic"><span class="isev hi">Critical</span><div class="ib"><p class="it">No CTA — "Seeking management" is the only bio text</p><p class="id">No music CTA, no release mention, no Demon presave. A first-time viewer has no reason to follow and nowhere to go.</p></div><span class="ifix">Fix: Rewrite bio completely</span></div>
+    <div class="ic"><span class="isev hi">Critical</span><div class="ib"><p class="it">Zero link clicks across the entire 28-day period</p><p class="id">192k reach on Jun 28. 2,936 profile visits. Nobody clicked the link. The bio link is invisible and there is no CTA driving people to it.</p></div><span class="ifix">Fix: Pin Story with link + bio CTA</span></div>
+    <div class="ic"><span class="isev md">Medium</span><div class="ib"><p class="it">No pinned posts and no Instagram Highlights</p><p class="id">New visitors get a random grid and no pathway. Highlights should cover Music, BTS, and Demon placeholder.</p></div><span class="ifix">Fix: Pin 3 videos + create Highlights</span></div>
+    <div class="ca green"><p class="cal">What is working</p><p>The content produced a 452x reach spike on Jun 28. The 3,640 followers are genuine. The raw ingredient is there — the infrastructure needs building.</p></div>
+  </div>
+  <div class="sec">
+    <div class="sh"><span class="sl" style="color:var(--tt)">TikTok</span><h2 class="st">@prettybandit.wav</h2><div class="sr"></div></div>
+    <div class="as-row"><div class="astat">Followers<strong>2,599</strong></div><div class="astat">Total likes<strong>194.4k</strong></div><div class="astat">Pinned<strong>10.1k / 238k / 188k</strong></div><div class="astat">Bio<strong>Email only</strong></div><div class="astat">Link<strong>None</strong></div></div>
+    <div class="ic"><span class="isev hi">Critical</span><div class="ib"><p class="it">Bio contains only an email address</p><p class="id">prettybandizzy@gmail.com is the entire bio. No idea what kind of artist, no music destination. With 194.4k total likes this is the most costly conversion gap in the entire setup.</p></div><span class="ifix">Fix: Full bio rewrite + Spotify link</span></div>
+    <div class="ic"><span class="isev hi">Critical</span><div class="ib"><p class="it">No Spotify or music link anywhere in the profile</p><p class="id">TikTok allows one clickable link. Currently empty. No one can get to his music in one click despite 3M+ views.</p></div><span class="ifix">Fix: Add Spotify artist link to bio</span></div>
+    <div class="ic"><span class="isev md">Medium</span><div class="ib"><p class="it">Recent unpinned videos (227–1,411 views) far below pinned peaks (10k–238k)</p><p class="id">The formula that drove 238k views exists. Reverse engineer both pinneds before Day 1 and use as campaign template.</p></div><span class="ifix">Action: Analyse both pinneds before Day 1</span></div>
+    <div class="ca green"><p class="cal">What is working</p><p>194.4k total likes without a structured campaign. Follower-to-like ratio (1:74.8) signals high average engagement. The foundation is solid — the infrastructure is not.</p></div>
+  </div>
+  <div class="sec">
+    <div class="sh"><span class="sl">Fix First</span><h2 class="st">Before Day 1 of the Demon Campaign</h2><div class="sr"></div></div>
+    <div class="g2">
+      <div class="card c-amber"><p class="cl" style="color:var(--ig)">Instagram — do today</p><ul class="dl" style="margin-top:.5rem"><li>Replace track link with Spotify artist profile link</li><li>Rewrite bio: artist name, genre, Demon CTA</li><li>Pin 3 best performing videos to grid top</li><li>Create 3 Highlights: Music, BTS, Demon placeholder</li><li>Add link sticker to a pinned Story pointing to Spotify</li></ul></div>
+      <div class="card c-amber"><p class="cl" style="color:var(--tt)">TikTok — do today</p><ul class="dl" style="margin-top:.5rem"><li>Add Spotify artist profile as clickable link in bio</li><li>Rewrite bio: one line on who he is and what he makes</li><li>Analyse the 238k and 188k pinned videos — hook, format, posting time</li><li>Update third pinned video to something recent and strong</li><li>Set up TikTok Artist account to enable direct Spotify link</li></ul></div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== TAB 4: KPIs ==================== -->
+<div class="panel" id="panel-kpi">
+  <div class="ca amber" style="margin-bottom:2rem"><p class="cal">How to use this tab</p><p>Review every Sunday. If any metric is more than 30% below target, adjust content strategy for the following week. Send weekly numbers to Jordan every Sunday without being asked.</p></div>
+  <div class="sec">
+    <div class="sh"><span class="sl" style="color:var(--tt)">TikTok</span><h2 class="st">TikTok Targets</h2><div class="sr"></div></div>
+    <table class="kt"><thead><tr><th>Metric</th><th>Current</th><th>Day 30</th><th>Day 60</th><th>Day 90</th><th>Notes</th></tr></thead><tbody>
+      <tr><td>Followers</td><td class="kc">2,599</td><td class="kg tt">3,500+</td><td class="kg tt">5,000+</td><td class="kg tt">8,000+</td><td>Jun viral run shows what sustained posting can do.</td></tr>
+      <tr><td>Avg daily views</td><td class="kc">8,244</td><td class="kg tt">15,000+</td><td class="kg tt">20,000+</td><td class="kg tt">25,000+</td><td>Jun peak = 731k ÷ 30 = 24k avg. That is the ceiling to aim for.</td></tr>
+      <tr><td>Like rate</td><td class="kc">6.5%</td><td class="kg tt">7%+</td><td class="kg tt">7%+</td><td class="kg tt">7%+</td><td>Already above benchmark. Do not sacrifice quality for volume.</td></tr>
+      <tr><td>Share rate</td><td class="kc">0.65%</td><td class="kg tt">1.0%+</td><td class="kg tt">1.2%+</td><td class="kg tt">1.5%+</td><td>Day 20 monologue should spike this significantly.</td></tr>
+      <tr><td>New viral clips (10k+)</td><td class="kc">3 pinned</td><td class="kg tt">5 new</td><td class="kg tt">8 new</td><td class="kg tt">12 new</td><td>Day 9 (POV) and Day 20 (monologue) are the designed viral moments.</td></tr>
+      <tr><td>Posting consistency</td><td class="kc">Inconsistent</td><td class="kg tt">Daily</td><td class="kg tt">Daily</td><td class="kg tt">5x/week min</td><td>Non-negotiable. Sep–Oct collapse shows the cost of gaps.</td></tr>
+    </tbody></table>
+  </div>
+  <div class="sec">
+    <div class="sh"><span class="sl" style="color:var(--ig)">Instagram</span><h2 class="st">Instagram Targets</h2><div class="sr"></div></div>
+    <table class="kt"><thead><tr><th>Metric</th><th>Current</th><th>Day 30</th><th>Day 60</th><th>Day 90</th><th>Notes</th></tr></thead><tbody>
+      <tr><td>Followers</td><td class="kc">3,640</td><td class="kg ig">4,500+</td><td class="kg ig">6,000+</td><td class="kg ig">8,500+</td><td>Jun 28 added 42 in one day. Sustained campaign should accelerate this.</td></tr>
+      <tr><td>Avg daily reach</td><td class="kc">~400 / 37k post-viral</td><td class="kg ig">5,000+</td><td class="kg ig">10,000+</td><td class="kg ig">15,000+</td><td>Sustained by 3x/week Reels minimum.</td></tr>
+      <tr><td>Link clicks / week</td><td class="kc">0</td><td class="kg ig">50+</td><td class="kg ig">150+</td><td class="kg ig">300+</td><td>Currently zero because bio CTA does not exist. Fix bio first.</td></tr>
+      <tr><td>New follows / week</td><td class="kc">~15–20</td><td class="kg ig">100+</td><td class="kg ig">200+</td><td class="kg ig">300+</td><td>Driven by TikTok spillover and Reel discovery.</td></tr>
+      <tr><td>Stories / week</td><td class="kc">Sporadic</td><td class="kg ig">7 (daily)</td><td class="kg ig">5x/week</td><td class="kg ig">5x/week</td><td>Stories carry the cryptic campaign narrative. Cannot be an afterthought.</td></tr>
+    </tbody></table>
+  </div>
+  <div class="sec">
+    <div class="sh"><span class="sl" style="color:var(--sp)">Spotify</span><h2 class="st">Spotify Targets</h2><div class="sr"></div></div>
+    <table class="kt"><thead><tr><th>Metric</th><th>Current</th><th>Day 30</th><th>Day 60</th><th>Day 90</th><th>Notes</th></tr></thead><tbody>
+      <tr><td>Monthly listeners</td><td class="kc">85</td><td class="kg sp">500+</td><td class="kg sp">1,500+</td><td class="kg sp">3,000+</td><td>May 2024 peak was 2,763 without a structured campaign. 3k+ is achievable.</td></tr>
+      <tr><td>Streams in launch month</td><td class="kc">194 (Jun 26)</td><td class="kg sp">5,000+</td><td class="kg sp">12,000+</td><td class="kg sp">20,000+</td><td>First 48 hours critical for algorithmic placement.</td></tr>
+      <tr><td>Followers</td><td class="kc">177</td><td class="kg sp">400+</td><td class="kg sp">800+</td><td class="kg sp">1,500+</td><td>Followers get new release notifications. Long-term compounding value.</td></tr>
+      <tr><td>Saves (Demon)</td><td class="kc">0 (not released)</td><td class="kg sp">200+</td><td class="kg sp">500+</td><td class="kg sp">800+</td><td>Saves drive algorithmic recommendation. Pin save CTA in every post-launch caption.</td></tr>
+      <tr><td>Playlist adds</td><td class="kc">Sporadic</td><td class="kg sp">3+ playlists</td><td class="kg sp">10+</td><td class="kg sp">20+</td><td>Pitch Demon to UK R&amp;B, UK trap and mood editorial playlists on release week.</td></tr>
+      <tr><td>Presave sign-ups</td><td class="kc">0 (not set up)</td><td class="kg sp">250+</td><td class="kg sp">—</td><td class="kg sp">—</td><td>Set up via Feature.fm or ToneDen ASAP. Goes in bio from Day 21.</td></tr>
+    </tbody></table>
+  </div>
+</div>
+
+<!-- ==================== TAB 5: BRAND PERSONA ==================== -->
+<div class="panel" id="panel-persona">
+  <div class="ph">
+    <div class="phbg">PB</div>
+    <p class="pn">Pretty Bandit</p>
+    <p class="ph2">@prettybandit.wav &nbsp;·&nbsp; Amaan Choudhury &nbsp;·&nbsp; Singer / Rapper · London</p>
+    <div class="pg">
+      <div><p class="pil">Genre</p><p class="piv">R&amp;B / UK Trap / Afro-swing. Melodic with lyrical depth. Sits between Summer Walker and Central Cee.</p></div>
+      <div><p class="pil">Priority tracks</p><p class="piv">Demon (dark, R&amp;B/trap) · Curtains (intimate, female audience) · Overdosing (Indian elements, Asian diaspora)</p></div>
+      <div><p class="pil">Career stage</p><p class="piv">Emerging independent. Real creative output, real team. Bottleneck is structure and consistency, not talent.</p></div>
+      <div><p class="pil">Content personality</p><p class="piv">Charismatic, natural, personality-led. Performs better being himself than performing. Best content comes from candid moments.</p></div>
+      <div><p class="pil">Strengths</p><p class="piv">Natural on camera. Likeable, funny, real. Strong team. 16–17 days of footage in the bank.</p></div>
+      <div><p class="pil">Watch-outs</p><p class="piv">Loses momentum after content creation. Needs external accountability. Ideas are not the problem — consistency is.</p></div>
+    </div>
+  </div>
+  <div class="sec">
+    <div class="sh"><span class="sl">Brand Identity</span><h2 class="st">Who Pretty Bandit Is</h2><div class="sr"></div></div>
+    <div class="tg">
+      <div class="tc"><p class="tcl">Tone of voice</p><p class="tcv">Honest without being heavy. Funny without trying too hard. Talks like a person, not a brand. The content that works best is when he forgets he's making content.</p></div>
+      <div class="tc"><p class="tcl">Visual identity</p><p class="tcv">No clear visual system yet. The 238k and 188k pinneds suggest casual phone-shot aesthetic performs better than produced content. Lean into that for the Demon campaign.</p></div>
+      <div class="tc"><p class="tcl">Content world</p><p class="tcv">Dating dynamics. Relationship drama. Gender discourse. Real life moments. Music woven in through story, not promotion.</p></div>
+      <div class="tc"><p class="tcl">Artist references</p><p class="tcv">Summer Walker (Curtains energy). Central Cee (anonymous rollout model). Ice Spice (organic TikTok-first rise).</p></div>
+      <div class="tc"><p class="tcl">Audience relationship</p><p class="tcv">65–70% female on TikTok. They follow because of his personality. The Demon campaign converts that following into music listeners.</p></div>
+      <div class="tc"><p class="tcl">Long-term vision</p><p class="tcv">Independent UK artist with genuine community, not just followers. Three-song rollout proving the model before scaling. Twitch for income diversification.</p></div>
+    </div>
+  </div>
+  <div class="sec">
+    <div class="sh"><span class="sl">Bio Copy</span><h2 class="st">How Pretty Bandit Should Describe Himself</h2><div class="sr"></div></div>
+    <div class="g2">
+      <div class="card c-green"><p class="cl">TikTok bio</p><p style="font-size:14px;color:var(--paper);line-height:1.65;margin-top:.5rem">UK R&amp;B / trap · London<br>New single Demon out [date] 🔗</p></div>
+      <div class="card c-green"><p class="cl">Instagram bio</p><p style="font-size:14px;color:var(--paper);line-height:1.65;margin-top:.5rem">Pretty Bandit · Singer / Rapper · London<br>R&amp;B and trap with something to say.<br>Demon — out [date] · Link below 👇</p></div>
+    </div>
+  </div>
+  <div class="sec">
+    <div class="sh"><span class="sl">Three Songs</span><h2 class="st">The Sequence and Why It Matters</h2><div class="sr"></div></div>
+    <div class="g3">
+      <div class="card" style="border-color:rgba(204,34,34,.3)"><p class="cl" style="color:var(--red)">Month 1 — Demon</p><p class="tcv">Dark, party-centric, R&amp;B/trap. The guerrilla narrative campaign. Targets TikTok female audience watching the situationship arc.</p></div>
+      <div class="card" style="border-color:rgba(105,201,208,.3)"><p class="cl" style="color:var(--tt)">Month 2 — Curtains</p><p class="tcv">Intimate, playful, soft pastel. Summer Walker aesthetic. Targets the female Spotify listener — the 35–44 cohort. The aftermath of Demon.</p></div>
+      <div class="card" style="border-color:rgba(29,185,84,.3)"><p class="cl" style="color:var(--sp)">Month 3 — Overdosing</p><p class="tcv">Indian musical elements. Asian diaspora targeting. A completely different audience unlock. Proves Pretty Bandit has range.</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== TAB 6: ACCOUNTABILITY ==================== -->
+<div class="panel" id="panel-account">
+  <div class="ca amber" style="margin-bottom:2rem"><p class="cal">How this works</p><p>Tick off items as completed. Progress bar updates automatically. Review together every Sunday. Anything not ticked becomes the first agenda item for that week's check-in.</p></div>
+  <div class="sec">
+    <div class="sh"><span class="sl">Before Day 1</span><h2 class="st">Pre-Campaign Setup</h2><div class="sr"></div></div>
+    <p style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:.4rem">Pre-campaign progress</p>
+    <div class="pr-t"><div class="pr-f" id="pre-fill" style="width:0%"></div></div>
+    <div class="pr-s"><span id="pre-done">0 complete</span><span id="pre-total">0 items</span></div>
+    <div class="ch" id="pre-checks" style="margin-top:1.25rem">
+      <div class="chh">Profile fixes</div>
+      <div class="ci"><div class="cb" onclick="tc(this)"></div><div class="ct"><strong>Instagram:</strong> Replace track link with Spotify artist profile link</div><span class="co">Amaan</span></div>
+      <div class="ci"><div class="cb" onclick="tc(this)"></div><div class="ct"><strong>Instagram:</strong> Rewrite bio — artist name, genre, Demon CTA</div><span class="co">Amaan</span></div>
+      <div class="ci"><div class="cb" onclick="tc(this)"></div><div class="ct"><strong>Instagram:</strong> Pin 3 best performing videos + create 3 Highlights</div><span class="co">Amaan</span></div>
+      <div class="ci"><div class="cb" onclick="tc(this)"></div><div class="ct"><strong>TikTok:</strong> Add Spotify artist profile as clickable link in bio</div><span class="co">Amaan</span></div>
+      <div class="ci"><div class="cb" onclick="tc(this)"></div><div class="ct"><strong>TikTok:</strong> Rewrite bio — one line on who he is and what he makes</div><span class="co">Amaan</span></div>
+      <div class="ci"><div class="cb" onclick="tc(this)"></div><div class="ct">Analyse 238k and 188k pinned TikToks — identify hook, format and posting time</div><span class="co">Jordan + Amaan</span></div>
+      <div class="chh">Music and distribution</div>
+      <div class="ci"><div class="cb" onclick="tc(this)"></div><div class="ct">Schedule Demon on distributor — minimum 2 weeks before launch date</div><span class="co">Amaan</span></div>
+      <div class="ci"><div class="cb" onclick="tc(this)"></div><div class="ct">Confirm Demon is fully mixed and mastered — ready for 3-second audio tease on Day 27</div><span class="co">Amaan</span></div>
+      <div class="ci"><div class="cb" onclick="tc(this)"></div><div class="ct">Set up presave link via Feature.fm or ToneDen — goes in bio from Day 21</div><span class="co">Amaan + Jordan</span></div>
+      <div class="ci"><div class="cb" onclick="tc(this)"></div><div class="ct">Send Demon song file to Jordan</div><span class="co">Amaan</span></div>
+      <div class="chh">Campaign prep</div>
+      <div class="ci"><div class="cb" onclick="tc(this)"></div><div class="ct">Cast the actress for CCTV and drink-in-face scenes — lesser-known, no identifiable social presence</div><span class="co">Amaan</span></div>
+      <div class="ci"><div class="cb" onclick="tc(this)"></div><div class="ct">Brief 2–3 seed accounts on specific comments to plant from Days 9–10 onwards</div><span class="co">Jordan + Amaan</span></div>
+      <div class="ci"><div class="cb" onclick="tc(this)"></div><div class="ct">Brief inner circle — everyone who knows this is planned must stay silent online</div><span class="co">Amaan</span></div>
+      <div class="ci"><div class="cb" onclick="tc(this)"></div><div class="ct">Film Day 1 (keyed car), Day 14 (drink in face), Day 17 (CCTV) scenes in advance</div><span class="co">Amaan + team</span></div>
+      <div class="ci"><div class="cb" onclick="tc(this)"></div><div class="ct">Film and edit the Day 30 Reveal video in advance — do not freestyle it on launch day</div><span class="co">Amaan</span></div>
+    </div>
+  </div>
+  <div class="sec">
+    <div class="sh"><span class="sl">Every Sunday</span><h2 class="st">Weekly Check-In</h2><div class="sr"></div></div>
+    <div class="ch">
+      <div class="chh">Content this week</div>
+      <div class="ci"><div class="cb" onclick="tc(this)"></div><div class="ct">TikTok: minimum 7 posts this week (daily). If not, explain why in the Sunday voice note.</div><span class="co">Amaan</span></div>
+      <div class="ci"><div class="cb" onclick="tc(this)"></div><div class="ct">Instagram Reels: minimum 3 posts this week</div><span class="co">Amaan</span></div>
+      <div class="ci"><div class="cb" onclick="tc(this)"></div><div class="ct">Instagram Stories: at least 5 days with Story content</div><span class="co">Amaan</span></div>
+      <div class="ci"><div class="cb" onclick="tc(this)"></div><div class="ct">No character breaks — nothing posted hinting the campaign is planned</div><span class="co">Amaan</span></div>
+      <div class="chh">Numbers reviewed</div>
+      <div class="ci"><div class="cb" onclick="tc(this)"></div><div class="ct">Checked TikTok weekly views vs KPI target</div><span class="co">Amaan</span></div>
+      <div class="ci"><div class="cb" onclick="tc(this)"></div><div class="ct">Checked Instagram weekly reach and new follows</div><span class="co">Amaan</span></div>
+      <div class="ci"><div class="cb" onclick="tc(this)"></div><div class="ct">Checked Spotify streams — are they growing since launch?</div><span class="co">Amaan</span></div>
+      <div class="ci"><div class="cb" onclick="tc(this)"></div><div class="ct">Identified best-performing piece of content this week and why</div><span class="co">Amaan</span></div>
+      <div class="chh">Communication</div>
+      <div class="ci"><div class="cb" onclick="tc(this)"></div><div class="ct">Sent Sunday voice note to Jordan: weekly numbers, best content, blockers</div><span class="co">Amaan</span></div>
+      <div class="ci"><div class="cb" onclick="tc(this)"></div><div class="ct">Sent new content ideas to Jordan to integrate into the plan</div><span class="co">Amaan</span></div>
+    </div>
+  </div>
+  <div class="sec">
+    <div class="sh"><span class="sl">The Rules</span><h2 class="st">Campaign Non-Negotiables</h2><div class="sr"></div></div>
+    <div class="g2">
+      <div class="card c-red"><p class="cl" style="color:var(--red)">Never</p><ul class="dl" style="margin-top:.5rem"><li>Confirm it is a campaign before Day 30</li><li>Let any team member hint it is planned online</li><li>Use the word Demon or song title before Day 26</li><li>Post content that looks too scripted in Acts 1 and 2</li><li>Confirm or deny speculation — stay silent or be vague</li><li>Break character on livestreams or in-person events</li><li>Skip a TikTok posting day without a pre-filmed fallback</li></ul></div>
+      <div class="card c-green"><p class="cl" style="color:var(--green)">Always</p><ul class="dl" style="margin-top:.5rem"><li>Post in first person, from the feeling not the concept</li><li>Let the comment section tell the story — do not correct it</li><li>Vary posting times organically</li><li>Mix normal entertaining content with the narrative</li><li>Screenshot comment threads daily — post-launch content</li><li>Have next week's content at least partially filmed by Sunday</li><li>Send weekly update to Jordan every Sunday without being chased</li></ul></div>
+    </div>
+  </div>
+</div>
+
+<div class="footer"><span class="fb">PRETTY <span>BANDIT</span></span><div class="fm">Strategy Dashboard · July 2026 · V1.0<br>Prepared by Jordan Hall / FORE · Confidential</div></div>
+
+<script>
+// ===== DATA =====
+var DAYS = [
+  // ACT 1
+  {d:1,act:'a1',title:'Someone Keyed My Car',type:'Reaction / Staged Drama',platforms:['tt'],hook:'"i don\'t even know what to say right now" [shows the car, rattled, no explanation of who]',note:'Post mid-morning as if just discovered. Show the car briefly. Do not explain who did it. Let the comment section do that.',shoot:true,key:false,ig:false},
+  {d:2,act:'a1',title:'Am I the Dickhead?',type:'Discussion',platforms:['tt'],hook:'"okay be honest with me. am i actually the dickhead in this situation"',note:'A grey-area dating scenario — not the keyed car, something separate. The audience who saw Day 1 wonders if it\'s connected.',shoot:false,key:false,ig:false},
+  {d:3,act:'a1',title:'Dating Nightmare Story Time: Part 1',type:'Story Time',platforms:['tt'],hook:'"story time: the situationship that should never have happened"',note:'General and entertaining. A past disaster with nothing to do with the current situation. Palette-establishing — shows he\'s funny and self-aware.',shoot:false,key:false,ig:false},
+  {d:4,act:'a1',title:'Men vs Women: Red Flags',type:'Discussion',platforms:['tt','ig'],hook:'"what\'s the worst red flag you\'ve actually seen? i\'ll go first"',note:'High comment bait. He gives his answer first. Comment section runs. First IG Reel post — 3x per week maximum on Instagram.',shoot:false,key:false,ig:true},
+  {d:5,act:'a1',title:'Snapchat Format: Studio Session',type:'Snapchat Format',platforms:['tt'],hook:'No caption needed — the vibe is the content',note:'Casual vertical clip, front camera, talking or just existing. Something slightly off about the energy. Ends abruptly.',shoot:false,key:false,ig:false},
+  {d:6,act:'a1',title:'Dating Nightmare: Demon-Themed Story',type:'Story Time',platforms:['tt'],hook:'"story time: the most confusing person i\'ve ever been involved with"',note:'"Someone who was completely different depending on the day. Weekend vs weekday." Maps to the song\'s world without naming it. Audience starts connecting this to Day 1.',shoot:false,key:false,ig:false},
+  {d:7,act:'a1',title:'Gender Dynamics: Do People Know When They\'re Being Toxic?',type:'Discussion',platforms:['tt','ig'],hook:'"genuine question. do people actually know when they\'re being the problem or do they just not care?"',note:'Slightly more loaded than Day 4 — the framing feels personal now. Second IG Reel.',shoot:false,key:false,ig:true},
+  {d:8,act:'a1',title:'Late Night IG Story',type:'IG Story',platforms:['ig'],hook:'[Single image or text. No caption. Deleted by morning.]',note:'Posted at 11:52pm. Not acknowledged. The timestamp is the content. Audience notices before anything else.',shoot:false,key:false,ig:true},
+  {d:9,act:'a1',title:'POV: She Texts You at 3am',type:'POV',platforms:['tt'],hook:'"POV: she texts you at 3am and you already know it\'s going to ruin your morning"',note:'15 seconds max. His face does the work — recognising the name on screen, the conflict visible. Ends before he responds. Post at 10:30pm.',shoot:false,key:false,ig:false},
+  {d:10,act:'a1',title:'"depends what day you ask"',type:'Comment Interaction',platforms:['tt','ig'],hook:'Reply to "bro you good?": "depends what day you ask tbh"',note:'IG Story: cropped screenshot of text convo, his side only. Posted and deleted in 40 minutes. Seed accounts start the thread.',shoot:false,key:false,ig:true},
+  // ACT 2
+  {d:11,act:'a2',title:'1:34am Bedroom Clip',type:'Late Night',platforms:['tt'],hook:'"idk why i\'m still up"',note:'Scheduled to post at exactly 1:34am. No performance. Just him, the silence, clearly not sleeping. The timestamp is the entire content.',shoot:false,key:false,ig:false},
+  {d:12,act:'a2',title:'Suspicious Behaviour Discussion',type:'Discussion',platforms:['tt','ig'],hook:'"what counts as suspicious vs just being paranoid. i\'ve been thinking about this"',note:'"I\'ve been thinking about this a lot lately." Feels personal now. Seed comment: "bro is going through something."',shoot:false,key:false,ig:true},
+  {d:13,act:'a2',title:'Snapchat Format: Distracted Energy',type:'Snapchat Format',platforms:['tt'],hook:'[Starts to say something, cuts himself off. Ends abruptly. No explanation.]',note:'Same Snapchat vertical format as Day 5. Heavier energy. Different location. He does not explain.',shoot:false,key:false,ig:false},
+  {d:14,act:'a2',title:'Drink Thrown in Face — Selfie Cam',type:'Staged Drama',platforms:['tt','ig'],hook:'"i don\'t even know what to say right now 😐" [wet, direct to camera]',note:'Aftermath selfie only — no setup shown, no incident shown. Just the reaction. Post mid-evening. Comment section treats it as completely real.',shoot:true,key:false,ig:true},
+  {d:15,act:'a2',title:'Am I the Dickhead? Part 2',type:'Discussion',platforms:['tt'],hook:'"genuinely need an honest answer on this one"',note:'This iteration is closer to home. More loaded. The audience who has followed since Day 1 connects it to everything they\'ve seen.',shoot:false,key:false,ig:false},
+  {d:16,act:'a2',title:'Exposing Cheaters: Coming Home Late',type:'Discussion / Exposé',platforms:['tt','ig'],hook:'"the signs were there and i kept ignoring them. that\'s on me"',note:'Reaction or commentary content. Reflective, not accusatory. The tone shift here is deliberate — less entertaining, more real.',shoot:false,key:false,ig:true},
+  {d:17,act:'a2',title:'CCTV: Vandalising the House',type:'Staged Drama',platforms:['tt'],hook:'"nah i\'m not even gonna say anything 😭"',note:'First CCTV-style clip. Grainy, low angle. Someone outside his block. Never clear enough to identify anyone. His reaction follows the footage.',shoot:true,key:false,ig:false},
+  {d:18,act:'a2',title:'Dating Nightmare: Demon-Themed Part 2',type:'Story Time',platforms:['tt','ig'],hook:'"i need to talk about this because i\'ve been holding it in"',note:'More intense than Day 6. Specific incident — not named, but specific enough to feel like a confession. Audience is fully invested.',shoot:false,key:false,ig:true},
+  {d:19,act:'a2',title:'Snapchat Format: Processing Out Loud',type:'Snapchat Format',platforms:['tt'],hook:'[Starts talking, seems about to explain everything, catches himself. Three seconds of silence before it cuts.]',note:'Third Snapchat instance. The heaviest of the three. Post at 11pm.',shoot:false,key:false,ig:false},
+  {d:20,act:'a2',title:'"some people just don\'t know when to leave someone alone"',type:'Talking Head',platforms:['tt','ig'],hook:'"nah because some people genuinely don\'t know when to leave someone alone and it is actually exhausting... anyway" [looks away, clip ends]',note:'★ THE KEY CLIP. Most important piece of content in the entire campaign. Film multiple takes — use the most unscripted-feeling one. PIN THIS IMMEDIATELY. Target 500k+ views. Seed: "bro is NOT okay"',shoot:false,key:true,ig:true},
+  {d:21,act:'a2',title:'POV: You\'re Out But She\'s Everywhere',type:'POV',platforms:['tt'],hook:'"POV: you\'re out trying to have a good night but someone keeps finding a way back into your head"',note:'Second POV format. Out with friends, seeming fine, phone keeps going. Short. His face tells the story. Post at 8pm.',shoot:false,key:false,ig:false},
+  {d:22,act:'a2',title:'Introducing the Song: Talking Head',type:'Music Tease',platforms:['tt','ig'],hook:'"i wrote this song about a crazy ex. guys have you ever met a girl like this?"',note:'First direct music reference after 21 days of pure narrative. Does not name the song. Does not play it. PRESAVE LINK GOES IN BIO NOW.',shoot:false,key:false,ig:true},
+  // ACT 3
+  {d:23,act:'a3',title:'He Goes Quiet',type:'Silence',platforms:['ig'],hook:'[Single emoji: 🔁 — no context, no caption]',note:'Nothing on TikTok. IG Story only, posted and deleted within 45 minutes. The comments on Day 22 keep going. The silence is the content.',shoot:false,key:false,ig:true},
+  {d:24,act:'a3',title:'"I\'m Good Now" — Different Energy',type:'Return',platforms:['tt'],hook:'"needed a minute. i\'m good now"',note:'Back, but different. Filmed outside, moving. Something has been decided. Short. The comments are relieved but sense the shift.',shoot:false,key:false,ig:false},
+  {d:25,act:'a3',title:'CCTV: Set Up Chick — The Exposé',type:'Staged Drama',platforms:['tt','ig'],hook:'"at this point i\'m just documenting 📸"',note:'Second and more dramatic CCTV clip. More clearly staged behaviour. He is no longer reactive — he is documenting. Never a clear face. Grain filter throughout.',shoot:true,key:false,ig:true},
+  {d:26,act:'a3',title:'"I Wrote This About a Demon I Couldn\'t Shake"',type:'Music Reveal',platforms:['tt','ig'],hook:'"guys have you met a girl like this? i wrote this about a demon i couldn\'t shake. you\'ll hear it soon"',note:'First use of the word DEMON. Still no song name, no release date. The audience who has been here for 26 days immediately understands.',shoot:false,key:false,ig:true},
+  {d:27,act:'a3',title:'3 Seconds of Demon — Stories Only',type:'Audio Tease',platforms:['ig','tt'],hook:'[No caption. Just the sound. 3 seconds.]',note:'Enough to feel the energy, not enough to make out the song. Comment sections across all platforms converge. Must be properly mixed and mastered before this goes out.',shoot:false,key:false,ig:true},
+  {d:28,act:'a3',title:'Pure Black Image — Release Date in Corner',type:'Countdown',platforms:['tt','ig'],hook:'[Pure black. Small white date in bottom right corner. Nothing else. No caption. No hashtags. No tags.]',note:'ALL PLATFORMS simultaneously. Screenshot bait. The most shared post of the campaign. Do not add anything to this post.',shoot:false,key:false,ig:true},
+  {d:29,act:'a3',title:'Final 24 Hours — "tomorrow."',type:'Countdown',platforms:['tt','ig'],hook:'Morning: "tomorrow." · Evening: [speaker playing Demon, filmed from behind, just the sound in the room]',note:'Stories throughout the day documenting the last 24 hours. Do not oversell it.',shoot:false,key:false,ig:true},
+  // LAUNCH
+  {d:'30a',act:'al',title:'DEMON Live on All DSPs',type:'Launch',platforms:['tt','ig','sp'],hook:'"wrote this about a demon i couldn\'t shake. you\'ve been watching me deal with it for a month. DEMON out now 🔗"',note:'Midnight or 6am. Schedule in advance — must go live exactly when Spotify goes live. Pin immediately on all platforms.',shoot:false,key:false,ig:true},
+  {d:'30b',act:'al',title:'The Reveal — "for the last 30 days..."',type:'Launch',platforms:['tt','ig'],hook:'"for the last 30 days i\'ve been telling you a story. here\'s what it actually was."',note:'3–5 minute talking-to-camera. Film in advance. Do not freestyle it on launch day. The most-watched piece of content of the entire campaign.',shoot:false,key:false,ig:true},
+  {d:'30c',act:'al',title:'30-Day Arc Compilation set to Demon',type:'Launch',platforms:['tt','ig'],hook:'[90-second chronological edit of the full narrative arc, Demon playing underneath]',note:'Edit in advance. Post within hours of the song dropping. Most shareable post-launch asset.',shoot:false,key:false,ig:true},
+  // POST LAUNCH
+  {d:'PL1',act:'apl',title:'Cherry / Demon Counter — Notting Hill Carnival',type:'Carnival',platforms:['tt','ig'],hook:'[Usher-cherry format adapted — offering something to people at carnival, counting how many are "demons." Song playing in background.]',note:'First time Demon appears in a pure party context. High energy, no narrative needed.',shoot:true,key:false,ig:true},
+  {d:'PL2',act:'apl',title:'Questions from Demon Lyrics — Carnival',type:'Carnival',platforms:['tt'],hook:'[Stopping people at carnival and asking questions pulled directly from the Demon lyrics. Their answers become the content.]',note:'Confirm actual song lyrics first. Works best when questions feel provocative or relatable enough to get real reactions.',shoot:true,key:false,ig:false},
+  {d:'PL3',act:'apl',title:'Listening in Headphones — Carnival',type:'Carnival',platforms:['tt','ig'],hook:'[Getting people at carnival to listen to Demon on headphones and capturing their real first-listen reactions.]',note:'First-listen reaction format is consistently high-performing. No staging needed — the song does the work.',shoot:true,key:false,ig:true},
+];
+
+function actColor(act){return act==='a1'?'var(--act1)':act==='a2'?'var(--act2)':act==='a3'?'var(--act3)':act==='al'?'var(--launch)':'var(--tt)'}
+function platBadge(p){return p==='tt'?'<span class="pb pb-tt">TikTok</span>':p==='ig'?'<span class="pb pb-ig">IG</span>':p==='sp'?'<span class="pb pb-sp">Spotify</span>':''}
+function calTag(p){return p==='tt'?'<span class="cal-tag tt">TT</span>':p==='ig'?'<span class="cal-tag ig">IG</span>':p==='sp'?'<span class="cal-tag sp">SP</span>':''}
+
+var currentFilter='all';
+
+function dayMatchesFilter(day){
+  if(currentFilter==='all') return true;
+  if(currentFilter==='tt') return day.platforms.includes('tt');
+  if(currentFilter==='ig') return day.platforms.includes('ig')||day.ig;
+  if(currentFilter==='shoot') return day.shoot;
+  return true;
+}
+
+function setFilter(f,el){
+  currentFilter=f;
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  el.classList.add('active');
+  renderAll();
+}
+
+function setView(v){
+  document.getElementById('grid-view').classList.toggle('hidden',v!=='grid');
+  document.getElementById('list-view').classList.toggle('active',v==='list');
+  document.getElementById('cal-view').classList.toggle('active',v==='cal');
+  document.querySelectorAll('.view-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('vbtn-'+v).classList.add('active');
+  if(v==='cal') renderCal();
+}
+
+function openModal(idx){
+  var day=DAYS[idx];
+  var html='<div class="modal-day" style="color:'+actColor(day.act)+'">'+
+    (typeof day.d==='number'?'Day '+day.d:day.d)+' &nbsp;·&nbsp; '+day.type+'</div>'+
+    '<h2 class="modal-title">'+day.title+'</h2>';
+  if(day.key) html+='<div class="modal-badges"><span class="modal-badge-key">★ Key Clip</span></div>';
+  if(day.shoot) html+='<div class="modal-badges"><span class="modal-badge-shoot">● Shoot Day</span></div>';
+  html+='<div class="modal-section"><p class="modal-lbl">Platforms</p><div class="modal-badges">'+day.platforms.map(platBadge).join('')+'</div></div>';
+  html+='<div class="modal-section"><p class="modal-lbl">Hook / Caption</p><div class="modal-hook">'+day.hook+'</div></div>';
+  html+='<div class="modal-section"><p class="modal-lbl">Production notes</p><div class="modal-note">'+day.note+'</div></div>';
+  document.getElementById('modal-content').innerHTML=html;
+  document.getElementById('modal-overlay').classList.add('open');
+}
+function closeModal(e){if(e.target===document.getElementById('modal-overlay')) document.getElementById('modal-overlay').classList.remove('open')}
+function closeModalBtn(){document.getElementById('modal-overlay').classList.remove('open')}
+
+function buildGridCard(day,idx){
+  var dimmed=!dayMatchesFilter(day)?'dimmed':'';
+  var keyClass=day.key?'key-card':'';
+  var shootClass=day.shoot?'shoot-card':'';
+  var shootBadge=day.shoot?'<div class="shoot-badge">Shoot Day</div>':'';
+  return '<div class="dc '+day.act+' '+dimmed+' '+keyClass+' '+shootClass+'" onclick="openModal('+idx+')" style="cursor:pointer">'+
+    '<span class="dnum">'+(typeof day.d==='number'?day.d:day.d.toString().replace('a','').replace('b','').replace('c','').replace('PL',''))+'</span>'+
+    '<p class="dtag">'+(typeof day.d==='number'?'Day '+day.d:day.d)+' · '+day.type+'</p>'+
+    shootBadge+
+    '<p class="dti">'+day.title+'</p>'+
+    '<div class="dp">'+day.platforms.map(platBadge).join('')+'</div>'+
+    '<p class="dh">'+day.hook.substring(0,80)+(day.hook.length>80?'...':'')+'</p>'+
+    '</div>';
+}
+
+function buildListRow(day,idx){
+  var dimmed=!dayMatchesFilter(day)?'dimmed':'';
+  return '<div class="lv-row '+day.act+' '+dimmed+'">'+
+    '<div class="lv-day"><span class="lv-daynum">'+(typeof day.d==='number'?day.d:day.d)+'</span><span class="lv-acttag">'+day.type.split('/')[0].trim()+'</span></div>'+
+    '<div class="lv-body">'+
+    '<div class="lv-main">'+
+    '<p class="lv-title">'+day.title+'</p>'+
+    '<p class="lv-hook">'+day.hook+'</p>'+
+    '<p class="lv-note">'+day.note+'</p>'+
+    '</div>'+
+    '<div class="lv-meta">'+
+    '<div class="lv-platforms">'+day.platforms.map(platBadge).join('')+'</div>'+
+    (day.shoot?'<span class="lv-shoot">Shoot Day</span>':'')+
+    (day.key?'<span class="lv-key">★ Key Clip</span>':'')+
+    '</div>'+
+    '</div></div>';
+}
+
+function renderAll(){
+  var acts=['a1','a2','a3','al','apl'];
+  acts.forEach(function(act){
+    var gEl=document.getElementById('grid-'+act);
+    var lEl=document.getElementById('list-'+act);
+    if(!gEl||!lEl) return;
+    var html='';var lhtml='';
+    DAYS.forEach(function(d,i){if(d.act===act){html+=buildGridCard(d,i);lhtml+=buildListRow(d,i)}});
+    gEl.innerHTML=html;lEl.innerHTML=lhtml;
+  });
+  if(document.getElementById('cal-view').classList.contains('active')) renderCal();
+}
+
+function renderCal(){
+  var calEl=document.getElementById('cal-grid');
+  // Start Monday — offset of 0 empty cells before Day 1
+  var offset=0; // adjust if you want a real calendar start day
+  var cells='';
+  for(var e=0;e<offset;e++) cells+='<div class="cal-cell empty"></div>';
+  DAYS.forEach(function(day,idx){
+    if(day.act==='apl') return; // skip post-launch in calendar
+    var dimmed=!dayMatchesFilter(day)?'dimmed':'';
+    var tagHtml=day.platforms.map(calTag).join('');
+    if(day.shoot) tagHtml='<span class="cal-tag shoot">Shoot</span>'+tagHtml;
+    if(day.key) tagHtml='<span class="cal-tag key">★Key</span>'+tagHtml;
+    cells+='<div class="cal-cell '+day.act+' '+dimmed+'" onclick="'+(!dayMatchesFilter(day)?'':'openModal('+idx+')')+'">'+
+      '<div class="cal-daynum">'+(typeof day.d==='number'?day.d:day.d)+'</div>'+
+      '<div class="cal-title">'+day.title.substring(0,30)+(day.title.length>30?'...':'')+'</div>'+
+      '<div class="cal-tags">'+tagHtml+'</div></div>';
+  });
+  calEl.innerHTML=cells;
+}
+
+function sw(id){
+  document.querySelectorAll('.tb').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelector('[onclick="sw(\''+id+'\')"]').classList.add('active');
+  document.getElementById('panel-'+id).classList.add('active');
+}
+function tc(el){el.classList.toggle('checked');up();save()}
+function up(){
+  var all=document.querySelectorAll('#pre-checks .cb');
+  var done=document.querySelectorAll('#pre-checks .cb.checked').length;
+  var pct=all.length?Math.round(done/all.length*100):0;
+  var f=document.getElementById('pre-fill');if(f)f.style.width=pct+'%';
+  var d=document.getElementById('pre-done');if(d)d.textContent=done+' complete';
+  var t=document.getElementById('pre-total');if(t)t.textContent=all.length+' items';
+}
+function save(){
+  var s={};
+  document.querySelectorAll('.cb').forEach(function(b,i){s[i]=b.classList.contains('checked')});
+  try{localStorage.setItem('pb_v3',JSON.stringify(s))}catch(e){}
+}
+function load(){
+  try{var s=JSON.parse(localStorage.getItem('pb_v3')||'{}');document.querySelectorAll('.cb').forEach(function(b,i){if(s[i])b.classList.add('checked')})}catch(e){}
+  up();
+}
+
+renderAll();
+load();
+</script>
+</body>
+</html>
